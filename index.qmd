@@ -1,5 +1,5 @@
 ---
-title: "daniel-a-udekwe.github.io"
+title: "Machine Learning I Blog Posts"
 listing:
   contents: posts
   sort: "date desc"

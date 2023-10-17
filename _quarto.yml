@@ -3,14 +3,17 @@ project:
   output-dir: docs
 
 website:
-  title: "daniel-a-udekwe.github.io"
+  title: "daudekwe@vt.edu"
   navbar:
     right:
       - about.qmd
       - icon: github
-        href: https://github.com/
-      - icon: twitter
+        href: https://github.com/daniel-udekwe
+      - icon: discord
         href: https://twitter.com
+      - icon: linkedin
+        href: https://linkedin.com/in/daniel-a-udekwe-19a2bbb2
+        
 format:
   html:
     theme: cosmo
