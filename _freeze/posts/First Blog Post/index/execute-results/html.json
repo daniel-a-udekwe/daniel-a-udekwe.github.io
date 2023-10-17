@@ -1,0 +1,14 @@
+{
+  "hash": "6bfde81067ffb6b7192161825ac99fbb",
+  "result": {
+    "markdown": "---\ntitle: \"First Blog Post\"\nauthor: \"Daniel A. Udekwe\"\ndate: \"2023-10-17\"\ncategories: [news, code, analysis]\nimage: \"image.jpg\"\n---\n\n\nThis is a post with executable code.\n\n\n::: {.cell}\n\n```{.r .cell-code}\n1 + 1\n```\n\n::: {.cell-output .cell-output-stdout}\n```\n[1] 2\n```\n:::\n:::\n\n\nlets run a for loop\n\n\n::: {.cell}\n\n```{.python .cell-code}\nfor i in range(1,10):\n  print(i)\n```\n\n::: {.cell-output .cell-output-stdout}\n```\n1\n2\n3\n4\n5\n6\n7\n8\n9\n```\n:::\n:::\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

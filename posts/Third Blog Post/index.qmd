@@ -1,6 +1,6 @@
 ---
-title: "Welcome To My Blog"
-author: "Tristan O'Malley"
+title: "Third Blog Post"
+author: "Daniel A. Udekwe"
 date: "2023-10-14"
 categories: [news]
 ---

@@ -1,6 +1,6 @@
 ---
-title: "Post With Code"
-author: "Harlow Malloc"
+title: "First Blog Post"
+author: "Daniel A. Udekwe"
 date: "2023-10-17"
 categories: [news, code, analysis]
 image: "image.jpg"
@@ -10,4 +10,12 @@ This is a post with executable code.
 
 ```{r}
 1 + 1
+```
+
+lets run a for loop
+
+```{python}
+for i in range(1,10):
+  print(i)
+
 ```
