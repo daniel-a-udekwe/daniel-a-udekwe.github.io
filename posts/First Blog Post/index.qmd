@@ -70,216 +70,119 @@ $$
 
 ### Implementation
 
-We are going to use a dataset containing head size and brain weight of different people. This data set has other features. But, we will not use them in this model.. This dataset is available in this [Github Repo](https://github.com/mubaris/potential-enigma). Let's start off by importing the data.
+We are going to use a dataset containing the price of houses as a function of size. This data is split into 3 for training, validation and finally testing. Let's start off by importing and viewing the data.
 
 ```{python}
-# Importing Necessary Libraries
-%matplotlib inline
-import numpy as np
+#Import the needed libraries
 import pandas as pd
 import matplotlib.pyplot as plt
-plt.rcParams['figure.figsize'] = (20.0, 10.0)
+import json
+import numpy as np
 
-# Reading Data
-data = pd.read_csv('headbrain.csv')
-print(data.shape)
-data.head()
+with open('assignment1.json', 'r') as json_file:
+    data = json.load(json_file)
+    
+X_train = np.array(data['X_train']).reshape(-1, 1)
+y_train = np.array(data['Y_train']).reshape(-1, 1)
+X_val = np.array(data['X_val']).reshape(-1, 1)
+y_val = np.array(data['Y_val']).reshape(-1, 1)
+X_test = np.array(data['X_test']).reshape(-1, 1)
+y_test = np.array(data['Y_test']).reshape(-1, 1)
+
+
+array1 = data['X_train']
+array2 = data['Y_train']
+
+array3 = data['X_val']
+array4 = data['Y_val']
+
+array5 = data['X_test']
+array6 = data['Y_test']
+
+
+
+print("Training Data")
+tableData = {
+  'X_train': array1,
+  'Y_train': array2,
+}
+table = pd.DataFrame(tableData)
+print(table.head(3))
+print(f"number of rows and colums: {table.shape}")
+print()
+
+print("Validation Data")
+tableData2 = {
+  'X_Val': array3,
+  'Y_Val': array4
+}
+table2 = pd.DataFrame(tableData2)
+print(table2.head(3))
+print(f"number of rows and colums: {table2.shape}")
+print()
+
+print("Test Data")
+tableData3 = {
+  'X_test': array5,
+  'Y_test': array6
+}
+table3 = pd.DataFrame(tableData3)
+print(table3.head(3))
+print(f"number of rows and colums: {table3.shape}")
+
 ```
 
-As you can see there are 237 values in the training set. We will find a linear relationship between Head Size and Brain Weights. So, now we will get these variables.
+As we can see, the data is split unequally between training, validation and testing. The training data has 12 entries while the validation and testing data have 21 entries.
+
+we need to implement feature scaling
 
 ```{python}
-# Collecting X and Y
-X = data['Head Size(cm^3)'].values
-Y = data['Brain Weight(grams)'].values
+# Step 2: Preprocess the data (feature scaling)
+mean = np.mean(X_train)
+std = np.std(X_train)
+X_train = (X_train - mean) / std
+X_val = (X_val - mean) / std
+X_test = (X_test - mean) / std
+
 ```
 
-To find the values �1 and �0, we will need mean of **X** and **Y**. We will find these and the coeffients.
+Next, we will find a linear relationship house prices and sizes but it is important to visualize this data on a scatter plot. But first
 
 ```{python}
-# Mean X and Y
-mean_x = np.mean(X)
-mean_y = np.mean(Y)
+plt.scatter(array1, array2, label='training data')
+plt.scatter(array3, array4, label='validation data')
+plt.scatter(array5, array6, label='testing data')
 
-# Total number of values
-m = len(X)
-
-# Using the formula to calculate b1 and b2
-numer = 0
-denom = 0
-for i in range(m):
-    numer += (X[i] - mean_x) * (Y[i] - mean_y)
-    denom += (X[i] - mean_x) ** 2
-b1 = numer / denom
-b0 = mean_y - (b1 * mean_x)
-
-# Print coefficients
-print(b1, b0)
-```
-
-There we have our coefficients.
-
-$$
-Brain Weight = 325.573421049 + 0.263429339489 * Head Size
-$$
-
-That is our linear model.
-
-Now we will see this graphically.
-
-```{python}
-# Plotting Values and Regression Line
-
-max_x = np.max(X) + 100
-min_x = np.min(X) - 100
-
-# Calculating line values x and y
-x = np.linspace(min_x, max_x, 1000)
-y = b0 + b1 * x
-
-# Ploting Line
-plt.plot(x, y, color='#58b970', label='Regression Line')
-# Ploting Scatter Points
-plt.scatter(X, Y, c='#ef5423', label='Scatter Plot')
-
-plt.xlabel('Head Size in cm3')
-plt.ylabel('Brain Weight in grams')
+plt.ylabel('House Price')
+plt.xlabel('House size')
 plt.legend()
-plt.show()
+plt.title('Training, Validation and Testing Data')
 ```
 
-his model is not so bad. But we need to find how good is our model. There are many methods to evaluate models. We will use **Root Mean Squared Error** and **Coefficient of Determination(�2 Score)**.
-
-Root Mean Squared Error is the square root of sum of all errors divided by number of values, or Mathematically,
+Lets create a function to implement linear regression with regularization.
 
 $$
-RMSE = \sqrt{\sum_{i=1}^{m} \frac{1}{m} (\hat{y_i} - y_i)^2}
+J(\theta) = \frac{1}{2m} (\sum_{i=1}^m(h_\theta(x^{(i)})-y^{(i)})^2) + \frac{\lambda}{2m}(\sum_{j=1}^n \theta_j^2)
 $$
-
-Here ��\^ is the i^th^ predicted output values. Now we will find RMSE.
 
 ```{python}
-# Calculating Root Mean Squares Error
-rmse = 0
-for i in range(m):
-    y_pred = b0 + b1 * X[i]
-    rmse += (Y[i] - y_pred) ** 2
-rmse = np.sqrt(rmse/m)
-print(rmse)
+# Step 3: Implement regularized linear regression with gradient descent
+def ridge_regression(X, y, alpha, num_iterations, learning_rate):
+    m, n = X.shape
+    # Initialize theta with the correct shape
+    theta = np.zeros((n, 1))
+    history = []
+
+    for _ in range(num_iterations):
+        gradient = (X.T @ (X @ theta - y) + alpha * theta) / m
+        theta -= learning_rate * gradient
+        cost = np.sum((X @ theta - y) ** 2) / (2 * m) + (alpha / (2 * m)) * np.sum(theta[1:] ** 2)
+        history.append(cost)
+
+    return theta, history, cost
 ```
 
-Now we will find �2 score. �2 is defined as follows,
-
-$$
-SS_t = \sum_{i=1}^{m} (y_i - \bar{y})^2
-$$
-
-$$
-SS_r = \sum_{i=1}^{m} (y_i - \hat{y_i})^2
-$$
-
-$$
-SS_r = \sum_{i=1}^{m} (y_i - \hat{y_i})^2
-$$
-
-\
-��� is the total sum of squares and ��� is the total sum of squares of residuals.\
-�2 Score usually range from 0 to 1. It will also become negative if the model is completely wrong. Now we will find �2 Score.
-
-```{python}
-ss_t = 0
-ss_r = 0
-for i in range(m):
-    y_pred = b0 + b1 * X[i]
-    ss_t += (Y[i] - mean_y) ** 2
-    ss_r += (Y[i] - y_pred) ** 2
-r2 = 1 - (ss_r/ss_t)
-print(r2)
-```
-
-0.64 is not so bad. Now we have implemented Simple Linear Regression Model using Ordinary Least Square Method. Now we will see how to implement the same model using a Machine Learning Library called [scikit-learn](http://scikit-learn.org/)
-
-### The scikit-learn approach
-
-[scikit-learn](http://scikit-learn.org/) is simple machine learning library in Python. Building Machine Learning models are very easy using scikit-learn. Let's see how we can build this Simple Linear Regression Model using scikit-learn.
-
-```{python}
-from sklearn.linear_model import LinearRegression
-from sklearn.metrics import mean_squared_error
-
-# Cannot use Rank 1 matrix in scikit learn
-X = X.reshape((m, 1))
-# Creating Model
-reg = LinearRegression()
-# Fitting training data
-reg = reg.fit(X, Y)
-# Y Prediction
-Y_pred = reg.predict(X)
-
-# Calculating RMSE and R2 Score
-mse = mean_squared_error(Y, Y_pred)
-rmse = np.sqrt(mse)
-r2_score = reg.score(X, Y)
-
-print(np.sqrt(mse))
-print(r2_score)
-```
-
-You can see that this exactly equal to model we built from scratch, but simpler and less code.
-
-Now we will move on to Multiple Linear Regression.
-
-## Multiple Linear Regression
-
-Multiple Linear Regression is a type of Linear Regression when the input has multiple features(variables).
-
-### Model Representation
-
-Similar to Simple Linear Regression, we have input variable(**X**) and output variable(**Y**). But the input variable has � features. Therefore, we can represent this linear model as follows;
-
-$$
-Y = \beta_0 + \beta_1x_1 + \beta_1x_2 + ... + \beta_nx_n
-$$
-
-$$
-Y = \beta_0x_0 + \beta_1x_1 + \beta_1x_2 + ... + \beta_nx_n
-$$
-
-$$
-x_0 = 1
-$$
-
-Now we can convert this eqaution to matrix form.
-
-$$
-Y = \beta^TX
-$$
-
-Where,
-
-$$
-\beta = \begin{bmatrix}\beta_0\\\beta_1\\\beta_2\\.\\.\\\beta_n\end{bmatrix}
-$$
-
-and,
-
-$$
-X = \begin{bmatrix}x_0\\x_1\\x_2\\.\\.\\x_n\end{bmatrix}
-$$
-
-We have to define the cost of the model. Cost bascially gives the error in our model. **Y** in above equation is the our hypothesis(approximation). We are going to define it as our hypothesis function.
-
-$$
-h_\beta(x) = \beta^Tx
-$$
-
-and the cost is,
-
-$$
-J(\beta) = \frac{1}{2m} \sum_{i=1}^{m} (h_\beta(x^{\textrm{(i)}}) - y^{\textrm{(i)}})^2
-$$
-
-By minimizing this cost function, we can get find �. We use **Gradient Descent** for this.
+In the equation above, $\lambda$ is the regularization parameter which ensures ... This is implemented with the gradient descent algorithm.
 
 ### Gradient Descent
 
@@ -287,198 +190,213 @@ Gradient Descent is an optimization algorithm. We will optimize our cost functio
 
 ##### Step 1
 
-Initialize values �0, �1,\..., �� with some value. In this case we will initialize with 0.
+Initialize values $\theta_0, \theta_1, ..., \theta_n$ with some value. In this case we will initialize with 0.
 
 #### Step 2
 
 Iteratively update,
 
 $$
-\beta_j := \beta_j - \alpha\frac{\partial}{\partial \beta_j} J(\beta)
+\theta_j : \theta_j - \alpha \frac{\partial}{\partial \theta_j} J(\theta)
 $$
 
 until it converges.
 
-This is the procedure. Here � is the learning rate. This operation $\frac{\partial}{\partial \beta_j} J(\beta)$ means we are finding partial derivate of cost with respect to each ��. This is called Gradient.
+where:
+
+$$
+\frac{\partial J(\theta)}{\partial \theta_0} = \frac{1}{m} \sum_{i=1}^m (h_\theta(x^{(i)}) - y^{(i)})x_j^{(i)},  \ j = 0
+$$
+
+$$
+\frac{\partial J(\theta)}{\partial \theta_j} = \frac{1}{m} \sum_{i=1}^m (h_\theta(x^{(i)}) - y^{(i)})x_j^{(i)}, + \frac{\lambda}{m}\theta_j \ j\ge 1 
+$$
+
+This is the procedure. Here $\alpha$ is the learning rate. This operation $\frac{\partial}{\partial \theta_j} J(\theta)$ means we are finding partial derivate of cost with respect to each $\theta_j$. This is called Gradient.
 
 Read [this](https://math.stackexchange.com/questions/174270/what-exactly-is-the-difference-between-a-derivative-and-a-total-derivative) if you are unfamiliar with partial derivatives.
 
-In step 2 we are changing the values of �� in a direction in which it reduces our cost function. And Gradient gives the direction in which we want to move. Finally we will reach the minima of our cost function. But we don't want to change values of �� drastically, because we might miss the minima. That's why we need learning rate.
+In step 2 we are changing the values of $\theta_j$. in a direction in which it reduces our cost function. And Gradient gives the direction in which we want to move. Finally we will reach the minima of our cost function. But we don't want to change values of $\theta_j$. drastically, because we might miss the minima. That's why we need learning rate.
 
-![](regression _4.gif)
+![Animation illustrating the gradient descent method](regression _4.gif){fig-align="center"}
 
 The above animation illustrates the Gradient Descent method.
 
-But we still didn't find the value of �����(�). After we applying the mathematics. The step 2 becomes.
+But we still didn't find the value of $\frac{\partial J(\theta)}{\partial \theta_j}$ . After we applying the mathematics. The step 2 becomes.
 
 $$
-\beta_j := \beta_j - \alpha\frac{1}{m}\sum_{i=1}^m (h_\beta(x^{(i)})-y^{(i)})x_{j}^{(i)}
+\theta_j := \theta_j - \alpha \frac{1}{m} \sum_{i=1}^m (h_\theta(x^{(i)}) - y^{(i)})x_j^{(i)}, + \frac{\lambda}{m}\theta_j
 $$
 
-We iteratively change values of �� according to above equation. This particular method is called **Batch Gradient Descent**.
+We iteratively change values of $\theta_j$ according to above equation. This particular method is called **Batch Gradient Descent**.
 
-### Implementation
-
-Let's try to implement this in Python. This looks like a long procedure. But the implementation is comparitively easy since we will vectorize all the equations. If you are unfamiliar with vectorization, read this [post](https://www.datascience.com/blog/straightening-loops-how-to-vectorize-data-aggregation-with-pandas-and-numpy/)
-
-We will be using a student score dataset. In this particular dataset, we have math, reading and writing exam scores of 1000 students. We will try to find a predict the score of writing exam from math and reading scores. You can get this dataset from this [Github Repo](https://github.com/mubaris/potential-enigma). That's we have 2 features(input variables). Let's start by importing our dataset.
+Then we need to implement a function to plot the line of best fit
 
 ```{python}
-%matplotlib inline
-import numpy as np
-import pandas as pd
-import matplotlib.pyplot as plt
-plt.rcParams['figure.figsize'] = (20.0, 10.0)
-from mpl_toolkits.mplot3d import Axes3D
-
-data = pd.read_csv('student.csv')
-print(data.shape)
-data.head()
+def plot_data_and_fit(X_train, y_train, theta):
+    plt.scatter(X_train, y_train, color='blue', label='Training data')
+    
+    x_values = np.linspace(min(X_train), max(X_train), 100).reshape(-1, 1)
+    x_values_extended = np.column_stack((np.ones_like(x_values), x_values))
+    y_values = x_values_extended @ theta
+    
+    plt.plot(x_values, y_values, color='red', label='Line of best fit')
+    plt.xlabel('X')
+    plt.ylabel('y')
+    plt.title('Training Data and Line of Best Fit')
+    plt.legend()
+    plt.show()
 ```
 
-We will get scores to an array.
+Next we will train the model using the training data and return the cost using the equations below:
 
 ```{python}
-math = data['Math'].values
-read = data['Reading'].values
-write = data['Writing'].values
+# Step 4: Train the model using the training data
+alpha = 0 # Regularization strength (adjust as needed)
+num_iterations = 1000
+learning_rate = 0.1
+X_train_extended = np.column_stack((np.ones_like(X_train), X_train))
+theta, history, cost = ridge_regression(X_train_extended, y_train, alpha, num_iterations, learning_rate)
+print(f"the cost iss: {cost}")
+```
 
-# Ploting the scores as scatter plot
-fig = plt.figure()
-ax = Axes3D(fig)
-ax.scatter(math, read, write, color='#ef1234')
+Then tuning the regularization parameter
+
+```{python}
+# Step 5: Tune the regularization parameter using the validation data
+alphas = [0.01, 0.1, 1, 10, 100]
+mse_val = []
+
+for alpha in alphas:
+    X_val_extended = np.column_stack((np.ones_like(X_val), X_val))
+    theta_val, history_, cost = ridge_regression(X_train_extended, y_train, alpha, num_iterations, learning_rate)
+    y_val_pred = X_val_extended @ theta_val
+    mse = np.mean((y_val - y_val_pred) ** 2)
+    mse_val.append(mse)
+
+best_alpha = alphas[np.argmin(mse_val)]
+print(f"Best regularization parameter (alpha): {best_alpha}")
+
+```
+
+Evaluating the Model on the Testing data using the root mean square of errors.
+
+Root Mean Squared Error is the square root of sum of all errors divided by number of values, or Mathematically,
+
+$$
+RMSE = \sqrt{\sum_{i=1}^m \frac{1}{m}(\hat{y_1}-y_i)^2)}
+$$
+
+Here $\hat{y_i}$ is the $i^{th}$ predicted output values.
+
+```{python}
+# Step 6: Evaluate the model using the testing data
+X_test_extended = np.column_stack((np.ones_like(X_test), X_test))
+theta_test, _, cost = ridge_regression(X_train_extended, y_train, best_alpha, num_iterations, learning_rate)
+y_test_pred = X_test_extended @ theta_test
+mse_test = np.mean((y_test - y_test_pred) ** 2)
+print(f"Mean Squared Error on Test Data: {mse_test}")
+print(cost)
+```
+
+```{python}
+# Plot the cost history during training
+plt.plot(range(num_iterations), history)
+plt.xlabel('Iteration')
+plt.ylabel('Cost')
+plt.title('Cost vs. Iteration')
 plt.show()
 ```
 
-Now we will generate our X, Y and $\beta$
+Plotting the training data and line of best fit
 
 ```{python}
-m = len(math)
-x0 = np.ones(m)
-X = np.array([x0, math, read]).T
-# Initial Coefficients
-B = np.array([0, 0, 0])
-Y = np.array(write)
-alpha = 0.0001
+# Plot training data and line of best fit
+plot_data_and_fit(X_train, y_train, theta)
+print(theta)
+
 ```
 
-We'll define our cost function.
+$$
+House Price = 22.108 + 20.736 \times House size
+$$
+
+------------------------------------------------------------------------
+
+Nonlinear Regression
 
 ```{python}
-def cost_function(X, Y, B):
-    m = len(Y)
-    J = np.sum((X.dot(B) - Y) ** 2)/(2 * m)
-    return J
-```
+# Step 4: Train the model using the training data
+alpha = 10  # Regularization strength (adjust as needed)
+num_iterations = 1000
+learning_rate = 0.1
+degree = 3  # Degree of the polynomial features
 
-```{python}
-inital_cost = cost_function(X, Y, B)
-print(inital_cost)
-```
+# Create polynomial features
+X_train_poly = np.column_stack([X_train ** i for i in range(1, degree + 1)])
 
-As you can see our initial cost is huge. Now we'll reduce our cost prediocally using Gradient Descent.
+# Train the model using polynomial features
+X_train_poly = np.column_stack((np.ones_like(X_train_poly), X_train_poly))
+theta, history_train, cost_train = ridge_regression(X_train_poly, y_train, alpha, num_iterations, learning_rate)
+print(f"Training cost: {cost_train}")
+print(theta)
 
-**Hypothesis:** $h_\beta(x) = \beta^Tx$
+# Step 5: Tune the regularization parameter using the validation data
+alphas = [0.01, 0.1, 1, 10, 100]
+mse_val = []
 
-**Loss:** $(h_\beta(x)-y)$
-
-**Gradient:** $(h_\beta(x)-y)x_{j}$
-
-**Gradient Descent Updation:** $\beta_j := \beta_j - \alpha(h_\beta(x)-y)x_{j})$
-
-```{python}
-def gradient_descent(X, Y, B, alpha, iterations):
-    cost_history = [0] * iterations
-    m = len(Y)
+for alpha in alphas:
+    # Create polynomial features for validation data
+    X_val_poly = np.column_stack([X_val ** i for i in range(1, degree + 1)])
+    X_val_poly = np.column_stack((np.ones_like(X_val_poly), X_val_poly))
     
-    for iteration in range(iterations):
-        # Hypothesis Values
-        h = X.dot(B)
-        # Difference b/w Hypothesis and Actual Y
-        loss = h - Y
-        # Gradient Calculation
-        gradient = X.T.dot(loss) / m
-        # Changing Values of B using Gradient
-        B = B - alpha * gradient
-        # New Cost Value
-        cost = cost_function(X, Y, B)
-        cost_history[iteration] = cost
-        
-    return B, cost_history
-```
+    theta_val, history_val, cost_val = ridge_regression(X_val_poly, y_val, alpha, num_iterations, learning_rate)
+    y_val_pred = X_val_poly @ theta_val
+    mse = np.mean((y_val - y_val_pred) ** 2)
+    mse_val.append(mse)
+"""
+    # Plot the cost history for both training and validation
+    plt.plot(range(num_iterations), history_train, label='Training Cost', color='blue')
+    plt.plot(range(num_iterations), history_val, label='Validation Cost', color='red')
+    plt.xlabel('Iteration')
+    plt.ylabel('Cost')
+    plt.title('Cost vs. Iteration')
+    plt.legend()
+    plt.show()
+"""
+best_alpha = alphas[np.argmin(mse_val)]
+print(f"Best regularization parameter (alpha): {best_alpha}")
 
-Now we will compute final value of $\beta$
+# Step 6: Evaluate the model using the testing data
+# Create polynomial features for test data
+X_test_poly = np.column_stack([X_test ** i for i in range(1, degree + 1)])
+X_test_poly = np.column_stack((np.ones_like(X_test_poly), X_test_poly))
+
+theta_test, _, cost_test = ridge_regression(X_test_poly, y_test, best_alpha, num_iterations, learning_rate)
+y_test_pred = X_test_poly @ theta_test
+mse_test = np.mean((y_test - y_test_pred) ** 2)
+print(f"Mean Squared Error on Test Data: {mse_test}")
+
+# Plot training data and the polynomial fit
+plt.scatter(X_train, y_train, color='blue', label='Training data')
+x_values = np.linspace(min(X_train), max(X_train), 100).reshape(-1, 1)
+x_values_poly = np.column_stack([x_values ** i for i in range(1, degree + 1)])
+x_values_poly = np.column_stack((np.ones_like(x_values_poly), x_values_poly))
+y_values = x_values_poly @ theta
+plt.plot(x_values, y_values, color='red', label=f'Polynomial Fit (Degree {degree})')
+plt.xlabel('X')
+plt.ylabel('y')
+plt.title('Training Data and Polynomial Fit')
+plt.legend()
+plt.show()
+```
 
 ```{python}
-# 100000 Iterations
-newB, cost_history = gradient_descent(X, Y, B, alpha, 100000)
-
-# New Values of B
-print(newB)
-
-# Final Cost of new B
-print(cost_history[-1])
+    plt.plot(range(num_iterations), history_train, label='Training Cost', color='blue')
+    plt.plot(range(num_iterations), history_val, label='Validation Cost', color='red')
+    plt.xlabel('Iteration')
+    plt.ylabel('Cost')
+    plt.title('Cost vs. Iteration')
+    plt.legend()
+    plt.show()
 ```
-
-We can say that in this model,
-
-$$
-S_{writing} = -0.47889172 + 0.09137252 * S_{math} + 0.90144884 * S_{reading}
-$$
-
-There we have final hypothesis function of our model. Let's calculate **RMSE** and **�2 Score** of our model to evaluate.
-
-```{python}
-# Model Evaluation - RMSE
-def rmse(Y, Y_pred):
-    rmse = np.sqrt(sum((Y - Y_pred) ** 2) / len(Y))
-    return rmse
-
-# Model Evaluation - R2 Score
-def r2_score(Y, Y_pred):
-    mean_y = np.mean(Y)
-    ss_tot = sum((Y - mean_y) ** 2)
-    ss_res = sum((Y - Y_pred) ** 2)
-    r2 = 1 - (ss_res / ss_tot)
-    return r2
-
-Y_pred = X.dot(newB)
-
-print(rmse(Y, Y_pred))
-print(r2_score(Y, Y_pred))
-```
-
-We have very low value of RMSE score and a good �2 score. I guess our model was pretty good.
-
-Now we will implement this model using scikit-learn.
-
-### The scikit-learn Approach
-
-scikit-learn approach is very similar to Simple Linear Regression Model and simple too. Let's implement this.
-
-```{python}
-from sklearn.linear_model import LinearRegression
-from sklearn.metrics import mean_squared_error
-
-# X and Y
-X = np.array([math, read]).T
-Y = np.array(write)
-
-# Model Intialization
-reg = LinearRegression()
-# Data Fitting
-reg = reg.fit(X, Y)
-# Y Prediction
-Y_pred = reg.predict(X)
-
-# Model Evaluation
-rmse = np.sqrt(mean_squared_error(Y, Y_pred))
-r2 = reg.score(X, Y)
-
-print(rmse)
-print(r2)
-```
-
-You can see that this model is better than one which we have built from scratch by a small margin.
-
-That's it for Linear Regression. I assume, so far you have understood Linear Regression, Ordinary Least Square Method and Gradient Descent.
