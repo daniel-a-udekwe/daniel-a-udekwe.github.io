@@ -9,7 +9,7 @@
 <meta name="author" content="Daniel A. Udekwe">
 <meta name="dcterms.date" content="2023-10-14">
 
-<title>daudekwe@vt.edu - Second Blog Post</title>
+<title>daudekwe@vt.edu - Classification</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -113,7 +113,7 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Second Blog Post</h1>
+      <h1 class="title">Classification</h1>
                                 <div class="quarto-categories">
                 <div class="quarto-category">news</div>
               </div>
@@ -151,11 +151,34 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<p>This is the first post in a Quarto blog. Welcome!</p>
-<p><img src="thumbnail.jpg" class="img-fluid"></p>
-<p>Since this post doesn’t specify an explicit <code>image</code>, the first image in the post will be used in the listing page of posts.</p>
+<p>Classification is a task of Machine Learning which assigns a label value to a specific class and then can identify a particular type to be of one kind or another. The most basic example can be of the mail spam filtration system where one can classify a mail as either "spam" or "not spam".</p>
+<p>Classification usually refers to any kind of problem where a specific type of class label is the result to be predicted from the given input field of data. Some types of Classification challenges are :</p>
+<ul>
+<li><p>Classifying emails as spam or not</p></li>
+<li><p>Classify a given handwritten character to be either a known character or not</p></li>
+<li><p>Classify recent user behaviour as churn or not</p></li>
+</ul>
+<p>For any model, you will require a training dataset with many examples of inputs and outputs from which the model will train itself. The training data must include all the possible scenarios of the problem and must have sufficient data for each label for the model to be trained correctly. Class labels are often returned as string values and hence needs to be encoded into an integer like either representing 0 for "spam" and 1 for "no-spam".</p>
+<p>There are mainly 4 different types of classification tasks that you might encounter in your day to day challenges. Generally, the different types of predictive models in machine learning are as follows :</p>
+<ul>
+<li><p>Binary classification</p></li>
+<li><p>Multi-Label Classification</p></li>
+<li><p>Multi-Class Classification</p></li>
+<li><p>Imbalanced Classification</p></li>
+</ul>
+<p>We will go over them one by one.</p>
+<section id="binary-classification-for-machine-learning" class="level2">
+<h2 class="anchored" data-anchor-id="binary-classification-for-machine-learning"><strong>Binary Classification for Machine Learning</strong></h2>
+<p>A binary classification refers to those tasks which can give either of any two class labels as the output. Generally, one is considered as the normal state and the other is considered to be the abnormal state.&nbsp; The following examples will help you to understand them better.</p>
+<ul>
+<li><p>Email Spam detection: Normal State – Not Spam, Abnormal State – Spam</p></li>
+<li><p>Conversion prediction: Normal State – Not churned, Abnormal State – Churn</p></li>
+<li><p>Conversion Prediction: Normal State – Bought an item, Abnormal State – Not bought an item</p></li>
+</ul>
+<p>You can also add the example of that " No cancer detected" to be a normal state and " Cancer detected" to be the abnormal state. The notation mostly followed is that the normal state gets assigned the value of 0 and the class with the abnormal state gets assigned the value of 1. For each example, one can also create a model which predicts the Bernoulli probability for the output. You can read more about the probability <a href="https://en.wikipedia.org/wiki/Bernoulli_distribution">here</a>. In short, it returns a discrete value that covers all cases and will give the output as either the outcome will have a value of 1 or 0. Hence after the association to two different states, the model can give an output for either of the values present.</p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

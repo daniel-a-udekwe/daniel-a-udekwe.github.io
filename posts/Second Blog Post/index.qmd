@@ -1,12 +1,43 @@
 ---
-title: "Second Blog Post"
+title: "Classification"
 author: "Daniel A. Udekwe"
 date: "2023-10-14"
 categories: [news]
+image: "classification1.png"
 ---
 
-This is the first post in a Quarto blog. Welcome!
+Classification is a task of Machine Learning which assigns a label value to a specific class and then can identify a particular type to be of one kind or another. The most basic example can be of the mail spam filtration system where one can classify a mail as either \"spam\" or \"not spam\".
 
-![](thumbnail.jpg)
+Classification usually refers to any kind of problem where a specific type of class label is the result to be predicted from the given input field of data. Some types of Classification challenges are :
 
-Since this post doesn't specify an explicit `image`, the first image in the post will be used in the listing page of posts.
+-   Classifying emails as spam or not
+
+-   Classify a given handwritten character to be either a known character or not
+
+-   Classify recent user behaviour as churn or not
+
+For any model, you will require a training dataset with many examples of inputs and outputs from which the model will train itself. The training data must include all the possible scenarios of the problem and must have sufficient data for each label for the model to be trained correctly. Class labels are often returned as string values and hence needs to be encoded into an integer like either representing 0 for \"spam\" and 1 for \"no-spam\".
+
+There are mainly 4 different types of classification tasks that you might encounter in your day to day challenges. Generally, the different types of predictive models in machine learning are as follows :
+
+-   Binary classification
+
+-   Multi-Label Classification
+
+-   Multi-Class Classification
+
+-   Imbalanced Classification
+
+We will go over them one by one.
+
+## **Binary Classification for Machine Learning**
+
+A binary classification refers to those tasks which can give either of any two class labels as the output. Generally, one is considered as the normal state and the other is considered to be the abnormal state.  The following examples will help you to understand them better.
+
+-   Email Spam detection: Normal State -- Not Spam, Abnormal State -- Spam
+
+-   Conversion prediction: Normal State -- Not churned, Abnormal State -- Churn
+
+-   Conversion Prediction: Normal State -- Bought an item, Abnormal State -- Not bought an item
+
+You can also add the example of that \" No cancer detected\" to be a normal state and \" Cancer detected\" to be the abnormal state. The notation mostly followed is that the normal state gets assigned the value of 0 and the class with the abnormal state gets assigned the value of 1. For each example, one can also create a model which predicts the Bernoulli probability for the output. You can read more about the probability [here](https://en.wikipedia.org/wiki/Bernoulli_distribution). In short, it returns a discrete value that covers all cases and will give the output as either the outcome will have a value of 1 or 0. Hence after the association to two different states, the model can give an output for either of the values present.

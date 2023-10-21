@@ -1,5 +1,5 @@
 ---
-title: "Linear and Non-Linear Regression"
+title: "Regression (Linear and Nonlinear)"
 author: "Daniel A. Udekwe"
 date: "2023-10-17"
 categories: [news, code, analysis]
