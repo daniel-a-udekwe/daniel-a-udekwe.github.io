@@ -1,0 +1,7 @@
+---
+title: "Probability Theory and Random Variables"
+author: "Daniel A. Udekwe"
+date: "2023-10-14"
+categories: [news]
+image: "randomv.jpeg"
+---
