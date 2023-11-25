@@ -1,0 +1,279 @@
+---
+title: "Anomaly/Outlier Detection"
+author: "Daniel A. Udekwe"
+date: "2023-10-14"
+categories: [news]
+image: "avknn.png"
+---
+
+Anomaly detection is the process of identifying data points, entities or events that fall outside the normal range. An anomaly is anything that deviates from what is standard or expected. Humans and animals do this habitually when they spot a ripe fruit in a tree or a rustle in the grass that stands out from the background and could represent an opportunity or threat. Thus, the concept is sometimes framed as *outlier detection* or *novelty detection*.
+
+Anomaly detection has a long history in statistics, driven by analysts and scientists who pored over charts to find elements that stood out. Over the last several decades, researchers have started automating this process using [machine learning](https://www.techtarget.com/searchenterpriseai/definition/machine-learning-ML) training techniques designed to find more efficient ways to detect different types of outliers.
+
+In practice, anomaly detection is often used to detect suspicious events, unexpected opportunities or bad data buried in [time series](https://www.techtarget.com/whatis/definition/time-series-forecasting) data. A suspicious event might indicate a network breach, fraud, crime, disease or faulty equipment. An unexpected opportunity could involve finding a store, product or salesperson that's performing much better than others and should be investigated for insight into improving the business.
+
+**What is an anomaly?**
+
+Before talking about anomaly detection, we need to understand what an **anomaly** is.
+
+Generally speaking, an anomaly is something that differs from a norm: a deviation, an exception. In software engineering, by anomaly we understand a rare occurrence or event that doesn't fit into the pattern, and, therefore, seems suspicious. Some examples are:
+
+-   sudden burst or decrease in activity;
+
+-   error in the text;
+
+-   sudden rapid drop or increase in temperature.
+
+Common reasons for outliers are:
+
+-   data preprocessing errors;
+
+-   noise;
+
+-   fraud;
+
+-   attacks.
+
+Normally, you want to catch them all; a software program must run smoothly and be predictable so every outlier is a potential threat to its robustness and security. Catching and identifying anomalies is what we call **anomaly or outlier detection**.
+
+For example, if large sums of money are spent one after another within one day and it is not your typical behavior, a bank can block your card. They will see an unusual pattern in your daily transactions. This anomaly can typically be connected to fraud since identity thieves try to steal as much money as they can while they can. Once an anomaly is detected, it needs to be investigated, or problems may follow.
+
+## How does anomaly detection work?
+
+There are several ways of training [machine learning algorithms](https://www.techtarget.com/whatis/definition/machine-learning-algorithm) to detect anomalies. [Supervised machine learning techniques](https://www.techtarget.com/searchenterpriseai/definition/supervised-learning) are used when you have a labeled data set indicating normal vs. abnormal conditions. For example, a bank or credit card company can develop a process for labeling fraudulent credit card transactions after those transactions have been reported. Medical researchers might similarly label images or data sets indicative of future disease diagnosis. In such instances, supervised machine learning models can be trained to detect these known anomalies.
+
+Researchers might start with some previously discovered outliers but suspect that other anomalies also exist. In the scenario of fraudulent credit card transactions, consumers might fail to report suspicious transactions with innocuous-sounding names and of a small value. A data scientist might use reports that include these types of fraudulent transactions to automatically label other like transactions as fraud, using semi-supervised machine learning techniques.
+
+### Supervised vs. unsupervised anomaly detection techniques
+
+The supervised and semi-supervised techniques can only detect known anomalies. However, the vast majority of data is unlabeled. In these cases, data scientists might use unsupervised anomaly detection techniques, which can automatically identify exceptional or rare events.
+
+For example, a cloud cost estimator might look for unusual upticks in data egress charges or processing costs that could be caused by a poorly written algorithm. Similarly, an intrusion detection algorithm might look for novel network traffic patterns or a rise in authentication requests. In both cases, [unsupervised machine learning techniques](https://www.techtarget.com/searchenterpriseai/definition/unsupervised-learning) might be used to identify data points indicating things that are well outside the range of normal behavior. In contrast, supervised techniques would have to be explicitly trained using examples of previously known deviant behavior.
+
+## **Different types of anomalies**
+
+Broadly speaking, there are three different types of anomalies.
+
+-   **Global outliers,** or point anomalies, occur far outside the range of the rest of a data set.
+
+-   **Contextual outliers** deviate from other points in the same context, e.g., holiday or weekend sales.
+
+-   **Collective outliers** occur when a range of different types of data vary when considered together, for example, ice cream sales and temperature spikes.
+
+## **Anomaly detection techniques**
+
+Many different kinds of machine learning algorithms can be trained to detect anomalies. Some of the most popular anomaly detection methods include the following:
+
+-   Density-based algorithms determine when an outlier differs from a larger, hence denser normal data set, using algorithms like K-nearest neighbor and Isolation Forest.
+
+-   Cluster-based algorithms evaluate how any point differs from [clusters of related data](https://www.techtarget.com/searchenterpriseai/definition/clustering-in-machine-learning) using techniques like K-means cluster analysis.
+
+-   [Bayesian-network](https://www.techtarget.com/searchenterpriseai/feature/Bayesian-networks-applications-are-fueling-enterprise-support) algorithms develop models for estimating the probability that events will occur based on related data and then identifying significant deviations from these predictions.
+
+-   [Neural network](https://www.techtarget.com/searchenterpriseai/definition/neural-network) algorithms train a neural network to predict an expected time series and then flag deviations.
+
+```{python}
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Import models
+from pyod.models.abod import ABOD
+from pyod.models.cblof import CBLOF
+from pyod.models.feature_bagging import FeatureBagging
+from pyod.models.hbos import HBOS
+from pyod.models.iforest import IForest
+from pyod.models.knn import KNN
+from pyod.models.lof import LOF
+# reading the big mart sales training data
+df = pd.read_csv("Train.csv")
+df.plot.scatter('Item_MRP','Item_Outlet_Sales')
+```
+
+```{python}
+from sklearn.preprocessing import MinMaxScaler
+
+scaler = MinMaxScaler(feature_range=(0, 1))
+df[['Item_MRP','Item_Outlet_Sales']] = scaler.fit_transform(df[['Item_MRP','Item_Outlet_Sales']])
+df[['Item_MRP','Item_Outlet_Sales']].head()
+```
+
+Option 2
+
+```{python}
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.preprocessing import StandardScaler
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import classification_report
+from sklearn.ensemble import IsolationForest
+from sklearn.neighbors import LocalOutlierFactor
+from sklearn.svm import OneClassSVM
+from pyod.models.abod import ABOD
+from pyod.models.cblof import CBLOF
+from pyod.models.feature_bagging import FeatureBagging
+from pyod.models.hbos import HBOS
+from pyod.models.knn import KNN
+
+import warnings
+warnings.filterwarnings("ignore")
+
+
+# Load the dataset
+df = pd.read_csv('train.csv')
+
+# Select relevant features for outlier detection
+features = ['Item_MRP', 'Item_Outlet_Sales']
+X = df[features].values
+
+# Standardize the features
+scaler = StandardScaler()
+X = scaler.fit_transform(X)
+
+# Set up the outlier detection algorithms
+random_state = np.random.RandomState(42)
+outliers_fraction = 0.05
+
+classifiers = {
+    'Angle-based Outlier Detector (ABOD)': ABOD(contamination=outliers_fraction),
+    'Cluster-based Local Outlier Factor (CBLOF)': CBLOF(contamination=outliers_fraction, check_estimator=False, random_state=random_state),
+    'Feature Bagging': FeatureBagging(KNN(n_neighbors=35), contamination=outliers_fraction, check_estimator=False, random_state=random_state),
+    'Histogram-based Outlier Detection (HBOS)': HBOS(contamination=outliers_fraction),
+    'Isolation Forest': IsolationForest(contamination=outliers_fraction, random_state=random_state),
+    'K Nearest Neighbors (KNN)': KNN(contamination=outliers_fraction),
+    'Average KNN': KNN(method='mean', contamination=outliers_fraction)
+}
+
+# Split the data into training and testing sets
+X_train, X_test = train_test_split(X, test_size=0.2, random_state=42)
+
+# Set up subplots for visualization
+fig, axs = plt.subplots(nrows=3, ncols=3, figsize=(15, 15))
+axs = axs.flatten()
+
+# Fit the models and predict outliers
+for i, (clf_name, clf) in enumerate(classifiers.items()):
+    clf.fit(X_train)
+    
+    if clf_name == 'Isolation Forest':
+        # Use decision function to get anomaly scores
+        y_train_scores = clf.decision_function(X_train)
+        y_test_scores = clf.decision_function(X_test)
+        
+        # Set a threshold to classify samples as outliers (you may need to adjust this threshold)
+        threshold = np.percentile(y_train_scores, 100 * outliers_fraction)
+        
+        # Convert continuous scores to binary labels
+        y_train_pred = (y_train_scores > threshold).astype(int)
+        y_test_pred = (y_test_scores > threshold).astype(int)
+    else:
+        y_train_pred = clf.labels_  # binary labels (0: inliers, 1: outliers)
+        y_test_pred = clf.predict(X_test)
+
+    # Visualize the results
+    inliers_train = X_train[y_train_pred == 0]
+    outliers_train = X_train[y_train_pred == 1]
+    inliers_test = X_test[y_test_pred == 0]
+    outliers_test = X_test[y_test_pred == 1]
+
+    axs[i].scatter(inliers_train[:, 0], inliers_train[:, 1], color='blue', label='Inliers (Train)')
+    axs[i].scatter(outliers_train[:, 0], outliers_train[:, 1], color='red', label='Outliers (Train)')
+    axs[i].scatter(inliers_test[:, 0], inliers_test[:, 1], color='green', label='Inliers (Test)')
+    axs[i].scatter(outliers_test[:, 0], outliers_test[:, 1], color='orange', label='Outliers (Test)')
+    axs[i].set_title(clf_name)
+    axs[i].legend()
+
+plt.tight_layout()
+plt.show()
+
+```
+
+```{python}
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.preprocessing import StandardScaler
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import classification_report
+from sklearn.ensemble import IsolationForest
+from sklearn.neighbors import LocalOutlierFactor
+from sklearn.svm import OneClassSVM
+from pyod.models.abod import ABOD
+from pyod.models.cblof import CBLOF
+from pyod.models.feature_bagging import FeatureBagging
+from pyod.models.hbos import HBOS
+from pyod.models.knn import KNN
+
+# Load the dataset
+df = pd.read_csv('train.csv')
+
+# Select relevant features for outlier detection
+features = ['Item_MRP', 'Item_Outlet_Sales']
+X = df[features].values
+
+# Standardize the features
+scaler = StandardScaler()
+X = scaler.fit_transform(X)
+
+# Set up the outlier detection algorithms
+random_state = np.random.RandomState(42)
+outliers_fraction = 0.05
+
+classifiers = [
+    ('Angle-based Outlier Detector (ABOD)', ABOD(contamination=outliers_fraction)),
+    ('Cluster-based Local Outlier Factor (CBLOF)', CBLOF(contamination=outliers_fraction, check_estimator=False, random_state=random_state)),
+    ('Feature Bagging', FeatureBagging(base_estimator=KNN(n_neighbors=35), contamination=outliers_fraction, check_estimator=False, random_state=random_state)),
+    ('Histogram-based Outlier Detection (HBOS)', HBOS(contamination=outliers_fraction)),
+    ('Isolation Forest', IsolationForest(contamination=outliers_fraction, random_state=random_state)),
+    ('K Nearest Neighbors (KNN)', KNN(contamination=outliers_fraction)),
+    ('Average KNN', KNN(method='mean', contamination=outliers_fraction))
+]
+
+# Split the data into training and testing sets
+X_train, X_test = train_test_split(X, test_size=0.2, random_state=42)
+
+# Fit the models and predict outliers
+index = 0
+while index < len(classifiers):
+    clf_name, clf = classifiers[index]
+    clf.fit(X_train)
+    
+    if clf_name == 'Isolation Forest':
+        # Use decision function to get anomaly scores
+        y_train_scores = clf.decision_function(X_train)
+        y_test_scores = clf.decision_function(X_test)
+        
+        # Set a threshold to classify samples as outliers (you may need to adjust this threshold)
+        threshold = np.percentile(y_train_scores, 100 * outliers_fraction)
+        
+        # Convert continuous scores to binary labels
+        y_train_pred = (y_train_scores > threshold).astype(int)
+        y_test_pred = (y_test_scores > threshold).astype(int)
+    else:
+        y_train_pred = clf.labels_  # binary labels (0: inliers, 1: outliers)
+        y_test_pred = clf.predict(X_test)
+
+    # Visualize the results
+    plt.figure(figsize=(12, 6))
+    
+    plt.subplot(1, 2, 1)
+    plt.scatter(X_test[:, 0], X_test[:, 1], c=y_test_pred, cmap='coolwarm', edgecolors='k', marker='o')
+    plt.title(f'{clf_name} - Test Set Predictions')
+    
+    plt.subplot(1, 2, 2)
+    plt.scatter(X_train[:, 0], X_train[:, 1], c=y_train_pred, cmap='coolwarm', edgecolors='k', marker='o')
+    plt.title(f'{clf_name} - Training Set Predictions')
+
+    # Evaluate the model performance
+    print(f"------ {clf_name} ------")
+    print(f"Train Accuracy: {np.sum(y_train_pred == 0) / len(y_train_pred):.2%}")
+    print(f"Test Accuracy: {np.sum(y_test_pred == 0) / len(y_test_pred):.2%}")
+    print("\nClassification Report:")
+    print(classification_report(y_test_pred, np.zeros_like(y_test_pred), zero_division=1))  # Set zero_division to 1
+    plt.show()
+    
+    # Increment the index for the next iteration
+    index += 1
+
+```
