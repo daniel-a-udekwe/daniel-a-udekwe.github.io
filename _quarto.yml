@@ -14,10 +14,21 @@ website:
       - icon: linkedin
         href: https://linkedin.com/in/daniel-a-udekwe-19a2bbb2
         
-format:
+#format:
+  #html:
+    #theme: cosmo
+    #css: styles.css
+
+format: 
   html:
-    theme: cosmo
-    css: styles.css
+    page-layout: full
+    sidebar: false
+    theme: minty
+    #theme: slate
+    #theme: green_theme.scss
+    
+    mainfont: Nunito
+    toc: true
 
 editor: visual
 

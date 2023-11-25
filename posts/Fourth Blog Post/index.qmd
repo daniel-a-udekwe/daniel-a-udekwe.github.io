@@ -6,11 +6,13 @@ categories: [news]
 image: "avknn.png"
 ---
 
-Anomaly detection is one of the most common use cases of machine learning. Finding and identifying outliers helps to prevent fraud, adversary attacks, and network intrusions that can compromise your company's future.
+Anomaly detection is the process of identifying data points, entities or events that fall outside the normal range. An anomaly is anything that deviates from what is standard or expected. Humans and animals do this habitually when they spot a ripe fruit in a tree or a rustle in the grass that stands out from the background and could represent an opportunity or threat. Thus, the concept is sometimes framed as *outlier detection* or *novelty detection*.
 
-In this post, we will talk about how anomaly detection works, what machine learning techniques you can use for it, and what benefits anomaly detection with ML brings to a business.
+Anomaly detection has a long history in statistics, driven by analysts and scientists who pored over charts to find elements that stood out. Over the last several decades, researchers have started automating this process using [machine learning](https://www.techtarget.com/searchenterpriseai/definition/machine-learning-ML) training techniques designed to find more efficient ways to detect different types of outliers.
 
-## **What is an anomaly?**
+In practice, anomaly detection is often used to detect suspicious events, unexpected opportunities or bad data buried in [time series](https://www.techtarget.com/whatis/definition/time-series-forecasting) data. A suspicious event might indicate a network breach, fraud, crime, disease or faulty equipment. An unexpected opportunity could involve finding a store, product or salesperson that's performing much better than others and should be investigated for insight into improving the business.
+
+**What is an anomaly?**
 
 Before talking about anomaly detection, we need to understand what an **anomaly** is.
 
@@ -36,47 +38,39 @@ Normally, you want to catch them all; a software program must run smoothly and b
 
 For example, if large sums of money are spent one after another within one day and it is not your typical behavior, a bank can block your card. They will see an unusual pattern in your daily transactions. This anomaly can typically be connected to fraud since identity thieves try to steal as much money as they can while they can. Once an anomaly is detected, it needs to be investigated, or problems may follow.
 
-## **Why do you need machine learning for anomaly detection?**
+## How does anomaly detection work?
 
-This is a process that is usually conducted with the help of statistics and machine learning tools.
+There are several ways of training [machine learning algorithms](https://www.techtarget.com/whatis/definition/machine-learning-algorithm) to detect anomalies. [Supervised machine learning techniques](https://www.techtarget.com/searchenterpriseai/definition/supervised-learning) are used when you have a labeled data set indicating normal vs. abnormal conditions. For example, a bank or credit card company can develop a process for labeling fraudulent credit card transactions after those transactions have been reported. Medical researchers might similarly label images or data sets indicative of future disease diagnosis. In such instances, supervised machine learning models can be trained to detect these known anomalies.
 
-The reason is that the majority of companies today that require outlier detection work with huge amounts of data: transactions, text, image, and video content, etc. You would have to spend days going through all the transitions that happen inside a bank every hour, and more and more are generated every second. It is simply impossible to drive any meaningful insights from this amount of data manually.
+Researchers might start with some previously discovered outliers but suspect that other anomalies also exist. In the scenario of fraudulent credit card transactions, consumers might fail to report suspicious transactions with innocuous-sounding names and of a small value. A data scientist might use reports that include these types of fraudulent transactions to automatically label other like transactions as fraud, using semi-supervised machine learning techniques.
 
-Moreover, another difficulty is that the data is often unstructured, which means that the information wasn't arranged in any specific way for the data analysis. For example, business documents, emails, or images are examples of unstructured data.
+### Supervised vs. unsupervised anomaly detection techniques
 
-To be able to collect, clean, structure, analyze, and store data, you need to use tools that aren't scared of big volumes of data. Machine learning techniques, in fact, show the best results when large data sets are involved. Machine learning algorithms are able to process most types of data. Moreover, you can choose the algorithm based on your problem and even combine different techniques for the best results.
+The supervised and semi-supervised techniques can only detect known anomalies. However, the vast majority of data is unlabeled. In these cases, data scientists might use unsupervised anomaly detection techniques, which can automatically identify exceptional or rare events.
 
-Machine learning used for real-world applications helps to streamline the process of anomaly detection and save the resources. It can happen not only post-factum but also in real time. Real-time anomaly detection is applied to improve security and robustness, for instance, in fraud discovery and cybersecurity.
+For example, a cloud cost estimator might look for unusual upticks in data egress charges or processing costs that could be caused by a poorly written algorithm. Similarly, an intrusion detection algorithm might look for novel network traffic patterns or a rise in authentication requests. In both cases, [unsupervised machine learning techniques](https://www.techtarget.com/searchenterpriseai/definition/unsupervised-learning) might be used to identify data points indicating things that are well outside the range of normal behavior. In contrast, supervised techniques would have to be explicitly trained using examples of previously known deviant behavior.
 
-**What are anomaly detection methods?**
+## **Different types of anomalies**
 
-![](anomaly.png){fig-align="center"}
+Broadly speaking, there are three different types of anomalies.
 
-There are different kinds of anomaly detection methods with machine learning.
+-   **Global outliers,** or point anomalies, occur far outside the range of the rest of a data set.
 
-### **Supervised**
+-   **Contextual outliers** deviate from other points in the same context, e.g., holiday or weekend sales.
 
-In supervised anomaly detection, an ML engineer needs a training dataset. Items in the dataset are labeled into two categories: normal and abnormal. The model will use these examples to extract patterns and be able to detect abnormal patterns in the previously unseen data.
+-   **Collective outliers** occur when a range of different types of data vary when considered together, for example, ice cream sales and temperature spikes.
 
-In supervised learning, the quality of the training dataset is very important. There is a lot of manual work involved since somebody needs to collect and label examples.
+## **Anomaly detection techniques**
 
-**Note:** While you can label some anomalies and try to classify them (hence it's a classification task), the underlying goal of anomaly detection is defining "normal data points" rather than "abnormal data points". So in real world applications with very few anomaly samples labelled, it's almost never regarded as a supervised task.
+Many different kinds of machine learning algorithms can be trained to detect anomalies. Some of the most popular anomaly detection methods include the following:
 
-### **Unsupervised**
+-   Density-based algorithms determine when an outlier differs from a larger, hence denser normal data set, using algorithms like K-nearest neighbor and Isolation Forest.
 
-This type of anomaly detection is the most common type, and the most well-known representative of unsupervised algorithms are neural networks.
+-   Cluster-based algorithms evaluate how any point differs from [clusters of related data](https://www.techtarget.com/searchenterpriseai/definition/clustering-in-machine-learning) using techniques like K-means cluster analysis.
 
-Artificial neural networks allow to decrease the amount of manual work needed to pre-process examples: no manual labeling is needed. Neural networks can even be applied to unstructured data. NNs can detect anomalies in unlabeled data and use what they have learned when working with new data.
+-   [Bayesian-network](https://www.techtarget.com/searchenterpriseai/feature/Bayesian-networks-applications-are-fueling-enterprise-support) algorithms develop models for estimating the probability that events will occur based on related data and then identifying significant deviations from these predictions.
 
-The advantage of this method is that it allows you to decrease the manual work in anomaly detection. Moreover, quite often it's impossible to predict all the anomalies that can occur in the dataset. Think of self-driving cars, for example. They can face a situation on the road that has never happened before. Putting all road situations into a finite number of classes would be impossible. That is why neural networks are priceless when working with real-life data in real-time.
-
-However, ANNs almost rocket science level of complexity. So before you try out those, you might want to experiment with more conventional algorithms like DBSCAN, especially if your project is not that big.
-
-Moreover, the architecture of neural networks is a black box. We often don't know what kinds of events neural networks will label as anomalies, moreover, it can easily learn wrong rules that are not so easy to fix. That is why unsupervised anomaly detection techniques are often less trustworthy than supervised ones.
-
-### **Semi-supervised**
-
-Semi-supervised anomaly detection methods combine the benefits of the previous two methods. Engineers can apply unsupervised learning methods to automate feature learning and work with unstructured data. However, by combining it with human supervision, they have an opportunity to monitor and control what kind of patterns the model learns. This usually helps to make the model's predictions more accurate.
+-   [Neural network](https://www.techtarget.com/searchenterpriseai/definition/neural-network) algorithms train a neural network to predict an expected time series and then flag deviations.
 
 ```{python}
 import pandas as pd
@@ -104,91 +98,6 @@ df[['Item_MRP','Item_Outlet_Sales']] = scaler.fit_transform(df[['Item_MRP','Item
 df[['Item_MRP','Item_Outlet_Sales']].head()
 ```
 
-```{python}
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-from sklearn.preprocessing import StandardScaler
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import classification_report
-from sklearn.ensemble import IsolationForest
-from sklearn.neighbors import LocalOutlierFactor
-from sklearn.svm import OneClassSVM
-from pyod.models.abod import ABOD
-from pyod.models.cblof import CBLOF
-from pyod.models.feature_bagging import FeatureBagging
-from pyod.models.hbos import HBOS
-from pyod.models.knn import KNN
-
-# Load the dataset
-df = pd.read_csv('train.csv')
-
-# Select relevant features for outlier detection
-features = ['Item_MRP', 'Item_Outlet_Sales']
-X = df[features].values
-
-# Standardize the features
-scaler = StandardScaler()
-X = scaler.fit_transform(X)
-
-# Set up the outlier detection algorithms
-random_state = np.random.RandomState(42)
-outliers_fraction = 0.05
-
-classifiers = {
-    'Angle-based Outlier Detector (ABOD)': ABOD(contamination=outliers_fraction),
-    'Cluster-based Local Outlier Factor (CBLOF)': CBLOF(contamination=outliers_fraction, check_estimator=False, random_state=random_state),
-    'Feature Bagging': FeatureBagging(base_estimator=KNN(n_neighbors=35), contamination=outliers_fraction, check_estimator=False, random_state=random_state),
-    'Histogram-based Outlier Detection (HBOS)': HBOS(contamination=outliers_fraction),
-    'Isolation Forest': IsolationForest(contamination=outliers_fraction, random_state=random_state),
-    'K Nearest Neighbors (KNN)': KNN(contamination=outliers_fraction),
-    'Average KNN': KNN(method='mean', contamination=outliers_fraction)
-}
-
-# Split the data into training and testing sets
-X_train, X_test = train_test_split(X, test_size=0.2, random_state=42)
-
-# Fit the models and predict outliers
-for clf_name, clf in classifiers.items():
-    clf.fit(X_train)
-    
-    if clf_name == 'Isolation Forest':
-        # Use decision function to get anomaly scores
-        y_train_scores = clf.decision_function(X_train)
-        y_test_scores = clf.decision_function(X_test)
-        
-        # Set a threshold to classify samples as outliers (you may need to adjust this threshold)
-        threshold = np.percentile(y_train_scores, 100 * outliers_fraction)
-        
-        # Convert continuous scores to binary labels
-        y_train_pred = (y_train_scores > threshold).astype(int)
-        y_test_pred = (y_test_scores > threshold).astype(int)
-    else:
-        y_train_pred = clf.labels_  # binary labels (0: inliers, 1: outliers)
-        y_test_pred = clf.predict(X_test)
-
-    # Visualize the results
-    plt.figure(figsize=(12, 6))
-    
-    plt.subplot(1, 2, 1)
-    plt.scatter(X_test[:, 0], X_test[:, 1], c=y_test_pred, cmap='coolwarm', edgecolors='k', marker='o')
-    plt.title(f'{clf_name} - Test Set Predictions')
-    
-    plt.subplot(1, 2, 2)
-    plt.scatter(X_train[:, 0], X_train[:, 1], c=y_train_pred, cmap='coolwarm', edgecolors='k', marker='o')
-    plt.title(f'{clf_name} - Training Set Predictions')
-    
-    plt.show()
-
-    # Evaluate the model performance
-    print(f"------ {clf_name} ------")
-    print(f"Train Accuracy: {np.sum(y_train_pred == 0) / len(y_train_pred):.2%}")
-    print(f"Test Accuracy: {np.sum(y_test_pred == 0) / len(y_test_pred):.2%}")
-    print("\nClassification Report:")
-    print(classification_report(y_test_pred, np.zeros_like(y_test_pred), zero_division=1))  # Set zero_division to 1
-    print("\n")
-```
-
 Option 2
 
 ```{python}
@@ -206,6 +115,10 @@ from pyod.models.cblof import CBLOF
 from pyod.models.feature_bagging import FeatureBagging
 from pyod.models.hbos import HBOS
 from pyod.models.knn import KNN
+
+import warnings
+warnings.filterwarnings("ignore")
+
 
 # Load the dataset
 df = pd.read_csv('train.csv')
@@ -292,7 +205,6 @@ from pyod.models.feature_bagging import FeatureBagging
 from pyod.models.hbos import HBOS
 from pyod.models.knn import KNN
 
-
 # Load the dataset
 df = pd.read_csv('train.csv')
 
@@ -308,21 +220,23 @@ X = scaler.fit_transform(X)
 random_state = np.random.RandomState(42)
 outliers_fraction = 0.05
 
-classifiers = {
-    'Angle-based Outlier Detector (ABOD)': ABOD(contamination=outliers_fraction),
-    'Cluster-based Local Outlier Factor (CBLOF)': CBLOF(contamination=outliers_fraction, check_estimator=False, random_state=random_state),
-    'Feature Bagging': FeatureBagging(base_estimator=KNN(n_neighbors=35), contamination=outliers_fraction, check_estimator=False, random_state=random_state),
-    'Histogram-based Outlier Detection (HBOS)': HBOS(contamination=outliers_fraction),
-    'Isolation Forest': IsolationForest(contamination=outliers_fraction, random_state=random_state),
-    'K Nearest Neighbors (KNN)': KNN(contamination=outliers_fraction),
-    'Average KNN': KNN(method='mean', contamination=outliers_fraction)
-}
+classifiers = [
+    ('Angle-based Outlier Detector (ABOD)', ABOD(contamination=outliers_fraction)),
+    ('Cluster-based Local Outlier Factor (CBLOF)', CBLOF(contamination=outliers_fraction, check_estimator=False, random_state=random_state)),
+    ('Feature Bagging', FeatureBagging(base_estimator=KNN(n_neighbors=35), contamination=outliers_fraction, check_estimator=False, random_state=random_state)),
+    ('Histogram-based Outlier Detection (HBOS)', HBOS(contamination=outliers_fraction)),
+    ('Isolation Forest', IsolationForest(contamination=outliers_fraction, random_state=random_state)),
+    ('K Nearest Neighbors (KNN)', KNN(contamination=outliers_fraction)),
+    ('Average KNN', KNN(method='mean', contamination=outliers_fraction))
+]
 
 # Split the data into training and testing sets
 X_train, X_test = train_test_split(X, test_size=0.2, random_state=42)
 
 # Fit the models and predict outliers
-for clf_name, clf in classifiers.items():
+index = 0
+while index < len(classifiers):
+    clf_name, clf = classifiers[index]
     clf.fit(X_train)
     
     if clf_name == 'Isolation Forest':
@@ -350,8 +264,6 @@ for clf_name, clf in classifiers.items():
     plt.subplot(1, 2, 2)
     plt.scatter(X_train[:, 0], X_train[:, 1], c=y_train_pred, cmap='coolwarm', edgecolors='k', marker='o')
     plt.title(f'{clf_name} - Training Set Predictions')
-    
-    plt.show()
 
     # Evaluate the model performance
     print(f"------ {clf_name} ------")
@@ -359,5 +271,9 @@ for clf_name, clf in classifiers.items():
     print(f"Test Accuracy: {np.sum(y_test_pred == 0) / len(y_test_pred):.2%}")
     print("\nClassification Report:")
     print(classification_report(y_test_pred, np.zeros_like(y_test_pred), zero_division=1))  # Set zero_division to 1
-    print("\n")
+    plt.show()
+    
+    # Increment the index for the next iteration
+    index += 1
+
 ```
