@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>CS5805 -</title>
+<title>CS5805 - Machine Learning I Blog Posts</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,9 +30,12 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-listing/list.min.js"></script>
+<script src="site_libs/quarto-listing/quarto-listing.js"></script>
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
@@ -58,7 +61,38 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script>
 
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    const listingTargetEl = window.document.querySelector('#listing-listing .list');
+    if (!listingTargetEl) {
+      // No listing discovered, do not attach.
+      return; 
+    }
+
+    const options = {
+      valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      
+      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
+    };
+
+    window['quarto-listings'] = window['quarto-listings'] || {};
+    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
+
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  });
+
+  window.addEventListener('hashchange',() => {
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  })
+  </script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 </head>
 
@@ -80,7 +114,7 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./posts.html" rel="" target="">
+    <a class="nav-link active" href="./posts.html" rel="" target="" aria-current="page">
  <span class="menu-text">Machine Learning I Blog Posts</span></a>
   </li>  
   <li class="nav-item">
@@ -110,60 +144,226 @@ ul.task-list li input[type="checkbox"] {
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-page-left">
+      <h1 class="title">Machine Learning I Blog Posts</h1>
+                      </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        
+    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(5)</span></div><div class="category" data-category="analysis">analysis <span class="quarto-category-count">(1)</span></div><div class="category" data-category="code">code <span class="quarto-category-count">(1)</span></div><div class="category" data-category="news">news <span class="quarto-category-count">(5)</span></div></div></div>
 <!-- main -->
-<div class="quarto-about-jolla column-page">
-  <img src="images/danny.jpg" class="about-image
-  round " style="height: 14em; width: 14em;">
- <main class="content column-page" id="quarto-document-content">
-<!-- ::: {.small-text} -->
-<p>Hi there! I’m Sam (and my last name is pronounced “chick”). Professionally, I love teaching data science skills, learning and implementing inclusive pedagogical approaches, and the communities that supports both of those things. Outside of work, I’m an avid hiker, novice (but passionate) meal-maker, and I really love the color green. Poke around my website to learn more! <!-- ::: --></p>
-<!-- ### hi there!     -->
-<!-- I'm Sam (and my last name is pronounced "chick"). I'm the Data Training Coordinator at the [National Center for Ecological Analysis & Synthesis](https://www.nceas.ucsb.edu/) (NCEAS) located at UC Santa Barbara, where I'm working to develop and teach data science training curricula for the [Master of Environmental Data Science](https://bren.ucsb.edu/masters-programs/master-environmental-data-science) (MEDS) program and other data science initiatives across NCEAS and UCSB. I am also a co-organizer of [R-Ladies Santa Barbara](https://www.meetup.com/rladies-santa-barbara/), a local data science group which works to promote gender diversity in the R community. In my spare time, you'll typically find me hiking with my pup or cooking family dinners with friends. -->
-<!-- ----------------------------------------------------------------------------------------------------------------------------------- -->
-<!-- ### education -->
-<!-- <div class="topbr"> -->
-<!-- <p class="custom-subtitle">{{< fa graduation-cap title="A graduation cap" >}} **MS in Ecology, Evolution & Marine Biology, 2020**</p>   -->
-<!-- <p class="custom-subtitle2">University of California, Santa Barbara</p> -->
-<!-- <p class="custom-subtitle">{{< fa graduation-cap title="A graduation cap" >}} **BS in Marine Biology, 2016**</p>   -->
-<!-- <p class="custom-subtitle2">Northeastern University</p> -->
-<!-- </div> -->
-<!-- ----------------------------------------------------------------------------------------------------------------------------------- -->
-<!-- ### experience -->
-<!-- <div class="topbr"> -->
-<!-- <p class="custom-subtitle">{{< fa chalkboard-teacher title="A teacher at a chalkboard" >}} **Data Training Coordinator, 2021-present**</p>    -->
-<!-- <p class="custom-subtitle2">National Center for Ecological Analysis & Synthesis</p>   -->
-<!-- <p class="custom-subtitle">{{< fa chart-bar title="A bar chart" >}} **Data Science Fellow, 2020-2021**</p>     -->
-<!-- <p class="custom-subtitle2">National Center for Ecological Analysis & Synthesis</p> -->
-<!-- </div> -->
-<!-- FOR REFERENCE: `r fontawesome::fa("graduation-cap", fill = "#98A08D", a11y = "sem")` # stopped working 5/1/2023? -->
+<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
 
 
-</main> 
-  <hr class="about-sep">
-   <div class="about-links">
-  <a href="https://www.linkedin.com/in/daniel-a-udekwe-19a2bbb2" class="about-link" rel="" target="">
-    <i class="bi bi-linkedin"></i>
-     <span class="about-link-text">LinkedIn</span>
-  </a>
-  <a href="https://twitter.com/" class="about-link" rel="" target="">
-    <i class="bi bi-twitter"></i>
-     <span class="about-link-text">Twitter</span>
-  </a>
-  <a href="https://github.com/daniel-udekwe" class="about-link" rel="" target="">
-    <i class="bi bi-github"></i>
-     <span class="about-link-text">GitHub</span>
-  </a>
-  <a href="mailto:daudekwe@vt.edu" class="about-link" rel="" target="">
-    <i class="bi bi-envelope"></i>
-     <span class="about-link-text">Email</span>
-  </a>
+
+
+
+
+
+
+<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
+<div class="list quarto-listing-default">
+<div class="quarto-post image-right" data-index="0" data-categories="news,code,analysis" data-listing-date-sort="1697515200000" data-listing-file-modified-sort="1700243320283" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="10">
+<div class="thumbnail">
+<p><a href="./posts/First Blog Post/index.html"> <img src="./posts/First Blog Post/regression.jpeg" class="thumbnail-image"> </a></p>
+</div>
+<div class="body">
+<a href="./posts/First Blog Post/index.html">
+<h3 class="no-anchor listing-title">
+Regression (Linear and Nonlinear)
+</h3>
+<div class="listing-subtitle">
+
+</div>
+</a>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('news'); return false;">
+news
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('code'); return false;">
+code
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('analysis'); return false;">
+analysis
 </div>
 </div>
- <!-- /main -->
+<a href="./posts/First Blog Post/index.html">
+<div class="listing-description">
+Regression is one of the most common algorithms in machine learning. In this post we will explore this algorithm and we will implement it using Python from scratch.
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./posts/First Blog Post/index.html">
+<div class="listing-date">
+Oct 17, 2023
+</div>
+<div class="listing-author">
+Daniel A. Udekwe
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="1" data-categories="news" data-listing-date-sort="1697256000000" data-listing-file-modified-sort="1700934587576" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="10">
+<div class="thumbnail">
+<p><a href="./posts/Fourth Blog Post/index.html"> <img src="./posts/Fourth Blog Post/avknn.png" class="thumbnail-image"> </a></p>
+</div>
+<div class="body">
+<a href="./posts/Fourth Blog Post/index.html">
+<h3 class="no-anchor listing-title">
+Anomaly/Outlier Detection
+</h3>
+<div class="listing-subtitle">
+
+</div>
+</a>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('news'); return false;">
+news
+</div>
+</div>
+<a href="./posts/Fourth Blog Post/index.html">
+<div class="listing-description">
+Anomaly detection is the process of identifying data points, entities or events that fall outside the normal range. An anomaly is anything that deviates from what is…<em></em><em></em>
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./posts/Fourth Blog Post/index.html">
+<div class="listing-date">
+Oct 14, 2023
+</div>
+<div class="listing-author">
+Daniel A. Udekwe
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="2" data-categories="news" data-listing-date-sort="1697256000000" data-listing-file-modified-sort="1700919434763" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="10">
+<div class="thumbnail">
+<p><a href="./posts/Second Blog Post/index.html"> <img src="./posts/Second Blog Post/classification1.png" class="thumbnail-image"> </a></p>
+</div>
+<div class="body">
+<a href="./posts/Second Blog Post/index.html">
+<h3 class="no-anchor listing-title">
+Classification
+</h3>
+<div class="listing-subtitle">
+
+</div>
+</a>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('news'); return false;">
+news
+</div>
+</div>
+<a href="./posts/Second Blog Post/index.html">
+<div class="listing-description">
+Classification is a task of Machine Learning which assigns a label value to a specific class and then can…
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./posts/Second Blog Post/index.html">
+<div class="listing-date">
+Oct 14, 2023
+</div>
+<div class="listing-author">
+Daniel A. Udekwe
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="3" data-categories="news" data-listing-date-sort="1697256000000" data-listing-file-modified-sort="1700912070768" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="17">
+<div class="thumbnail">
+<p><a href="./posts/Fifth Blog Post/index.html"> <img src="./posts/Fifth Blog Post/randomv.jpeg" class="thumbnail-image"> </a></p>
+</div>
+<div class="body">
+<a href="./posts/Fifth Blog Post/index.html">
+<h3 class="no-anchor listing-title">
+Probability Theory and Random Variables
+</h3>
+<div class="listing-subtitle">
+
+</div>
+</a>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('news'); return false;">
+news
+</div>
+</div>
+<a href="./posts/Fifth Blog Post/index.html">
+<div class="listing-description">
+The subject of probability theory is the foundation upon which all of statistics is built, providing a means for modelling population, experiments or almost anything else…
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./posts/Fifth Blog Post/index.html">
+<div class="listing-date">
+Oct 14, 2023
+</div>
+<div class="listing-author">
+Daniel A. Udekwe
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="4" data-categories="news" data-listing-date-sort="1697256000000" data-listing-file-modified-sort="1700243309379" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="9">
+<div class="thumbnail">
+<p><a href="./posts/Third Blog Post/index.html"> <img src="./posts/Third Blog Post/clustering.jpeg" class="thumbnail-image"> </a></p>
+</div>
+<div class="body">
+<a href="./posts/Third Blog Post/index.html">
+<h3 class="no-anchor listing-title">
+Clustering
+</h3>
+<div class="listing-subtitle">
+
+</div>
+</a>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('news'); return false;">
+news
+</div>
+</div>
+<a href="./posts/Third Blog Post/index.html">
+<div class="listing-description">
+Clustering is a Machine Learning technique that involves the grouping of data points. Given a set of data points, we can use a clustering algorithm to classify each data…
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./posts/Third Blog Post/index.html">
+<div class="listing-date">
+Oct 14, 2023
+</div>
+<div class="listing-author">
+Daniel A. Udekwe
+</div>
+</a>
+</div>
+</div>
+</div>
+<div class="listing-no-matching d-none">
+No matching items
+</div>
+</div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -184,6 +384,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
   toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
   const isCodeAnnotation = (el) => {
     for (const clz of el.classList) {
       if (clz.startsWith('code-annotation-')) {                     
