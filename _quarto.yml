@@ -3,7 +3,7 @@ project:
   output-dir: docs
 
 website:
-  title: "CS5805"
+  title: "CS5805 - Machine Learning I"
   navbar:
     right:
       - posts.qmd
