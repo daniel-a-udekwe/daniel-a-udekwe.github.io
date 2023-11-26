@@ -120,7 +120,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
     <a class="nav-link" href="../../posts.html" rel="" target="">
- <span class="menu-text">Machine Learning I Blog Posts</span></a>
+ <span class="menu-text">Blog Posts</span></a>
   </li>  
   <li class="nav-item compact">
     <a class="nav-link" href="https://github.com/daniel-udekwe" rel="" target=""><i class="bi bi-github" role="img">
@@ -150,7 +150,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div class="quarto-title column-page-left">
       <h1 class="title">Regression (Linear and Nonlinear)</h1>
                                 <div class="quarto-categories">
-                <div class="quarto-category">news</div>
+                <div class="quarto-category">data</div>
                 <div class="quarto-category">code</div>
                 <div class="quarto-category">analysis</div>
               </div>
@@ -193,6 +193,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#implementation" id="toc-implementation" class="nav-link" data-scroll-target="#implementation">Implementation</a></li>
   <li><a href="#gradient-descent" id="toc-gradient-descent" class="nav-link" data-scroll-target="#gradient-descent">Gradient Descent</a></li>
   </ul></li>
+  <li><a href="#nonlinear-regression" id="toc-nonlinear-regression" class="nav-link" data-scroll-target="#nonlinear-regression">Nonlinear Regression</a>
+  <ul class="collapse">
+  <li><a href="#implementation-1" id="toc-implementation-1" class="nav-link" data-scroll-target="#implementation-1">Implementation</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -202,38 +206,53 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<p>Regression is one of the most common algorithms in machine learning. In this post we will explore this algorithm and we will implement it using Python from scratch.</p>
-<p>As the name suggests this algorithm is applicable for Regression problems. Linear Regression is a <strong>Linear Model</strong>. Which means, we will establish a linear relationship between the input variables(<strong>X</strong>) and single output variable(<strong>Y</strong>). When the input(<strong>X</strong>) is a single variable this model is called <strong>Simple Linear Regression</strong> and when there are mutiple input variables(<strong>X</strong>), it is called <strong>Multiple Linear Regression</strong>. Additionally, non-linear regression seeks to establish a non-linear relationship between the input variable (x) and the output (Y)</p>
+<p>Regression is a statistical technique in machine learning and statistics that aims to establish a relationship between a <strong>dependent variable (target)</strong> and one or more <strong>independent variables (features or predictors)</strong>. The primary goal of regression analysis is to model the relationship between these variables, enabling the prediction or estimation of the dependent variable based on the values of the independent variables.</p>
+<p>In simpler terms, regression helps us understand how the changes in one or more variables are associated with changes in another variable. It is widely used for prediction and forecasting, making it a fundamental tool in various fields, including finance, economics, biology, and social sciences.</p>
+<p>There are several types of regression models, with linear regression being one of the most common. In linear regression, the relationship between the variables is modeled as a linear equation, representing a straight line on a graph. However, regression is not limited to linear relationships; non-linear regression models can capture more complex patterns, accommodating scenarios where the relationship between variables is curved or follows a different pattern.</p>
+<p>The training process in regression involves fitting the model to historical data, allowing the algorithm to learn the underlying patterns. Once trained, the regression model can be used to make predictions on new, unseen data, providing valuable insights and aiding decision-making processes.</p>
+<p>In this post, we will consider the implementation of linear and nonlinear regression for predicting house prices based on size</p>
 <section id="simple-linear-regression" class="level2">
 <h2 class="anchored" data-anchor-id="simple-linear-regression">Simple Linear Regression</h2>
-<p>We discussed that Linear Regression is a simple model. Simple Linear Regression is the simplest model in machine learning.</p>
+<p>Simple Linear Regression is a fundamental and straightforward form of regression analysis where the relationship between two variables is modeled using a linear equation. In this case, there are two variables: one is considered the independent variable (often denoted as <span class="math inline">\(X\)</span>), and the other is the dependent variable (often denoted as <span class="math inline">\(Y\)</span>).</p>
 <section id="model-representation" class="level3">
 <h3 class="anchored" data-anchor-id="model-representation">Model Representation</h3>
-<p>In this problem we have an input variable - <strong>X</strong> and one output variable - <strong>Y</strong>. And we want to build linear relationship between these variables. Here the input variable is called <strong>Independent Variable</strong> and the output variable is called <strong>Dependent Variable</strong>. We can define this linear relationship as follows:<span class="math display">\[Y = \beta_0 + \beta_1 X\]</span></p>
-<p>The <span class="math inline">\(\beta_1\)</span> is called a scale factor or <strong>coefficient</strong> and <span class="math inline">\(\beta_0\)</span> is called <strong>bias coefficient</strong>. The bias coeffient gives an extra degree of freedom to this model. This equation is similar to the line equation <span class="math inline">\(y = mx +b\)</span> with <span class="math inline">\(m = \beta_1\)</span>(Slope) and <span class="math inline">\(b = \beta_0\)</span>(Intercept). So in this Simple Linear Regression model we want to draw a line between X and Y which estimates the relationship between X and Y.</p>
-<p>But how do we find these coefficients? That’s the learning procedure. We can find these using different approaches. One is called <strong>Ordinary Least Square Method</strong> and other one is called <strong>Gradient Descent Approach</strong>. We will use Ordinary Least Square Method in Simple Linear Regression and Gradient Descent Approach in Multiple Linear Regression in post.</p>
+<p>The equation for simple linear regression is represented as:</p>
+<p><span class="math display">\[Y = \beta_0 + \beta_1 X + \epsilon\]</span></p>
+<p>The <span class="math inline">\(\beta_1\)</span> is called a scale factor or <strong>coefficient</strong> and <span class="math inline">\(\beta_0\)</span> is called <strong>bias coefficient</strong>. The bias coefficient gives an extra degree of freedom to this model and <span class="math inline">\(\epsilon\)</span> is the error term accounting for unobserved factors that affect Y but are not accounted for by the model</p>
+<p>This equation is similar to the line equation <span class="math inline">\(y = mx +b\)</span> with <span class="math inline">\(m = \beta_1\)</span>(Slope) and <span class="math inline">\(b = \beta_0\)</span>(Intercept). So in this Simple Linear Regression model we want to draw a line between X and Y which estimates the relationship between X and Y.</p>
+<p>But how do we find these coefficients? That’s the learning procedure. We can find these using different approaches. One is called <strong>Ordinary Least Square Method</strong> and other one is called <strong>Gradient Descent Approach</strong>.</p>
 </section>
 <section id="ordinary-least-square-method" class="level3">
 <h3 class="anchored" data-anchor-id="ordinary-least-square-method">Ordinary Least Square Method</h3>
-<p>Earlier in this post we discussed that we are going to approximate the relationship between X and Y to a line. Let’s say we have few inputs and outputs. And we plot these scatter points in 2D space, we will get something like the following image.</p>
-<p><img src="regression_1.png" class="img-fluid"></p>
-<p>And you can see a line in the image. That’s what we are going to accomplish. And we want to minimize the error of out model. A good model will always have least error. We can find this line by reducing the error. The error of each point is the distance between line and that point. This is illustrated as follows.</p>
-<p><img src="regression_2.jpeg" class="img-fluid"></p>
+<p>The Ordinary Least Squares (OLS) method is a common approach used in linear regression to estimate the parameters of the linear equation by minimizing the sum of the squared differences between the observed and predicted values of the dependent variable. In simple terms, OLS aims to find the best-fitting line through the data points.</p>
+<p>Let’s say we have few inputs and outputs plotted in a 2D space with a scatter plot to yield the following image:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="regression_1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+<p>For a simple linear regression model with the equation given above, the OLS method seeks to find the values <span class="math inline">\(\beta_0\)</span>, <span class="math inline">\(\beta_1\)</span> of the linear model that minimize the sum of squared residuals.</p>
+<p>A good model will always have least error and we can find this line by reducing the error. The error of each point is the distance between line and that point. This is illustrated as follows.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="regression_2.jpeg" class="img-fluid figure-img"></p>
+</figure>
+</div>
 <p>And total error of this model is the sum of all errors of each point. ie.</p>
 <p><span class="math display">\[
 D = \sum_{i=1}^{m} d_i^2
 \]</span></p>
-<p><span class="math inline">\(d_i\)</span>Distance between line and i<sup>th</sup> point.</p>
-<p><span class="math inline">\(m\)</span>- Total number of points</p>
-<p>You might have noticed that we are squaring each of the distances. This is because, some points will be above the line and some points will be below the line. We can minimize the error in the model by minimizing <span class="math inline">\(D\)</span> And after the mathematics of minimizing <span class="math inline">\(D_i\)</span>, we will get;</p>
+<p><span class="math inline">\(d_i\)</span> - Distance between line and i<sup>th</sup> point.</p>
+<p><span class="math inline">\(m\)</span> - Total number of points</p>
+<p>You may have observed that we are taking the square of each distance. This is done because certain points lie above the line while others lie below it. By minimizing D, we aim to reduce the error in the model.</p>
 <p><span class="math display">\[
 \beta_1 = \frac{\sum_{i=1}^{m} (x_i - \bar{x})(y_i - \bar{y})}{\sum_{i=1}^{m} (x_i - \bar{x})^2}
 \]</span></p>
 <p><span class="math display">\[
 \beta_0 = \bar{y} - \beta_1\bar{x}
 \]</span></p>
-<p>In these equations �¯ is the mean value of input variable <strong>X</strong> and �¯ is the mean value of output variable <strong>Y</strong>.</p>
-<p>Now we have the model. This method is called <a href="https://www.wikiwand.com/en/Ordinary_least_squares"><strong>Ordinary Least Square Method</strong></a>. Now we will implement this model in Python.</p>
+<p>In these equations <span class="math inline">\(\bar{x}\)</span> is the mean value of input variable <span class="math inline">\(x\)</span> and <span class="math inline">\(\bar{y}\)</span> is the mean value of output variable <span class="math inline">\(y\)</span></p>
+<p>Now we have the <em>Ordinary Least Square Method</em> which is described with the following equations</p>
 <p><span class="math display">\[
 Y = \beta_0 + \beta_1X
 \]</span></p>
@@ -246,7 +265,7 @@ Y = \beta_0 + \beta_1X
 </section>
 <section id="implementation" class="level3">
 <h3 class="anchored" data-anchor-id="implementation">Implementation</h3>
-<p>We are going to use a dataset containing the price of houses as a function of size. This data is split into 3 for training, validation and finally testing. Let’s start off by importing and viewing the data.</p>
+<p>We are going to use a dataset containing the price of houses as a function of size to implement regression. This data is split into 3 for training, validation and finally testing. Let’s start off by importing and viewing the data.</p>
 <div class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Import the needed libraries</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -328,7 +347,8 @@ number of rows and colums: (21, 2)</code></pre>
 </div>
 </div>
 <p>As we can see, the data is split unequally between training, validation and testing. The training data has 12 entries while the validation and testing data have 21 entries.</p>
-<p>we need to implement feature scaling</p>
+<p>we need to implement feature scaling.</p>
+<p>Feature scaling is a preprocessing step in machine learning that involves adjusting the scale of the input features to a similar range. The goal is to ensure that all features contribute equally to the model training process, preventing certain features from dominating due to their larger scales.</p>
 <div class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 2: Preprocess the data (feature scaling)</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>mean <span class="op">=</span> np.mean(X_train)</span>
@@ -354,7 +374,8 @@ number of rows and colums: (21, 2)</code></pre>
 <p><img src="index_files/figure-html/cell-4-output-2.png" width="585" height="449"></p>
 </div>
 </div>
-<p>Lets create a function to implement linear regression with regularization.</p>
+<p>Lets create a function to implement linear regression with L2 regularization.</p>
+<p>Linear regression with regularization is an extension of traditional linear regression that incorporates regularization techniques to prevent overfitting and improve the model’s generalization performance. The two common types of regularization used in linear regression are Ridge Regression (L2 regularization) and Lasso Regression (L1 regularization).</p>
 <p><span class="math display">\[
 J(\theta) = \frac{1}{2m} (\sum_{i=1}^m(h_\theta(x^{(i)})-y^{(i)})^2) + \frac{\lambda}{2m}(\sum_{j=1}^n \theta_j^2)
 \]</span></p>
@@ -374,13 +395,13 @@ J(\theta) = \frac{1}{2m} (\sum_{i=1}^m(h_\theta(x^{(i)})-y^{(i)})^2) + \frac{\la
 <span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> theta, history, cost</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>In the equation above, <span class="math inline">\(\lambda\)</span> is the regularization parameter which ensures … This is implemented with the gradient descent algorithm.</p>
+<p>In the equation above, <span class="math inline">\(\lambda\)</span> is the regularization parameter which ensures a balance between the trade-off between fitting the training data well and keeping the model simple. This is implemented with the gradient descent algorithm.</p>
 </section>
 <section id="gradient-descent" class="level3">
 <h3 class="anchored" data-anchor-id="gradient-descent">Gradient Descent</h3>
 <p>Gradient Descent is an optimization algorithm. We will optimize our cost function using Gradient Descent Algorithm.</p>
-<section id="step-1" class="level5">
-<h5 class="anchored" data-anchor-id="step-1">Step 1</h5>
+<section id="step-1" class="level4">
+<h4 class="anchored" data-anchor-id="step-1">Step 1</h4>
 <p>Initialize values <span class="math inline">\(\theta_0, \theta_1, ..., \theta_n\)</span> with some value. In this case we will initialize with 0.</p>
 </section>
 <section id="step-2" class="level4">
@@ -389,16 +410,14 @@ J(\theta) = \frac{1}{2m} (\sum_{i=1}^m(h_\theta(x^{(i)})-y^{(i)})^2) + \frac{\la
 <p><span class="math display">\[
 \theta_j : \theta_j - \alpha \frac{\partial}{\partial \theta_j} J(\theta)
 \]</span></p>
-<p>until it converges.</p>
-<p>where:</p>
+<p>until it converges, where:</p>
 <p><span class="math display">\[
 \frac{\partial J(\theta)}{\partial \theta_0} = \frac{1}{m} \sum_{i=1}^m (h_\theta(x^{(i)}) - y^{(i)})x_j^{(i)},  \ j = 0
 \]</span></p>
 <p><span class="math display">\[
 \frac{\partial J(\theta)}{\partial \theta_j} = \frac{1}{m} \sum_{i=1}^m (h_\theta(x^{(i)}) - y^{(i)})x_j^{(i)}, + \frac{\lambda}{m}\theta_j \ j\ge 1
 \]</span></p>
-<p>This is the procedure. Here <span class="math inline">\(\alpha\)</span> is the learning rate. This operation <span class="math inline">\(\frac{\partial}{\partial \theta_j} J(\theta)\)</span> means we are finding partial derivate of cost with respect to each <span class="math inline">\(\theta_j\)</span>. This is called Gradient.</p>
-<p>Read <a href="https://math.stackexchange.com/questions/174270/what-exactly-is-the-difference-between-a-derivative-and-a-total-derivative">this</a> if you are unfamiliar with partial derivatives.</p>
+<p>This is the procedure. Here <span class="math inline">\(\alpha\)</span> is the learning rate. This operation <span class="math inline">\(\frac{\partial}{\partial \theta_j} J(\theta)\)</span> means we are finding partial derivative of cost with respect to each <span class="math inline">\(\theta_j\)</span>. This is called Gradient.</p>
 <p>In step 2 we are changing the values of <span class="math inline">\(\theta_j\)</span>. in a direction in which it reduces our cost function. And Gradient gives the direction in which we want to move. Finally we will reach the minima of our cost function. But we don’t want to change values of <span class="math inline">\(\theta_j\)</span>. drastically, because we might miss the minima. That’s why we need learning rate.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -407,7 +426,7 @@ J(\theta) = \frac{1}{2m} (\sum_{i=1}^m(h_\theta(x^{(i)})-y^{(i)})^2) + \frac{\la
 </figure>
 </div>
 <p>The above animation illustrates the Gradient Descent method.</p>
-<p>But we still didn’t find the value of <span class="math inline">\(\frac{\partial J(\theta)}{\partial \theta_j}\)</span> . After we applying the mathematics. The step 2 becomes.</p>
+<p>After making substitutions, Step 2 becomes:</p>
 <p><span class="math display">\[
 \theta_j := \theta_j - \alpha \frac{1}{m} \sum_{i=1}^m (h_\theta(x^{(i)}) - y^{(i)})x_j^{(i)}, + \frac{\lambda}{m}\theta_j
 \]</span></p>
@@ -507,7 +526,26 @@ RMSE = \sqrt{\sum_{i=1}^m \frac{1}{m}(\hat{y_1}-y_i)^2)}
 House Price = 22.108 + 20.736 \times House size
 \]</span></p>
 <hr>
-<p>Nonlinear Regression</p>
+</section>
+</section>
+</section>
+<section id="nonlinear-regression" class="level2">
+<h2 class="anchored" data-anchor-id="nonlinear-regression">Nonlinear Regression</h2>
+<p>Nonlinear regression is a type of regression analysis where the relationship between the independent variable(s) and the dependent variable is modeled as a nonlinear function. In contrast to linear regression, which assumes a linear relationship between variables, nonlinear regression allows for more complex and curved relationships to be captured.</p>
+<p>The general form of nonlinear regression is expressed as:</p>
+<p><span class="math display">\[
+Y = f(X, \theta) + \epsilon
+\]</span></p>
+<p>Where:</p>
+<ul>
+<li><p><span class="math inline">\(Y\)</span> is the dependent variable</p></li>
+<li><p><span class="math inline">\(X\)</span> is the independent variable(s)</p></li>
+<li><p><span class="math inline">\(\theta\)</span> represents the parameters of the nonlinear function <span class="math inline">\(f\)</span></p></li>
+<li><p><span class="math inline">\(\epsilon\)</span> is the error term</p></li>
+</ul>
+<p>The goal of nonlinear regression is to estimate the parameters <span class="math inline">\((\theta)\)</span> of the chosen nonlinear function in a way that minimizes the sum of squared differences between the predicted values and the actual observed values. This is typically done using optimization techniques, such as gradient descent or other numerical optimization algorithms.</p>
+<section id="implementation-1" class="level3">
+<h3 class="anchored" data-anchor-id="implementation-1">Implementation</h3>
 <div class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 4: Train the model using the training data</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>alpha <span class="op">=</span> <span class="dv">10</span>  <span class="co"># Regularization strength (adjust as needed)</span></span>
@@ -601,7 +639,6 @@ Mean Squared Error on Test Data: 19.60464293191099</code></pre>
 </div>
 
 
-</section>
 </section>
 </section>
 

@@ -2,35 +2,49 @@
 title: "Regression (Linear and Nonlinear)"
 author: "Daniel A. Udekwe"
 date: "2023-10-17"
-categories: [news, code, analysis]
+categories: [data, code, analysis]
 image: "regression.png"
 ---
 
-Regression is one of the most common algorithms in machine learning. In this post we will explore this algorithm and we will implement it using Python from scratch.
+Regression is a statistical technique in machine learning and statistics that aims to establish a relationship between a **dependent variable (target)** and one or more **independent variables (features or predictors)**. The primary goal of regression analysis is to model the relationship between these variables, enabling the prediction or estimation of the dependent variable based on the values of the independent variables.
 
-As the name suggests this algorithm is applicable for Regression problems. Linear Regression is a **Linear Model**. Which means, we will establish a linear relationship between the input variables(**X**) and single output variable(**Y**). When the input(**X**) is a single variable this model is called **Simple Linear Regression** and when there are mutiple input variables(**X**), it is called **Multiple Linear Regression**. Additionally, non-linear regression seeks to establish a non-linear relationship between the input variable (x) and the output (Y)
+In simpler terms, regression helps us understand how the changes in one or more variables are associated with changes in another variable. It is widely used for prediction and forecasting, making it a fundamental tool in various fields, including finance, economics, biology, and social sciences.
+
+There are several types of regression models, with linear regression being one of the most common. In linear regression, the relationship between the variables is modeled as a linear equation, representing a straight line on a graph. However, regression is not limited to linear relationships; non-linear regression models can capture more complex patterns, accommodating scenarios where the relationship between variables is curved or follows a different pattern.
+
+The training process in regression involves fitting the model to historical data, allowing the algorithm to learn the underlying patterns. Once trained, the regression model can be used to make predictions on new, unseen data, providing valuable insights and aiding decision-making processes.
+
+In this post, we will consider the implementation of linear and nonlinear regression for predicting house prices based on size
 
 ## Simple Linear Regression
 
-We discussed that Linear Regression is a simple model. Simple Linear Regression is the simplest model in machine learning.
+Simple Linear Regression is a fundamental and straightforward form of regression analysis where the relationship between two variables is modeled using a linear equation. In this case, there are two variables: one is considered the independent variable (often denoted as $X$), and the other is the dependent variable (often denoted as $Y$).
 
 ### Model Representation
 
-In this problem we have an input variable - **X** and one output variable - **Y**. And we want to build linear relationship between these variables. Here the input variable is called **Independent Variable** and the output variable is called **Dependent Variable**. We can define this linear relationship as follows:$$Y = \beta_0 + \beta_1 X$$
+The equation for simple linear regression is represented as:
 
-The $\beta_1$ is called a scale factor or **coefficient** and $\beta_0$ is called **bias coefficient**. The bias coeffient gives an extra degree of freedom to this model. This equation is similar to the line equation $y = mx +b$ with $m = \beta_1$(Slope) and $b = \beta_0$(Intercept). So in this Simple Linear Regression model we want to draw a line between X and Y which estimates the relationship between X and Y.
+$$Y = \beta_0 + \beta_1 X + \epsilon$$
 
-But how do we find these coefficients? That's the learning procedure. We can find these using different approaches. One is called **Ordinary Least Square Method** and other one is called **Gradient Descent Approach**. We will use Ordinary Least Square Method in Simple Linear Regression and Gradient Descent Approach in Multiple Linear Regression in post.
+The $\beta_1$ is called a scale factor or **coefficient** and $\beta_0$ is called **bias coefficient**. The bias coefficient gives an extra degree of freedom to this model and $\epsilon$ is the error term accounting for unobserved factors that affect Y but are not accounted for by the model
+
+This equation is similar to the line equation $y = mx +b$ with $m = \beta_1$(Slope) and $b = \beta_0$(Intercept). So in this Simple Linear Regression model we want to draw a line between X and Y which estimates the relationship between X and Y.
+
+But how do we find these coefficients? That's the learning procedure. We can find these using different approaches. One is called **Ordinary Least Square Method** and other one is called **Gradient Descent Approach**.
 
 ### Ordinary Least Square Method
 
-Earlier in this post we discussed that we are going to approximate the relationship between X and Y to a line. Let's say we have few inputs and outputs. And we plot these scatter points in 2D space, we will get something like the following image.
+The Ordinary Least Squares (OLS) method is a common approach used in linear regression to estimate the parameters of the linear equation by minimizing the sum of the squared differences between the observed and predicted values of the dependent variable. In simple terms, OLS aims to find the best-fitting line through the data points.
 
-![](regression_1.png)
+Let's say we have few inputs and outputs plotted in a 2D space with a scatter plot to yield the following image:
 
-And you can see a line in the image. That's what we are going to accomplish. And we want to minimize the error of out model. A good model will always have least error. We can find this line by reducing the error. The error of each point is the distance between line and that point. This is illustrated as follows.
+![](regression_1.png){fig-align="center"}
 
-![](regression_2.jpeg)
+For a simple linear regression model with the equation given above, the OLS method seeks to find the values $\beta_0$, $\beta_1$ of the linear model that minimize the sum of squared residuals.
+
+A good model will always have least error and we can find this line by reducing the error. The error of each point is the distance between line and that point. This is illustrated as follows.
+
+![](regression_2.jpeg){fig-align="center"}
 
 And total error of this model is the sum of all errors of each point. ie.
 
@@ -38,11 +52,11 @@ $$
 D = \sum_{i=1}^{m} d_i^2
 $$
 
-$d_i$Distance between line and i^th^ point.
+$d_i$ - Distance between line and i^th^ point.
 
-$m$- Total number of points
+$m$ - Total number of points
 
-You might have noticed that we are squaring each of the distances. This is because, some points will be above the line and some points will be below the line. We can minimize the error in the model by minimizing $D$ And after the mathematics of minimizing $D_i$, we will get;
+You may have observed that we are taking the square of each distance. This is done because certain points lie above the line while others lie below it. By minimizing D, we aim to reduce the error in the model.
 
 $$
 \beta_1 = \frac{\sum_{i=1}^{m} (x_i - \bar{x})(y_i - \bar{y})}{\sum_{i=1}^{m} (x_i - \bar{x})^2}
@@ -52,9 +66,9 @@ $$
 \beta_0 = \bar{y} - \beta_1\bar{x}
 $$
 
-In these equations �¯ is the mean value of input variable **X** and �¯ is the mean value of output variable **Y**.
+In these equations $\bar{x}$ is the mean value of input variable $x$ and $\bar{y}$ is the mean value of output variable $y$
 
-Now we have the model. This method is called [**Ordinary Least Square Method**](https://www.wikiwand.com/en/Ordinary_least_squares). Now we will implement this model in Python.
+Now we have the *Ordinary Least Square Method* which is described with the following equations
 
 $$
 Y = \beta_0 + \beta_1X
@@ -70,7 +84,7 @@ $$
 
 ### Implementation
 
-We are going to use a dataset containing the price of houses as a function of size. This data is split into 3 for training, validation and finally testing. Let's start off by importing and viewing the data.
+We are going to use a dataset containing the price of houses as a function of size to implement regression. This data is split into 3 for training, validation and finally testing. Let's start off by importing and viewing the data.
 
 ```{python}
 #Import the needed libraries
@@ -134,7 +148,9 @@ print(f"number of rows and colums: {table3.shape}")
 
 As we can see, the data is split unequally between training, validation and testing. The training data has 12 entries while the validation and testing data have 21 entries.
 
-we need to implement feature scaling
+we need to implement feature scaling.
+
+Feature scaling is a preprocessing step in machine learning that involves adjusting the scale of the input features to a similar range. The goal is to ensure that all features contribute equally to the model training process, preventing certain features from dominating due to their larger scales.
 
 ```{python}
 # Step 2: Preprocess the data (feature scaling)
@@ -159,7 +175,9 @@ plt.legend()
 plt.title('Training, Validation and Testing Data')
 ```
 
-Lets create a function to implement linear regression with regularization.
+Lets create a function to implement linear regression with L2 regularization.
+
+Linear regression with regularization is an extension of traditional linear regression that incorporates regularization techniques to prevent overfitting and improve the model's generalization performance. The two common types of regularization used in linear regression are Ridge Regression (L2 regularization) and Lasso Regression (L1 regularization).
 
 $$
 J(\theta) = \frac{1}{2m} (\sum_{i=1}^m(h_\theta(x^{(i)})-y^{(i)})^2) + \frac{\lambda}{2m}(\sum_{j=1}^n \theta_j^2)
@@ -182,13 +200,13 @@ def ridge_regression(X, y, alpha, num_iterations, learning_rate):
     return theta, history, cost
 ```
 
-In the equation above, $\lambda$ is the regularization parameter which ensures ... This is implemented with the gradient descent algorithm.
+In the equation above, $\lambda$ is the regularization parameter which ensures a balance between the trade-off between fitting the training data well and keeping the model simple. This is implemented with the gradient descent algorithm.
 
 ### Gradient Descent
 
 Gradient Descent is an optimization algorithm. We will optimize our cost function using Gradient Descent Algorithm.
 
-##### Step 1
+#### Step 1
 
 Initialize values $\theta_0, \theta_1, ..., \theta_n$ with some value. In this case we will initialize with 0.
 
@@ -200,9 +218,7 @@ $$
 \theta_j : \theta_j - \alpha \frac{\partial}{\partial \theta_j} J(\theta)
 $$
 
-until it converges.
-
-where:
+until it converges, where:
 
 $$
 \frac{\partial J(\theta)}{\partial \theta_0} = \frac{1}{m} \sum_{i=1}^m (h_\theta(x^{(i)}) - y^{(i)})x_j^{(i)},  \ j = 0
@@ -212,17 +228,15 @@ $$
 \frac{\partial J(\theta)}{\partial \theta_j} = \frac{1}{m} \sum_{i=1}^m (h_\theta(x^{(i)}) - y^{(i)})x_j^{(i)}, + \frac{\lambda}{m}\theta_j \ j\ge 1 
 $$
 
-This is the procedure. Here $\alpha$ is the learning rate. This operation $\frac{\partial}{\partial \theta_j} J(\theta)$ means we are finding partial derivate of cost with respect to each $\theta_j$. This is called Gradient.
-
-Read [this](https://math.stackexchange.com/questions/174270/what-exactly-is-the-difference-between-a-derivative-and-a-total-derivative) if you are unfamiliar with partial derivatives.
+This is the procedure. Here $\alpha$ is the learning rate. This operation $\frac{\partial}{\partial \theta_j} J(\theta)$ means we are finding partial derivative of cost with respect to each $\theta_j$. This is called Gradient.
 
 In step 2 we are changing the values of $\theta_j$. in a direction in which it reduces our cost function. And Gradient gives the direction in which we want to move. Finally we will reach the minima of our cost function. But we don't want to change values of $\theta_j$. drastically, because we might miss the minima. That's why we need learning rate.
 
-![Animation illustrating the gradient descent method](regression%20_4.gif){fig-align="center"}
+![ Animation illustrating the gradient descent method](regression%20_4.gif){fig-align="center"}
 
 The above animation illustrates the Gradient Descent method.
 
-But we still didn't find the value of $\frac{\partial J(\theta)}{\partial \theta_j}$ . After we applying the mathematics. The step 2 becomes.
+After making substitutions, Step 2 becomes:
 
 $$
 \theta_j := \theta_j - \alpha \frac{1}{m} \sum_{i=1}^m (h_\theta(x^{(i)}) - y^{(i)})x_j^{(i)}, + \frac{\lambda}{m}\theta_j
@@ -323,7 +337,29 @@ $$
 
 ------------------------------------------------------------------------
 
-Nonlinear Regression
+## Nonlinear Regression
+
+Nonlinear regression is a type of regression analysis where the relationship between the independent variable(s) and the dependent variable is modeled as a nonlinear function. In contrast to linear regression, which assumes a linear relationship between variables, nonlinear regression allows for more complex and curved relationships to be captured.
+
+The general form of nonlinear regression is expressed as:
+
+$$
+Y = f(X, \theta) + \epsilon
+$$
+
+Where:
+
+-   $Y$ is the dependent variable
+
+-   $X$ is the independent variable(s)
+
+-    $\theta$ represents the parameters of the nonlinear function $f$
+
+-    $\epsilon$ is the error term
+
+The goal of nonlinear regression is to estimate the parameters $(\theta)$ of the chosen nonlinear function in a way that minimizes the sum of squared differences between the predicted values and the actual observed values. This is typically done using optimization techniques, such as gradient descent or other numerical optimization algorithms.
+
+### Implementation
 
 ```{python}
 # Step 4: Train the model using the training data
