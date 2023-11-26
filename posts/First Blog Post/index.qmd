@@ -1,7 +1,7 @@
 ---
 title: "Regression (Linear and Nonlinear)"
 author: "Daniel A. Udekwe"
-date: "2023-10-17"
+date: "2023-11-26"
 categories: [data, code, analysis]
 image: "regression.png"
 ---

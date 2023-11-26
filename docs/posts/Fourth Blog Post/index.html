@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Daniel A. Udekwe">
-<meta name="dcterms.date" content="2023-10-14">
+<meta name="dcterms.date" content="2023-11-25">
 
 <title>CS5805 - Machine Learning I - Anomaly/Outlier Detection</title>
 <style>
@@ -121,11 +121,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
     <a class="nav-link" href="../../posts.html" rel="" target="">
- <span class="menu-text">Machine Learning I Blog Posts</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../../about.html" rel="" target="">
- <span class="menu-text">About</span></a>
+ <span class="menu-text">Blog Posts</span></a>
   </li>  
   <li class="nav-item compact">
     <a class="nav-link" href="https://github.com/daniel-udekwe" rel="" target=""><i class="bi bi-github" role="img">
@@ -155,7 +151,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div class="quarto-title column-page-left">
       <h1 class="title">Anomaly/Outlier Detection</h1>
                                 <div class="quarto-categories">
-                <div class="quarto-category">news</div>
+                <div class="quarto-category">data</div>
+                <div class="quarto-category">code</div>
+                <div class="quarto-category">analysis</div>
               </div>
                   </div>
   </div>
@@ -173,7 +171,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">October 14, 2023</p>
+        <p class="date">November 25, 2023</p>
       </div>
     </div>
     
@@ -189,12 +187,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#how-does-anomaly-detection-work" id="toc-how-does-anomaly-detection-work" class="nav-link active" data-scroll-target="#how-does-anomaly-detection-work">How does anomaly detection work?</a>
-  <ul class="collapse">
-  <li><a href="#supervised-vs.-unsupervised-anomaly-detection-techniques" id="toc-supervised-vs.-unsupervised-anomaly-detection-techniques" class="nav-link" data-scroll-target="#supervised-vs.-unsupervised-anomaly-detection-techniques">Supervised vs.&nbsp;unsupervised anomaly detection techniques</a></li>
-  </ul></li>
-  <li><a href="#different-types-of-anomalies" id="toc-different-types-of-anomalies" class="nav-link" data-scroll-target="#different-types-of-anomalies"><strong>Different types of anomalies</strong></a></li>
+  <li><a href="#how-does-anomaly-detection-work" id="toc-how-does-anomaly-detection-work" class="nav-link active" data-scroll-target="#how-does-anomaly-detection-work">How does anomaly detection work?</a></li>
   <li><a href="#anomaly-detection-techniques" id="toc-anomaly-detection-techniques" class="nav-link" data-scroll-target="#anomaly-detection-techniques"><strong>Anomaly detection techniques</strong></a></li>
+  <li><a href="#implementation" id="toc-implementation" class="nav-link" data-scroll-target="#implementation">Implementation</a></li>
   </ul>
 </nav>
     </div>
@@ -204,54 +199,48 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<p>Anomaly detection is the process of identifying data points, entities or events that fall outside the normal range. An anomaly is anything that deviates from what is standard or expected. Humans and animals do this habitually when they spot a ripe fruit in a tree or a rustle in the grass that stands out from the background and could represent an opportunity or threat. Thus, the concept is sometimes framed as <em>outlier detection</em> or <em>novelty detection</em>.</p>
-<p>Anomaly detection has a long history in statistics, driven by analysts and scientists who pored over charts to find elements that stood out. Over the last several decades, researchers have started automating this process using <a href="https://www.techtarget.com/searchenterpriseai/definition/machine-learning-ML">machine learning</a> training techniques designed to find more efficient ways to detect different types of outliers.</p>
-<p>In practice, anomaly detection is often used to detect suspicious events, unexpected opportunities or bad data buried in <a href="https://www.techtarget.com/whatis/definition/time-series-forecasting">time series</a> data. A suspicious event might indicate a network breach, fraud, crime, disease or faulty equipment. An unexpected opportunity could involve finding a store, product or salesperson that’s performing much better than others and should be investigated for insight into improving the business.</p>
+<p>Anomaly detection is a process in data analysis and machine learning that involves identifying patterns, events, or data points that deviate significantly from the expected or normal behavior within a dataset. The goal is to identify anomalies or outliers that may indicate errors, fraud, security threats, or other unexpected events. Anomaly detection is used across various domains, including cybersecurity, finance, healthcare, industrial monitoring, and more.</p>
 <p><strong>What is an anomaly?</strong></p>
-<p>Before talking about anomaly detection, we need to understand what an <strong>anomaly</strong> is.</p>
-<p>Generally speaking, an anomaly is something that differs from a norm: a deviation, an exception. In software engineering, by anomaly we understand a rare occurrence or event that doesn’t fit into the pattern, and, therefore, seems suspicious. Some examples are:</p>
-<ul>
-<li><p>sudden burst or decrease in activity;</p></li>
-<li><p>error in the text;</p></li>
-<li><p>sudden rapid drop or increase in temperature.</p></li>
-</ul>
-<p>Common reasons for outliers are:</p>
+<p>An anomaly, in the context of data analysis or system behavior, refers to an observation or event that deviates significantly from what is considered normal, expected, or typical. Anomalies are also often referred to as outliers, novelties, or deviations. Detecting anomalies is crucial in various fields, including data analysis, cybersecurity, finance, and industrial systems, as anomalies may indicate errors, fraud, security threats, or other unexpected events.</p>
+<p>There are two main types of anomalies:</p>
+<ol type="1">
+<li><p><strong>Point Anomalies:</strong> These anomalies involve individual data points that are considered unusual when compared to the rest of the data. For example, a sudden spike or drop in temperature, an unusually high transaction amount in financial data, or a single malfunctioning sensor reading in an industrial system.</p></li>
+<li><p><strong>Contextual Anomalies:</strong> These anomalies are identified by considering the context or relationships within the data. A data point may not be anomalous on its own, but it becomes an anomaly when taking into account its context. For instance, a sudden increase in website traffic during a holiday season might not be anomalous, but the same increase during an ordinary weekday could be considered unusual.</p></li>
+</ol>
+<p>Common reasons for anomalies are:</p>
 <ul>
 <li><p>data preprocessing errors;</p></li>
 <li><p>noise;</p></li>
 <li><p>fraud;</p></li>
 <li><p>attacks.</p></li>
 </ul>
-<p>Normally, you want to catch them all; a software program must run smoothly and be predictable so every outlier is a potential threat to its robustness and security. Catching and identifying anomalies is what we call <strong>anomaly or outlier detection</strong>.</p>
-<p>For example, if large sums of money are spent one after another within one day and it is not your typical behavior, a bank can block your card. They will see an unusual pattern in your daily transactions. This anomaly can typically be connected to fraud since identity thieves try to steal as much money as they can while they can. Once an anomaly is detected, it needs to be investigated, or problems may follow.</p>
+<p>Anomalies can be detected through various methods, including statistical techniques, machine learning algorithms, and rule-based systems. Some common approaches include:</p>
+<ul>
+<li><p><strong>Statistical Methods:</strong> Using statistical measures such as mean, standard deviation, or quantiles to identify data points that fall outside a certain threshold.</p></li>
+<li><p><strong>Machine Learning Algorithms:</strong> Employing supervised or unsupervised machine learning techniques, such as clustering, classification, or autoencoders, to learn patterns in the data and identify anomalies.</p></li>
+<li><p><strong>Rule-Based Systems:</strong> Defining explicit rules or thresholds based on domain knowledge to flag instances that deviate from the expected behavior.</p></li>
+</ul>
+<p>Anomaly detection is crucial for maintaining the integrity and security of systems, as anomalies may indicate issues that require investigation or intervention. It’s an important aspect of data analysis, monitoring, and maintenance in various industries.</p>
 <section id="how-does-anomaly-detection-work" class="level2">
 <h2 class="anchored" data-anchor-id="how-does-anomaly-detection-work">How does anomaly detection work?</h2>
-<p>There are several ways of training <a href="https://www.techtarget.com/whatis/definition/machine-learning-algorithm">machine learning algorithms</a> to detect anomalies. <a href="https://www.techtarget.com/searchenterpriseai/definition/supervised-learning">Supervised machine learning techniques</a> are used when you have a labeled data set indicating normal vs.&nbsp;abnormal conditions. For example, a bank or credit card company can develop a process for labeling fraudulent credit card transactions after those transactions have been reported. Medical researchers might similarly label images or data sets indicative of future disease diagnosis. In such instances, supervised machine learning models can be trained to detect these known anomalies.</p>
+<p>There are several ways of training machine learning algorithms to detect anomalies. Supervised machine learning techniques are used when you have a labeled data set indicating normal vs.&nbsp;abnormal conditions. For example, a bank or credit card company can develop a process for labeling fraudulent credit card transactions after those transactions have been reported. Medical researchers might similarly label images or data sets indicative of future disease diagnosis. In such instances, supervised machine learning models can be trained to detect these known anomalies.</p>
 <p>Researchers might start with some previously discovered outliers but suspect that other anomalies also exist. In the scenario of fraudulent credit card transactions, consumers might fail to report suspicious transactions with innocuous-sounding names and of a small value. A data scientist might use reports that include these types of fraudulent transactions to automatically label other like transactions as fraud, using semi-supervised machine learning techniques.</p>
-<section id="supervised-vs.-unsupervised-anomaly-detection-techniques" class="level3">
-<h3 class="anchored" data-anchor-id="supervised-vs.-unsupervised-anomaly-detection-techniques">Supervised vs.&nbsp;unsupervised anomaly detection techniques</h3>
 <p>The supervised and semi-supervised techniques can only detect known anomalies. However, the vast majority of data is unlabeled. In these cases, data scientists might use unsupervised anomaly detection techniques, which can automatically identify exceptional or rare events.</p>
-<p>For example, a cloud cost estimator might look for unusual upticks in data egress charges or processing costs that could be caused by a poorly written algorithm. Similarly, an intrusion detection algorithm might look for novel network traffic patterns or a rise in authentication requests. In both cases, <a href="https://www.techtarget.com/searchenterpriseai/definition/unsupervised-learning">unsupervised machine learning techniques</a> might be used to identify data points indicating things that are well outside the range of normal behavior. In contrast, supervised techniques would have to be explicitly trained using examples of previously known deviant behavior.</p>
-</section>
-</section>
-<section id="different-types-of-anomalies" class="level2">
-<h2 class="anchored" data-anchor-id="different-types-of-anomalies"><strong>Different types of anomalies</strong></h2>
-<p>Broadly speaking, there are three different types of anomalies.</p>
-<ul>
-<li><p><strong>Global outliers,</strong> or point anomalies, occur far outside the range of the rest of a data set.</p></li>
-<li><p><strong>Contextual outliers</strong> deviate from other points in the same context, e.g., holiday or weekend sales.</p></li>
-<li><p><strong>Collective outliers</strong> occur when a range of different types of data vary when considered together, for example, ice cream sales and temperature spikes.</p></li>
-</ul>
+<p>For example, a cloud cost estimator might look for unusual upticks in data egress charges or processing costs that could be caused by a poorly written algorithm. Similarly, an intrusion detection algorithm might look for novel network traffic patterns or a rise in authentication requests. In both cases, unsupervised machine learning techniques might be used to identify data points indicating things that are well outside the range of normal behavior. In contrast, supervised techniques would have to be explicitly trained using examples of previously known deviant behavior.</p>
 </section>
 <section id="anomaly-detection-techniques" class="level2">
 <h2 class="anchored" data-anchor-id="anomaly-detection-techniques"><strong>Anomaly detection techniques</strong></h2>
 <p>Many different kinds of machine learning algorithms can be trained to detect anomalies. Some of the most popular anomaly detection methods include the following:</p>
 <ul>
 <li><p>Density-based algorithms determine when an outlier differs from a larger, hence denser normal data set, using algorithms like K-nearest neighbor and Isolation Forest.</p></li>
-<li><p>Cluster-based algorithms evaluate how any point differs from <a href="https://www.techtarget.com/searchenterpriseai/definition/clustering-in-machine-learning">clusters of related data</a> using techniques like K-means cluster analysis.</p></li>
-<li><p><a href="https://www.techtarget.com/searchenterpriseai/feature/Bayesian-networks-applications-are-fueling-enterprise-support">Bayesian-network</a> algorithms develop models for estimating the probability that events will occur based on related data and then identifying significant deviations from these predictions.</p></li>
-<li><p><a href="https://www.techtarget.com/searchenterpriseai/definition/neural-network">Neural network</a> algorithms train a neural network to predict an expected time series and then flag deviations.</p></li>
+<li><p>Cluster-based algorithms evaluate how any point differs from clusters of related data using techniques like K-means cluster analysis.</p></li>
+<li><p>Bayesian-network algorithms develop models for estimating the probability that events will occur based on related data and then identifying significant deviations from these predictions.</p></li>
+<li><p>Neural network algorithms train a neural network to predict an expected time series and then flag deviations.</p></li>
 </ul>
+</section>
+<section id="implementation" class="level2">
+<h2 class="anchored" data-anchor-id="implementation">Implementation</h2>
+<p>Let’s implement anomaly detection in python using a dataset which contains sales data. First, we need to import the necessary libraries and view the data</p>
 <div class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -268,7 +257,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co"># reading the big mart sales training data</span></span>
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">"Train.csv"</span>)</span>
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>df.plot.scatter(<span class="st">'Item_MRP'</span>,<span class="st">'Item_Outlet_Sales'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="6">
+<div class="cell-output cell-output-display" data-execution_count="34">
 <pre><code>&lt;Axes: xlabel='Item_MRP', ylabel='Item_Outlet_Sales'&gt;</code></pre>
 </div>
 <div class="cell-output cell-output-display">
@@ -281,7 +270,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>scaler <span class="op">=</span> MinMaxScaler(feature_range<span class="op">=</span>(<span class="dv">0</span>, <span class="dv">1</span>))</span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>df[[<span class="st">'Item_MRP'</span>,<span class="st">'Item_Outlet_Sales'</span>]] <span class="op">=</span> scaler.fit_transform(df[[<span class="st">'Item_MRP'</span>,<span class="st">'Item_Outlet_Sales'</span>]])</span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>df[[<span class="st">'Item_MRP'</span>,<span class="st">'Item_Outlet_Sales'</span>]].head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="7">
+<div class="cell-output cell-output-display" data-execution_count="35">
 <div>
 
 
@@ -325,7 +314,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<p>Option 2</p>
+<p>The next bit of code defines a Python dictionary named <em>classifiers</em> that contains instances of various outlier detection algorithms from the scikit-learn library. Each key-value pair in the dictionary represents a different outlier detection algorithm. Hence, the following algorithms were employed for outlier detection:</p>
+<ul>
+<li><p>Angle based Outlier Detector (ABOD)</p></li>
+<li><p>Cluster based Local Outlier Factor (CBLOF)</p></li>
+<li><p>Feature Bagging</p></li>
+<li><p>Histogram-based Outlier Detection (HBOS)</p></li>
+<li><p>Isolation Forest</p></li>
+<li><p>K Nearest Neighbors (KNN)</p></li>
+<li><p>Average KNN<br>
+</p></li>
+</ul>
 <div class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -345,163 +344,46 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> warnings</span>
 <span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>warnings.filterwarnings(<span class="st">"ignore"</span>)</span>
 <span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the dataset</span></span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">'train.csv'</span>)</span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Select relevant features for outlier detection</span></span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>features <span class="op">=</span> [<span class="st">'Item_MRP'</span>, <span class="st">'Item_Outlet_Sales'</span>]</span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> df[features].values</span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Standardize the features</span></span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>scaler <span class="op">=</span> StandardScaler()</span>
-<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> scaler.fit_transform(X)</span>
-<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Set up the outlier detection algorithms</span></span>
-<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>random_state <span class="op">=</span> np.random.RandomState(<span class="dv">42</span>)</span>
-<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>outliers_fraction <span class="op">=</span> <span class="fl">0.05</span></span>
-<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>classifiers <span class="op">=</span> {</span>
-<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Angle-based Outlier Detector (ABOD)'</span>: ABOD(contamination<span class="op">=</span>outliers_fraction),</span>
-<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Cluster-based Local Outlier Factor (CBLOF)'</span>: CBLOF(contamination<span class="op">=</span>outliers_fraction, check_estimator<span class="op">=</span><span class="va">False</span>, random_state<span class="op">=</span>random_state),</span>
-<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Feature Bagging'</span>: FeatureBagging(KNN(n_neighbors<span class="op">=</span><span class="dv">35</span>), contamination<span class="op">=</span>outliers_fraction, check_estimator<span class="op">=</span><span class="va">False</span>, random_state<span class="op">=</span>random_state),</span>
-<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Histogram-based Outlier Detection (HBOS)'</span>: HBOS(contamination<span class="op">=</span>outliers_fraction),</span>
-<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Isolation Forest'</span>: IsolationForest(contamination<span class="op">=</span>outliers_fraction, random_state<span class="op">=</span>random_state),</span>
-<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>    <span class="st">'K Nearest Neighbors (KNN)'</span>: KNN(contamination<span class="op">=</span>outliers_fraction),</span>
-<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Average KNN'</span>: KNN(method<span class="op">=</span><span class="st">'mean'</span>, contamination<span class="op">=</span>outliers_fraction)</span>
-<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a><span class="co"># Split the data into training and testing sets</span></span>
-<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a>X_train, X_test <span class="op">=</span> train_test_split(X, test_size<span class="op">=</span><span class="fl">0.2</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
-<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a><span class="co"># Set up subplots for visualization</span></span>
-<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a>fig, axs <span class="op">=</span> plt.subplots(nrows<span class="op">=</span><span class="dv">3</span>, ncols<span class="op">=</span><span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">15</span>, <span class="dv">15</span>))</span>
-<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a>axs <span class="op">=</span> axs.flatten()</span>
-<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit the models and predict outliers</span></span>
-<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, (clf_name, clf) <span class="kw">in</span> <span class="bu">enumerate</span>(classifiers.items()):</span>
-<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a>    clf.fit(X_train)</span>
-<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> clf_name <span class="op">==</span> <span class="st">'Isolation Forest'</span>:</span>
-<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Use decision function to get anomaly scores</span></span>
-<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a>        y_train_scores <span class="op">=</span> clf.decision_function(X_train)</span>
-<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a>        y_test_scores <span class="op">=</span> clf.decision_function(X_test)</span>
-<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb4-61"><a href="#cb4-61" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Set a threshold to classify samples as outliers (you may need to adjust this threshold)</span></span>
-<span id="cb4-62"><a href="#cb4-62" aria-hidden="true" tabindex="-1"></a>        threshold <span class="op">=</span> np.percentile(y_train_scores, <span class="dv">100</span> <span class="op">*</span> outliers_fraction)</span>
-<span id="cb4-63"><a href="#cb4-63" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb4-64"><a href="#cb4-64" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Convert continuous scores to binary labels</span></span>
-<span id="cb4-65"><a href="#cb4-65" aria-hidden="true" tabindex="-1"></a>        y_train_pred <span class="op">=</span> (y_train_scores <span class="op">&gt;</span> threshold).astype(<span class="bu">int</span>)</span>
-<span id="cb4-66"><a href="#cb4-66" aria-hidden="true" tabindex="-1"></a>        y_test_pred <span class="op">=</span> (y_test_scores <span class="op">&gt;</span> threshold).astype(<span class="bu">int</span>)</span>
-<span id="cb4-67"><a href="#cb4-67" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
-<span id="cb4-68"><a href="#cb4-68" aria-hidden="true" tabindex="-1"></a>        y_train_pred <span class="op">=</span> clf.labels_  <span class="co"># binary labels (0: inliers, 1: outliers)</span></span>
-<span id="cb4-69"><a href="#cb4-69" aria-hidden="true" tabindex="-1"></a>        y_test_pred <span class="op">=</span> clf.predict(X_test)</span>
-<span id="cb4-70"><a href="#cb4-70" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-71"><a href="#cb4-71" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Visualize the results</span></span>
-<span id="cb4-72"><a href="#cb4-72" aria-hidden="true" tabindex="-1"></a>    inliers_train <span class="op">=</span> X_train[y_train_pred <span class="op">==</span> <span class="dv">0</span>]</span>
-<span id="cb4-73"><a href="#cb4-73" aria-hidden="true" tabindex="-1"></a>    outliers_train <span class="op">=</span> X_train[y_train_pred <span class="op">==</span> <span class="dv">1</span>]</span>
-<span id="cb4-74"><a href="#cb4-74" aria-hidden="true" tabindex="-1"></a>    inliers_test <span class="op">=</span> X_test[y_test_pred <span class="op">==</span> <span class="dv">0</span>]</span>
-<span id="cb4-75"><a href="#cb4-75" aria-hidden="true" tabindex="-1"></a>    outliers_test <span class="op">=</span> X_test[y_test_pred <span class="op">==</span> <span class="dv">1</span>]</span>
-<span id="cb4-76"><a href="#cb4-76" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-77"><a href="#cb4-77" aria-hidden="true" tabindex="-1"></a>    axs[i].scatter(inliers_train[:, <span class="dv">0</span>], inliers_train[:, <span class="dv">1</span>], color<span class="op">=</span><span class="st">'blue'</span>, label<span class="op">=</span><span class="st">'Inliers (Train)'</span>)</span>
-<span id="cb4-78"><a href="#cb4-78" aria-hidden="true" tabindex="-1"></a>    axs[i].scatter(outliers_train[:, <span class="dv">0</span>], outliers_train[:, <span class="dv">1</span>], color<span class="op">=</span><span class="st">'red'</span>, label<span class="op">=</span><span class="st">'Outliers (Train)'</span>)</span>
-<span id="cb4-79"><a href="#cb4-79" aria-hidden="true" tabindex="-1"></a>    axs[i].scatter(inliers_test[:, <span class="dv">0</span>], inliers_test[:, <span class="dv">1</span>], color<span class="op">=</span><span class="st">'green'</span>, label<span class="op">=</span><span class="st">'Inliers (Test)'</span>)</span>
-<span id="cb4-80"><a href="#cb4-80" aria-hidden="true" tabindex="-1"></a>    axs[i].scatter(outliers_test[:, <span class="dv">0</span>], outliers_test[:, <span class="dv">1</span>], color<span class="op">=</span><span class="st">'orange'</span>, label<span class="op">=</span><span class="st">'Outliers (Test)'</span>)</span>
-<span id="cb4-81"><a href="#cb4-81" aria-hidden="true" tabindex="-1"></a>    axs[i].set_title(clf_name)</span>
-<span id="cb4-82"><a href="#cb4-82" aria-hidden="true" tabindex="-1"></a>    axs[i].legend()</span>
-<span id="cb4-83"><a href="#cb4-83" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-84"><a href="#cb4-84" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb4-85"><a href="#cb4-85" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<p><img src="index_files/figure-html/cell-4-output-1.png" width="1430" height="1430"></p>
-</div>
-</div>
-<div class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> classification_report</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.ensemble <span class="im">import</span> IsolationForest</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.neighbors <span class="im">import</span> LocalOutlierFactor</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.svm <span class="im">import</span> OneClassSVM</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyod.models.abod <span class="im">import</span> ABOD</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyod.models.cblof <span class="im">import</span> CBLOF</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyod.models.feature_bagging <span class="im">import</span> FeatureBagging</span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyod.models.hbos <span class="im">import</span> HBOS</span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyod.models.knn <span class="im">import</span> KNN</span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the dataset</span></span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">'train.csv'</span>)</span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Select relevant features for outlier detection</span></span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>features <span class="op">=</span> [<span class="st">'Item_MRP'</span>, <span class="st">'Item_Outlet_Sales'</span>]</span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> df[features].values</span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Standardize the features</span></span>
-<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>scaler <span class="op">=</span> StandardScaler()</span>
-<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> scaler.fit_transform(X)</span>
-<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Set up the outlier detection algorithms</span></span>
-<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>random_state <span class="op">=</span> np.random.RandomState(<span class="dv">42</span>)</span>
-<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>outliers_fraction <span class="op">=</span> <span class="fl">0.05</span></span>
-<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>classifiers <span class="op">=</span> [</span>
-<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'Angle-based Outlier Detector (ABOD)'</span>, ABOD(contamination<span class="op">=</span>outliers_fraction)),</span>
-<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'Cluster-based Local Outlier Factor (CBLOF)'</span>, CBLOF(contamination<span class="op">=</span>outliers_fraction, check_estimator<span class="op">=</span><span class="va">False</span>, random_state<span class="op">=</span>random_state)),</span>
-<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'Feature Bagging'</span>, FeatureBagging(base_estimator<span class="op">=</span>KNN(n_neighbors<span class="op">=</span><span class="dv">35</span>), contamination<span class="op">=</span>outliers_fraction, check_estimator<span class="op">=</span><span class="va">False</span>, random_state<span class="op">=</span>random_state)),</span>
-<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'Histogram-based Outlier Detection (HBOS)'</span>, HBOS(contamination<span class="op">=</span>outliers_fraction)),</span>
-<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'Isolation Forest'</span>, IsolationForest(contamination<span class="op">=</span>outliers_fraction, random_state<span class="op">=</span>random_state)),</span>
-<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'K Nearest Neighbors (KNN)'</span>, KNN(contamination<span class="op">=</span>outliers_fraction)),</span>
-<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'Average KNN'</span>, KNN(method<span class="op">=</span><span class="st">'mean'</span>, contamination<span class="op">=</span>outliers_fraction))</span>
-<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>]</span>
-<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a><span class="co"># Split the data into training and testing sets</span></span>
-<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>X_train, X_test <span class="op">=</span> train_test_split(X, test_size<span class="op">=</span><span class="fl">0.2</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
-<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit the models and predict outliers</span></span>
-<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>index <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> index <span class="op">&lt;</span> <span class="bu">len</span>(classifiers):</span>
-<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a>    clf_name, clf <span class="op">=</span> classifiers[index]</span>
-<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a>    clf.fit(X_train)</span>
-<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> clf_name <span class="op">==</span> <span class="st">'Isolation Forest'</span>:</span>
-<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Use decision function to get anomaly scores</span></span>
-<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a>        y_train_scores <span class="op">=</span> clf.decision_function(X_train)</span>
-<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a>        y_test_scores <span class="op">=</span> clf.decision_function(X_test)</span>
-<span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Set a threshold to classify samples as outliers (you may need to adjust this threshold)</span></span>
-<span id="cb5-56"><a href="#cb5-56" aria-hidden="true" tabindex="-1"></a>        threshold <span class="op">=</span> np.percentile(y_train_scores, <span class="dv">100</span> <span class="op">*</span> outliers_fraction)</span>
-<span id="cb5-57"><a href="#cb5-57" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Convert continuous scores to binary labels</span></span>
-<span id="cb5-59"><a href="#cb5-59" aria-hidden="true" tabindex="-1"></a>        y_train_pred <span class="op">=</span> (y_train_scores <span class="op">&gt;</span> threshold).astype(<span class="bu">int</span>)</span>
-<span id="cb5-60"><a href="#cb5-60" aria-hidden="true" tabindex="-1"></a>        y_test_pred <span class="op">=</span> (y_test_scores <span class="op">&gt;</span> threshold).astype(<span class="bu">int</span>)</span>
-<span id="cb5-61"><a href="#cb5-61" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
-<span id="cb5-62"><a href="#cb5-62" aria-hidden="true" tabindex="-1"></a>        y_train_pred <span class="op">=</span> clf.labels_  <span class="co"># binary labels (0: inliers, 1: outliers)</span></span>
-<span id="cb5-63"><a href="#cb5-63" aria-hidden="true" tabindex="-1"></a>        y_test_pred <span class="op">=</span> clf.predict(X_test)</span>
-<span id="cb5-64"><a href="#cb5-64" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-65"><a href="#cb5-65" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Visualize the results</span></span>
-<span id="cb5-66"><a href="#cb5-66" aria-hidden="true" tabindex="-1"></a>    plt.figure(figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">6</span>))</span>
-<span id="cb5-67"><a href="#cb5-67" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb5-68"><a href="#cb5-68" aria-hidden="true" tabindex="-1"></a>    plt.subplot(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">1</span>)</span>
-<span id="cb5-69"><a href="#cb5-69" aria-hidden="true" tabindex="-1"></a>    plt.scatter(X_test[:, <span class="dv">0</span>], X_test[:, <span class="dv">1</span>], c<span class="op">=</span>y_test_pred, cmap<span class="op">=</span><span class="st">'coolwarm'</span>, edgecolors<span class="op">=</span><span class="st">'k'</span>, marker<span class="op">=</span><span class="st">'o'</span>)</span>
-<span id="cb5-70"><a href="#cb5-70" aria-hidden="true" tabindex="-1"></a>    plt.title(<span class="ss">f'</span><span class="sc">{</span>clf_name<span class="sc">}</span><span class="ss"> - Test Set Predictions'</span>)</span>
-<span id="cb5-71"><a href="#cb5-71" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb5-72"><a href="#cb5-72" aria-hidden="true" tabindex="-1"></a>    plt.subplot(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>)</span>
-<span id="cb5-73"><a href="#cb5-73" aria-hidden="true" tabindex="-1"></a>    plt.scatter(X_train[:, <span class="dv">0</span>], X_train[:, <span class="dv">1</span>], c<span class="op">=</span>y_train_pred, cmap<span class="op">=</span><span class="st">'coolwarm'</span>, edgecolors<span class="op">=</span><span class="st">'k'</span>, marker<span class="op">=</span><span class="st">'o'</span>)</span>
-<span id="cb5-74"><a href="#cb5-74" aria-hidden="true" tabindex="-1"></a>    plt.title(<span class="ss">f'</span><span class="sc">{</span>clf_name<span class="sc">}</span><span class="ss"> - Training Set Predictions'</span>)</span>
-<span id="cb5-75"><a href="#cb5-75" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-76"><a href="#cb5-76" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Evaluate the model performance</span></span>
-<span id="cb5-77"><a href="#cb5-77" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"------ </span><span class="sc">{</span>clf_name<span class="sc">}</span><span class="ss"> ------"</span>)</span>
-<span id="cb5-78"><a href="#cb5-78" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Train Accuracy: </span><span class="sc">{</span>np<span class="sc">.</span><span class="bu">sum</span>(y_train_pred <span class="op">==</span> <span class="dv">0</span>) <span class="op">/</span> <span class="bu">len</span>(y_train_pred)<span class="sc">:.2%}</span><span class="ss">"</span>)</span>
-<span id="cb5-79"><a href="#cb5-79" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Test Accuracy: </span><span class="sc">{</span>np<span class="sc">.</span><span class="bu">sum</span>(y_test_pred <span class="op">==</span> <span class="dv">0</span>) <span class="op">/</span> <span class="bu">len</span>(y_test_pred)<span class="sc">:.2%}</span><span class="ss">"</span>)</span>
-<span id="cb5-80"><a href="#cb5-80" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Classification Report:"</span>)</span>
-<span id="cb5-81"><a href="#cb5-81" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(classification_report(y_test_pred, np.zeros_like(y_test_pred), zero_division<span class="op">=</span><span class="dv">1</span>))  <span class="co"># Set zero_division to 1</span></span>
-<span id="cb5-82"><a href="#cb5-82" aria-hidden="true" tabindex="-1"></a>    plt.show()</span>
-<span id="cb5-83"><a href="#cb5-83" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb5-84"><a href="#cb5-84" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Increment the index for the next iteration</span></span>
-<span id="cb5-85"><a href="#cb5-85" aria-hidden="true" tabindex="-1"></a>    index <span class="op">+=</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the dataset</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">'train.csv'</span>)</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Select relevant features for outlier detection</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>features <span class="op">=</span> [<span class="st">'Item_MRP'</span>, <span class="st">'Item_Outlet_Sales'</span>]</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> df[features].values</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Standardize the features</span></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>scaler <span class="op">=</span> StandardScaler()</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> scaler.fit_transform(X)</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Set up the outlier detection algorithms</span></span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>random_state <span class="op">=</span> np.random.RandomState(<span class="dv">42</span>)</span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>outliers_fraction <span class="op">=</span> <span class="fl">0.05</span></span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a><span class="co"># Split the data into training and testing sets</span></span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>X_train, X_test <span class="op">=</span> train_test_split(X, test_size<span class="op">=</span><span class="fl">0.2</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a><span class="co"># Angle-based Outlier Detector (ABOD)</span></span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>clf_abod <span class="op">=</span> ABOD(contamination<span class="op">=</span>outliers_fraction)</span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>clf_abod.fit(X_train)</span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>y_train_pred_abod <span class="op">=</span> clf_abod.labels_</span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>y_test_pred_abod <span class="op">=</span> clf_abod.predict(X_test)</span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"------ Angle-based Outlier Detector (ABOD) ------"</span>)</span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Train Accuracy: </span><span class="sc">{</span>np<span class="sc">.</span><span class="bu">sum</span>(y_train_pred_abod <span class="op">==</span> <span class="dv">0</span>) <span class="op">/</span> <span class="bu">len</span>(y_train_pred_abod)<span class="sc">:.2%}</span><span class="ss">"</span>)</span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Test Accuracy: </span><span class="sc">{</span>np<span class="sc">.</span><span class="bu">sum</span>(y_test_pred_abod <span class="op">==</span> <span class="dv">0</span>) <span class="op">/</span> <span class="bu">len</span>(y_test_pred_abod)<span class="sc">:.2%}</span><span class="ss">"</span>)</span>
+<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Classification Report:"</span>)</span>
+<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(classification_report(y_test_pred_abod, np.zeros_like(y_test_pred_abod), zero_division<span class="op">=</span><span class="dv">1</span>))</span>
+<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a>inliers_train_abod <span class="op">=</span> X_train[y_train_pred_abod <span class="op">==</span> <span class="dv">0</span>]</span>
+<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a>outliers_train_abod <span class="op">=</span> X_train[y_train_pred_abod <span class="op">==</span> <span class="dv">1</span>]</span>
+<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a>inliers_test_abod <span class="op">=</span> X_test[y_test_pred_abod <span class="op">==</span> <span class="dv">0</span>]</span>
+<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a>outliers_test_abod <span class="op">=</span> X_test[y_test_pred_abod <span class="op">==</span> <span class="dv">1</span>]</span>
+<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a>plt.scatter(inliers_train_abod[:, <span class="dv">0</span>], inliers_train_abod[:, <span class="dv">1</span>], color<span class="op">=</span><span class="st">'blue'</span>, label<span class="op">=</span><span class="st">'Inliers (Train)'</span>)</span>
+<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a>plt.scatter(outliers_train_abod[:, <span class="dv">0</span>], outliers_train_abod[:, <span class="dv">1</span>], color<span class="op">=</span><span class="st">'red'</span>, label<span class="op">=</span><span class="st">'Outliers (Train)'</span>)</span>
+<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a>plt.scatter(inliers_test_abod[:, <span class="dv">0</span>], inliers_test_abod[:, <span class="dv">1</span>], color<span class="op">=</span><span class="st">'green'</span>, label<span class="op">=</span><span class="st">'Inliers (Test)'</span>)</span>
+<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a>plt.scatter(outliers_test_abod[:, <span class="dv">0</span>], outliers_test_abod[:, <span class="dv">1</span>], color<span class="op">=</span><span class="st">'orange'</span>, label<span class="op">=</span><span class="st">'Outliers (Test)'</span>)</span>
+<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Angle-based Outlier Detector (ABOD)"</span>)</span>
+<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>------ Angle-based Outlier Detector (ABOD) ------
 Train Accuracy: 95.00%
@@ -516,8 +398,37 @@ Classification Report:
     accuracy                           0.95      1705
    macro avg       0.98      0.50      0.49      1705
 weighted avg       0.95      0.95      0.93      1705
-
------- Cluster-based Local Outlier Factor (CBLOF) ------
+</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-4-output-2.png" width="643" height="505"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cluster-based Local Outlier Factor (CBLOF)</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>clf_cblof <span class="op">=</span> CBLOF(contamination<span class="op">=</span>outliers_fraction, check_estimator<span class="op">=</span><span class="va">False</span>, random_state<span class="op">=</span>random_state)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>clf_cblof.fit(X_train)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>y_train_pred_cblof <span class="op">=</span> clf_cblof.labels_</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>y_test_pred_cblof <span class="op">=</span> clf_cblof.predict(X_test)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"------ Cluster-based Local Outlier Factor (CBLOF) ------"</span>)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Train Accuracy: </span><span class="sc">{</span>np<span class="sc">.</span><span class="bu">sum</span>(y_train_pred_cblof <span class="op">==</span> <span class="dv">0</span>) <span class="op">/</span> <span class="bu">len</span>(y_train_pred_cblof)<span class="sc">:.2%}</span><span class="ss">"</span>)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Test Accuracy: </span><span class="sc">{</span>np<span class="sc">.</span><span class="bu">sum</span>(y_test_pred_cblof <span class="op">==</span> <span class="dv">0</span>) <span class="op">/</span> <span class="bu">len</span>(y_test_pred_cblof)<span class="sc">:.2%}</span><span class="ss">"</span>)</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Classification Report:"</span>)</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(classification_report(y_test_pred_cblof, np.zeros_like(y_test_pred_cblof), zero_division<span class="op">=</span><span class="dv">1</span>))</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>inliers_train_cblof <span class="op">=</span> X_train[y_train_pred_cblof <span class="op">==</span> <span class="dv">0</span>]</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>outliers_train_cblof <span class="op">=</span> X_train[y_train_pred_cblof <span class="op">==</span> <span class="dv">1</span>]</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>inliers_test_cblof <span class="op">=</span> X_test[y_test_pred_cblof <span class="op">==</span> <span class="dv">0</span>]</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>outliers_test_cblof <span class="op">=</span> X_test[y_test_pred_cblof <span class="op">==</span> <span class="dv">1</span>]</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>plt.scatter(inliers_train_cblof[:, <span class="dv">0</span>], inliers_train_cblof[:, <span class="dv">1</span>], color<span class="op">=</span><span class="st">'blue'</span>, label<span class="op">=</span><span class="st">'Inliers (Train)'</span>)</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>plt.scatter(outliers_train_cblof[:, <span class="dv">0</span>], outliers_train_cblof[:, <span class="dv">1</span>], color<span class="op">=</span><span class="st">'red'</span>, label<span class="op">=</span><span class="st">'Outliers (Train)'</span>)</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>plt.scatter(inliers_test_cblof[:, <span class="dv">0</span>], inliers_test_cblof[:, <span class="dv">1</span>], color<span class="op">=</span><span class="st">'green'</span>, label<span class="op">=</span><span class="st">'Inliers (Test)'</span>)</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>plt.scatter(outliers_test_cblof[:, <span class="dv">0</span>], outliers_test_cblof[:, <span class="dv">1</span>], color<span class="op">=</span><span class="st">'orange'</span>, label<span class="op">=</span><span class="st">'Outliers (Test)'</span>)</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Cluster-based Local Outlier Factor (CBLOF)"</span>)</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>------ Cluster-based Local Outlier Factor (CBLOF) ------
 Train Accuracy: 95.00%
 Test Accuracy: 95.95%
 
@@ -530,8 +441,37 @@ Classification Report:
     accuracy                           0.96      1705
    macro avg       0.98      0.50      0.49      1705
 weighted avg       0.96      0.96      0.94      1705
-
------- Feature Bagging ------
+</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-5-output-2.png" width="643" height="505"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Feature Bagging</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>clf_feature_bagging <span class="op">=</span> FeatureBagging(KNN(n_neighbors<span class="op">=</span><span class="dv">35</span>), contamination<span class="op">=</span>outliers_fraction, check_estimator<span class="op">=</span><span class="va">False</span>, random_state<span class="op">=</span>random_state)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>clf_feature_bagging.fit(X_train)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>y_train_pred_feature_bagging <span class="op">=</span> clf_feature_bagging.labels_</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>y_test_pred_feature_bagging <span class="op">=</span> clf_feature_bagging.predict(X_test)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"------ Feature Bagging ------"</span>)</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Train Accuracy: </span><span class="sc">{</span>np<span class="sc">.</span><span class="bu">sum</span>(y_train_pred_feature_bagging <span class="op">==</span> <span class="dv">0</span>) <span class="op">/</span> <span class="bu">len</span>(y_train_pred_feature_bagging)<span class="sc">:.2%}</span><span class="ss">"</span>)</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Test Accuracy: </span><span class="sc">{</span>np<span class="sc">.</span><span class="bu">sum</span>(y_test_pred_feature_bagging <span class="op">==</span> <span class="dv">0</span>) <span class="op">/</span> <span class="bu">len</span>(y_test_pred_feature_bagging)<span class="sc">:.2%}</span><span class="ss">"</span>)</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Classification Report:"</span>)</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(classification_report(y_test_pred_feature_bagging, np.zeros_like(y_test_pred_feature_bagging), zero_division<span class="op">=</span><span class="dv">1</span>))</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>inliers_train_feature_bagging <span class="op">=</span> X_train[y_train_pred_feature_bagging <span class="op">==</span> <span class="dv">0</span>]</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>outliers_train_feature_bagging <span class="op">=</span> X_train[y_train_pred_feature_bagging <span class="op">==</span> <span class="dv">1</span>]</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>inliers_test_feature_bagging <span class="op">=</span> X_test[y_test_pred_feature_bagging <span class="op">==</span> <span class="dv">0</span>]</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>outliers_test_feature_bagging <span class="op">=</span> X_test[y_test_pred_feature_bagging <span class="op">==</span> <span class="dv">1</span>]</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>plt.scatter(inliers_train_feature_bagging[:, <span class="dv">0</span>], inliers_train_feature_bagging[:, <span class="dv">1</span>], color<span class="op">=</span><span class="st">'blue'</span>, label<span class="op">=</span><span class="st">'Inliers (Train)'</span>)</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>plt.scatter(outliers_train_feature_bagging[:, <span class="dv">0</span>], outliers_train_feature_bagging[:, <span class="dv">1</span>], color<span class="op">=</span><span class="st">'red'</span>, label<span class="op">=</span><span class="st">'Outliers (Train)'</span>)</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>plt.scatter(inliers_test_feature_bagging[:, <span class="dv">0</span>], inliers_test_feature_bagging[:, <span class="dv">1</span>], color<span class="op">=</span><span class="st">'green'</span>, label<span class="op">=</span><span class="st">'Inliers (Test)'</span>)</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>plt.scatter(outliers_test_feature_bagging[:, <span class="dv">0</span>], outliers_test_feature_bagging[:, <span class="dv">1</span>], color<span class="op">=</span><span class="st">'orange'</span>, label<span class="op">=</span><span class="st">'Outliers (Test)'</span>)</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Feature Bagging"</span>)</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>------ Feature Bagging ------
 Train Accuracy: 95.00%
 Test Accuracy: 95.60%
 
@@ -544,8 +484,37 @@ Classification Report:
     accuracy                           0.96      1705
    macro avg       0.98      0.50      0.49      1705
 weighted avg       0.96      0.96      0.93      1705
-
------- Histogram-based Outlier Detection (HBOS) ------
+</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-6-output-2.png" width="643" height="505"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Histogram-based Outlier Detection (HBOS)</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>clf_hbos <span class="op">=</span> HBOS(contamination<span class="op">=</span>outliers_fraction)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>clf_hbos.fit(X_train)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>y_train_pred_hbos <span class="op">=</span> clf_hbos.labels_</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>y_test_pred_hbos <span class="op">=</span> clf_hbos.predict(X_test)</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"------ Histogram-based Outlier Detection (HBOS) ------"</span>)</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Train Accuracy: </span><span class="sc">{</span>np<span class="sc">.</span><span class="bu">sum</span>(y_train_pred_hbos <span class="op">==</span> <span class="dv">0</span>) <span class="op">/</span> <span class="bu">len</span>(y_train_pred_hbos)<span class="sc">:.2%}</span><span class="ss">"</span>)</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Test Accuracy: </span><span class="sc">{</span>np<span class="sc">.</span><span class="bu">sum</span>(y_test_pred_hbos <span class="op">==</span> <span class="dv">0</span>) <span class="op">/</span> <span class="bu">len</span>(y_test_pred_hbos)<span class="sc">:.2%}</span><span class="ss">"</span>)</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Classification Report:"</span>)</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(classification_report(y_test_pred_hbos, np.zeros_like(y_test_pred_hbos), zero_division<span class="op">=</span><span class="dv">1</span>))</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>inliers_train_hbos <span class="op">=</span> X_train[y_train_pred_hbos <span class="op">==</span> <span class="dv">0</span>]</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>outliers_train_hbos <span class="op">=</span> X_train[y_train_pred_hbos <span class="op">==</span> <span class="dv">1</span>]</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>inliers_test_hbos <span class="op">=</span> X_test[y_test_pred_hbos <span class="op">==</span> <span class="dv">0</span>]</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>outliers_test_hbos <span class="op">=</span> X_test[y_test_pred_hbos <span class="op">==</span> <span class="dv">1</span>]</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>plt.scatter(inliers_train_hbos[:, <span class="dv">0</span>], inliers_train_hbos[:, <span class="dv">1</span>], color<span class="op">=</span><span class="st">'blue'</span>, label<span class="op">=</span><span class="st">'Inliers (Train)'</span>)</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>plt.scatter(outliers_train_hbos[:, <span class="dv">0</span>], outliers_train_hbos[:, <span class="dv">1</span>], color<span class="op">=</span><span class="st">'red'</span>, label<span class="op">=</span><span class="st">'Outliers (Train)'</span>)</span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>plt.scatter(inliers_test_hbos[:, <span class="dv">0</span>], inliers_test_hbos[:, <span class="dv">1</span>], color<span class="op">=</span><span class="st">'green'</span>, label<span class="op">=</span><span class="st">'Inliers (Test)'</span>)</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>plt.scatter(outliers_test_hbos[:, <span class="dv">0</span>], outliers_test_hbos[:, <span class="dv">1</span>], color<span class="op">=</span><span class="st">'orange'</span>, label<span class="op">=</span><span class="st">'Outliers (Test)'</span>)</span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Histogram-based Outlier Detection (HBOS)"</span>)</span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>------ Histogram-based Outlier Detection (HBOS) ------
 Train Accuracy: 95.28%
 Test Accuracy: 96.01%
 
@@ -558,8 +527,40 @@ Classification Report:
     accuracy                           0.96      1705
    macro avg       0.98      0.50      0.49      1705
 weighted avg       0.96      0.96      0.94      1705
-
------- Isolation Forest ------
+</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-7-output-2.png" width="643" height="505"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Isolation Forest</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>clf_isolation_forest <span class="op">=</span> IsolationForest(contamination<span class="op">=</span>outliers_fraction, random_state<span class="op">=</span>random_state)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>clf_isolation_forest.fit(X_train)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>y_train_scores_if <span class="op">=</span> clf_isolation_forest.decision_function(X_train)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>y_test_scores_if <span class="op">=</span> clf_isolation_forest.decision_function(X_test)</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>threshold_if <span class="op">=</span> np.percentile(y_train_scores_if, <span class="dv">100</span> <span class="op">*</span> outliers_fraction)</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>y_train_pred_if <span class="op">=</span> (y_train_scores_if <span class="op">&gt;</span> threshold_if).astype(<span class="bu">int</span>)</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>y_test_pred_if <span class="op">=</span> (y_test_scores_if <span class="op">&gt;</span> threshold_if).astype(<span class="bu">int</span>)</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"------ Isolation Forest ------"</span>)</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Train Accuracy: </span><span class="sc">{</span>np<span class="sc">.</span><span class="bu">sum</span>(y_train_pred_if <span class="op">==</span> <span class="dv">0</span>) <span class="op">/</span> <span class="bu">len</span>(y_train_pred_if)<span class="sc">:.2%}</span><span class="ss">"</span>)</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Test Accuracy: </span><span class="sc">{</span>np<span class="sc">.</span><span class="bu">sum</span>(y_test_pred_if <span class="op">==</span> <span class="dv">0</span>) <span class="op">/</span> <span class="bu">len</span>(y_test_pred_if)<span class="sc">:.2%}</span><span class="ss">"</span>)</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Classification Report:"</span>)</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(classification_report(y_test_pred_if, np.zeros_like(y_test_pred_if), zero_division<span class="op">=</span><span class="dv">1</span>))</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>inliers_train_if <span class="op">=</span> X_train[y_train_pred_if <span class="op">==</span> <span class="dv">0</span>]</span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>outliers_train_if <span class="op">=</span> X_train[y_train_pred_if <span class="op">==</span> <span class="dv">1</span>]</span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>inliers_test_if <span class="op">=</span> X_test[y_test_pred_if <span class="op">==</span> <span class="dv">0</span>]</span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>outliers_test_if <span class="op">=</span> X_test[y_test_pred_if <span class="op">==</span> <span class="dv">1</span>]</span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>plt.scatter(inliers_train_if[:, <span class="dv">0</span>], inliers_train_if[:, <span class="dv">1</span>], color<span class="op">=</span><span class="st">'blue'</span>, label<span class="op">=</span><span class="st">'Inliers (Train)'</span>)</span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>plt.scatter(outliers_train_if[:, <span class="dv">0</span>], outliers_train_if[:, <span class="dv">1</span>], color<span class="op">=</span><span class="st">'red'</span>, label<span class="op">=</span><span class="st">'Outliers (Train)'</span>)</span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>plt.scatter(inliers_test_if[:, <span class="dv">0</span>], inliers_test_if[:, <span class="dv">1</span>], color<span class="op">=</span><span class="st">'green'</span>, label<span class="op">=</span><span class="st">'Inliers (Test)'</span>)</span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>plt.scatter(outliers_test_if[:, <span class="dv">0</span>], outliers_test_if[:, <span class="dv">1</span>], color<span class="op">=</span><span class="st">'orange'</span>, label<span class="op">=</span><span class="st">'Outliers (Test)'</span>)</span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Isolation Forest"</span>)</span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>------ Isolation Forest ------
 Train Accuracy: 5.00%
 Test Accuracy: 4.34%
 
@@ -572,8 +573,37 @@ Classification Report:
     accuracy                           0.04      1705
    macro avg       0.52      0.50      0.04      1705
 weighted avg       0.96      0.04      0.00      1705
-
------- K Nearest Neighbors (KNN) ------
+</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-8-output-2.png" width="643" height="505"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># K Nearest Neighbors (KNN)</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>clf_knn <span class="op">=</span> KNN(contamination<span class="op">=</span>outliers_fraction)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>clf_knn.fit(X_train)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>y_train_pred_knn <span class="op">=</span> clf_knn.labels_</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>y_test_pred_knn <span class="op">=</span> clf_knn.predict(X_test)</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"------ K Nearest Neighbors (KNN) ------"</span>)</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Train Accuracy: </span><span class="sc">{</span>np<span class="sc">.</span><span class="bu">sum</span>(y_train_pred_knn <span class="op">==</span> <span class="dv">0</span>) <span class="op">/</span> <span class="bu">len</span>(y_train_pred_knn)<span class="sc">:.2%}</span><span class="ss">"</span>)</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Test Accuracy: </span><span class="sc">{</span>np<span class="sc">.</span><span class="bu">sum</span>(y_test_pred_knn <span class="op">==</span> <span class="dv">0</span>) <span class="op">/</span> <span class="bu">len</span>(y_test_pred_knn)<span class="sc">:.2%}</span><span class="ss">"</span>)</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Classification Report:"</span>)</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(classification_report(y_test_pred_knn, np.zeros_like(y_test_pred_knn), zero_division<span class="op">=</span><span class="dv">1</span>))</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>inliers_train_knn <span class="op">=</span> X_train[y_train_pred_knn <span class="op">==</span> <span class="dv">0</span>]</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>outliers_train_knn <span class="op">=</span> X_train[y_train_pred_knn <span class="op">==</span> <span class="dv">1</span>]</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>inliers_test_knn <span class="op">=</span> X_test[y_test_pred_knn <span class="op">==</span> <span class="dv">0</span>]</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>outliers_test_knn <span class="op">=</span> X_test[y_test_pred_knn <span class="op">==</span> <span class="dv">1</span>]</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>plt.scatter(inliers_train_knn[:, <span class="dv">0</span>], inliers_train_knn[:, <span class="dv">1</span>], color<span class="op">=</span><span class="st">'blue'</span>, label<span class="op">=</span><span class="st">'Inliers (Train)'</span>)</span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>plt.scatter(outliers_train_knn[:, <span class="dv">0</span>], outliers_train_knn[:, <span class="dv">1</span>], color<span class="op">=</span><span class="st">'red'</span>, label<span class="op">=</span><span class="st">'Outliers (Train)'</span>)</span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>plt.scatter(inliers_test_knn[:, <span class="dv">0</span>], inliers_test_knn[:, <span class="dv">1</span>], color<span class="op">=</span><span class="st">'green'</span>, label<span class="op">=</span><span class="st">'Inliers (Test)'</span>)</span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>plt.scatter(outliers_test_knn[:, <span class="dv">0</span>], outliers_test_knn[:, <span class="dv">1</span>], color<span class="op">=</span><span class="st">'orange'</span>, label<span class="op">=</span><span class="st">'Outliers (Test)'</span>)</span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"K Nearest Neighbors (KNN)"</span>)</span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>------ K Nearest Neighbors (KNN) ------
 Train Accuracy: 95.01%
 Test Accuracy: 95.37%
 
@@ -586,8 +616,37 @@ Classification Report:
     accuracy                           0.95      1705
    macro avg       0.98      0.50      0.49      1705
 weighted avg       0.96      0.95      0.93      1705
-
------- Average KNN ------
+</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-9-output-2.png" width="643" height="505"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Average KNN</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>clf_avg_knn <span class="op">=</span> KNN(method<span class="op">=</span><span class="st">'mean'</span>, contamination<span class="op">=</span>outliers_fraction)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>clf_avg_knn.fit(X_train)</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>y_train_pred_avg_knn <span class="op">=</span> clf_avg_knn.labels_</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>y_test_pred_avg_knn <span class="op">=</span> clf_avg_knn.predict(X_test)</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"------ Average KNN ------"</span>)</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Train Accuracy: </span><span class="sc">{</span>np<span class="sc">.</span><span class="bu">sum</span>(y_train_pred_avg_knn <span class="op">==</span> <span class="dv">0</span>) <span class="op">/</span> <span class="bu">len</span>(y_train_pred_avg_knn)<span class="sc">:.2%}</span><span class="ss">"</span>)</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Test Accuracy: </span><span class="sc">{</span>np<span class="sc">.</span><span class="bu">sum</span>(y_test_pred_avg_knn <span class="op">==</span> <span class="dv">0</span>) <span class="op">/</span> <span class="bu">len</span>(y_test_pred_avg_knn)<span class="sc">:.2%}</span><span class="ss">"</span>)</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Classification Report:"</span>)</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(classification_report(y_test_pred_avg_knn, np.zeros_like(y_test_pred_avg_knn), zero_division<span class="op">=</span><span class="dv">1</span>))</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>inliers_train_avg_knn <span class="op">=</span> X_train[y_train_pred_avg_knn <span class="op">==</span> <span class="dv">0</span>]</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>outliers_train_avg_knn <span class="op">=</span> X_train[y_train_pred_avg_knn <span class="op">==</span> <span class="dv">1</span>]</span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>inliers_test_avg_knn <span class="op">=</span> X_test[y_test_pred_avg_knn <span class="op">==</span> <span class="dv">0</span>]</span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>outliers_test_avg_knn <span class="op">=</span> X_test[y_test_pred_avg_knn <span class="op">==</span> <span class="dv">1</span>]</span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>plt.scatter(inliers_train_avg_knn[:, <span class="dv">0</span>], inliers_train_avg_knn[:, <span class="dv">1</span>], color<span class="op">=</span><span class="st">'blue'</span>, label<span class="op">=</span><span class="st">'Inliers (Train)'</span>)</span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>plt.scatter(outliers_train_avg_knn[:, <span class="dv">0</span>], outliers_train_avg_knn[:, <span class="dv">1</span>], color<span class="op">=</span><span class="st">'red'</span>, label<span class="op">=</span><span class="st">'Outliers (Train)'</span>)</span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>plt.scatter(inliers_test_avg_knn[:, <span class="dv">0</span>], inliers_test_avg_knn[:, <span class="dv">1</span>], color<span class="op">=</span><span class="st">'green'</span>, label<span class="op">=</span><span class="st">'Inliers (Test)'</span>)</span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>plt.scatter(outliers_test_avg_knn[:, <span class="dv">0</span>], outliers_test_avg_knn[:, <span class="dv">1</span>], color<span class="op">=</span><span class="st">'orange'</span>, label<span class="op">=</span><span class="st">'Outliers (Test)'</span>)</span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Average KNN"</span>)</span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>------ Average KNN ------
 Train Accuracy: 95.00%
 Test Accuracy: 94.96%
 
@@ -603,25 +662,7 @@ weighted avg       0.95      0.95      0.92      1705
 </code></pre>
 </div>
 <div class="cell-output cell-output-display">
-<p><img src="index_files/figure-html/cell-5-output-2.png" width="991" height="505"></p>
-</div>
-<div class="cell-output cell-output-display">
-<p><img src="index_files/figure-html/cell-5-output-3.png" width="1033" height="505"></p>
-</div>
-<div class="cell-output cell-output-display">
-<p><img src="index_files/figure-html/cell-5-output-4.png" width="941" height="505"></p>
-</div>
-<div class="cell-output cell-output-display">
-<p><img src="index_files/figure-html/cell-5-output-5.png" width="1036" height="505"></p>
-</div>
-<div class="cell-output cell-output-display">
-<p><img src="index_files/figure-html/cell-5-output-6.png" width="941" height="505"></p>
-</div>
-<div class="cell-output cell-output-display">
-<p><img src="index_files/figure-html/cell-5-output-7.png" width="948" height="505"></p>
-</div>
-<div class="cell-output cell-output-display">
-<p><img src="index_files/figure-html/cell-5-output-8.png" width="941" height="505"></p>
+<p><img src="index_files/figure-html/cell-10-output-2.png" width="643" height="505"></p>
 </div>
 </div>
 
