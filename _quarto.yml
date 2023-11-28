@@ -3,6 +3,8 @@ project:
   output-dir: docs
 
 website:
+  repo-url: https://github.com/daniel-a-udekwe/daniel-a-udekwe.github.io
+  repo-actions: [source]
   title: "CS5805 - Machine Learning I"
   navbar:
     right:
