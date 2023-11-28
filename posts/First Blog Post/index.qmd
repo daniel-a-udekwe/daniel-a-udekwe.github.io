@@ -232,7 +232,7 @@ This is the procedure. Here $\alpha$ is the learning rate. This operation $\frac
 
 In step 2 we are changing the values of $\theta_j$. in a direction in which it reduces our cost function. And Gradient gives the direction in which we want to move. Finally we will reach the minima of our cost function. But we don't want to change values of $\theta_j$. drastically, because we might miss the minima. That's why we need learning rate.
 
-![ Animation illustrating the gradient descent method](regression%20_4.gif){fig-align="center"}
+![Animation illustrating the gradient descent method](regression%20_4.gif){fig-align="center"}
 
 The above animation illustrates the Gradient Descent method.
 
@@ -353,9 +353,9 @@ Where:
 
 -   $X$ is the independent variable(s)
 
--    $\theta$ represents the parameters of the nonlinear function $f$
+-   $\theta$ represents the parameters of the nonlinear function $f$
 
--    $\epsilon$ is the error term
+-   $\epsilon$ is the error term
 
 The goal of nonlinear regression is to estimate the parameters $(\theta)$ of the chosen nonlinear function in a way that minimizes the sum of squared differences between the predicted values and the actual observed values. This is typically done using optimization techniques, such as gradient descent or other numerical optimization algorithms.
 
