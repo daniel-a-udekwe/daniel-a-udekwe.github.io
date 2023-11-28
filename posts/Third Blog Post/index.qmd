@@ -3,7 +3,7 @@ title: "Clustering"
 author: "Daniel A. Udekwe"
 date: "2023-11-23"
 categories: [news]
-image: "clustering.jpeg"
+image: "cluster.png"
 ---
 
 Clustering is a type of unsupervised machine learning technique where the goal is to group similar data points together based on certain characteristics or features. The objective is to identify natural patterns or structures within the data without the need for predefined labels.

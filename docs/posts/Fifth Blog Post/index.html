@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Daniel A. Udekwe">
-<meta name="dcterms.date" content="2023-10-14">
+<meta name="dcterms.date" content="2023-11-23">
 
-<title>daudekwe@vt.edu - Probability Theory and Random Variables</title>
+<title>CS5805 - Machine Learning I - Probability Theory and Random Variables</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -109,7 +109,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
     <a class="navbar-brand" href="../../index.html">
-    <span class="navbar-title">daudekwe@vt.edu</span>
+    <span class="navbar-title">CS5805 - Machine Learning I</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -119,8 +119,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../about.html" rel="" target="">
- <span class="menu-text">About</span></a>
+    <a class="nav-link" href="../../posts.html" rel="" target="">
+ <span class="menu-text">Blog Posts</span></a>
   </li>  
   <li class="nav-item compact">
     <a class="nav-link" href="https://github.com/daniel-udekwe" rel="" target=""><i class="bi bi-github" role="img">
@@ -128,7 +128,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://twitter.com" rel="" target=""><i class="bi bi-discord" role="img">
+    <a class="nav-link" href="https://twitter.com" rel="" target=""><i class="bi bi-twitter" role="img">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
@@ -168,7 +168,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">October 14, 2023</p>
+        <p class="date">November 23, 2023</p>
       </div>
     </div>
     
@@ -190,26 +190,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#events" id="toc-events" class="nav-link" data-scroll-target="#events">Events</a></li>
   <li><a href="#probability" id="toc-probability" class="nav-link" data-scroll-target="#probability">Probability</a></li>
   </ul></li>
-  <li><a href="#random-variables" id="toc-random-variables" class="nav-link" data-scroll-target="#random-variables">Random Variables</a>
+  <li><a href="#random-variables" id="toc-random-variables" class="nav-link" data-scroll-target="#random-variables">Random Variables</a></li>
+  <li><a href="#probability-distribution" id="toc-probability-distribution" class="nav-link" data-scroll-target="#probability-distribution">Probability Distribution</a>
   <ul class="collapse">
-  <li><a href="#probability-distribution" id="toc-probability-distribution" class="nav-link" data-scroll-target="#probability-distribution">Probability Distribution</a></li>
-  </ul></li>
   <li><a href="#probability-mass-function" id="toc-probability-mass-function" class="nav-link" data-scroll-target="#probability-mass-function"><strong>Probability Mass Function</strong></a>
   <ul class="collapse">
   <li><a href="#bernoulli-distribution" id="toc-bernoulli-distribution" class="nav-link" data-scroll-target="#bernoulli-distribution">Bernoulli Distribution</a></li>
   <li><a href="#binomial-distribution" id="toc-binomial-distribution" class="nav-link" data-scroll-target="#binomial-distribution">Binomial Distribution</a></li>
   <li><a href="#geometric-distribution" id="toc-geometric-distribution" class="nav-link" data-scroll-target="#geometric-distribution">Geometric Distribution</a></li>
-  <li><a href="#probability-density-function" id="toc-probability-density-function" class="nav-link" data-scroll-target="#probability-density-function">Probability Density Function</a></li>
   <li><a href="#gaussian-distribution" id="toc-gaussian-distribution" class="nav-link" data-scroll-target="#gaussian-distribution">Gaussian Distribution</a></li>
+  </ul></li>
+  <li><a href="#probability-density-function" id="toc-probability-density-function" class="nav-link" data-scroll-target="#probability-density-function">Probability Density Function</a></li>
   </ul></li>
   <li><a href="#applications-in-machine-learning" id="toc-applications-in-machine-learning" class="nav-link" data-scroll-target="#applications-in-machine-learning">Applications in Machine Learning</a>
   <ul class="collapse">
-  <li><a href="#bayesian-inference" id="toc-bayesian-inference" class="nav-link" data-scroll-target="#bayesian-inference">Bayesian Inference</a></li>
+  <li><a href="#bayesian-inference" id="toc-bayesian-inference" class="nav-link" data-scroll-target="#bayesian-inference">Bayesian Inference</a>
+  <ul class="collapse">
   <li><a href="#the-likelihood" id="toc-the-likelihood" class="nav-link" data-scroll-target="#the-likelihood"><strong>The likelihood</strong></a></li>
   <li><a href="#the-prior" id="toc-the-prior" class="nav-link" data-scroll-target="#the-prior"><strong>The prior</strong></a></li>
   <li><a href="#the-posterior" id="toc-the-posterior" class="nav-link" data-scroll-target="#the-posterior"><strong>The posterior</strong></a></li>
   </ul></li>
-  <li><a href="#mcmc" id="toc-mcmc" class="nav-link" data-scroll-target="#mcmc">MCMC</a></li>
+  <li><a href="#markov-chain-monte-carlo-mcmc" id="toc-markov-chain-monte-carlo-mcmc" class="nav-link" data-scroll-target="#markov-chain-monte-carlo-mcmc">Markov Chain Monte Carlo (MCMC)</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -226,13 +228,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>In the following sections, we are going to cover some fundamental aspects of probability before delving into aspects that are especially relevant to machine learning — the random variable and the probability distribution.</p>
 <section id="set-theory" class="level2">
 <h2 class="anchored" data-anchor-id="set-theory">Set Theory</h2>
-<p>The set <span class="math inline">\(S\)</span> of all possible outcomes of a particular experiment is called the sample space for the experiment.</p>
-<p>If the experiment consists of tossing a coin, the sample space contains two outcomes, heads and tails: thus,</p>
+<p>The set <span class="math inline">\(S\)</span> of all possible outcomes of a particular experiment is called the sample space for the experiment. If the experiment consists of tossing a coin, the sample space contains two outcomes, heads and tails: thus,</p>
 <p><span class="math display">\[
 S = \{H, T\}
 \]</span></p>
 <p>If, on the other hand, the experiment consists of observing the reported SAT scores of randomly selected students at a certain university, the sample space would be the set of positive integers between 200 and 800 that are multiples of ten — that is, <span class="math inline">\(S = \{200, 210, 220, ..., 780, 790, 800 \}\)</span></p>
-<p>We can classify sample spaces into two types according to the number of elements they contain. Sample spaces can be either countable or uncountable; If the elements of a sample space can be put into 1-1 correspondence with a subset of the integers, the sample space is countable. Of course, if the sample space contains only a finite number of elements, it is countable. Thus, the coin toss and SAT score sample is uncountable, since the positive real numbers cannot be put into 1-1 correspondence with the integers. If, however, we measured the reaction time to the nearest second, then the sample space would be (in seconds) <span class="math inline">\(S = \{0, 1, 2, 3, ... \}\)</span>, which is then countable.</p>
+<p>We can classify sample spaces into two types according to the number of elements they contain. Sample spaces can be either <strong>countable</strong> or <strong>uncountable</strong>; If the elements of a sample space can be put into 1-1 correspondence with a subset of the integers, the sample space is countable. Of course, if the sample space contains only a finite number of elements, it is countable. Thus, the coin toss and SAT score sample is uncountable, since the positive real numbers cannot be put into 1-1 correspondence with the integers. If, however, we measured the reaction time to the nearest second, then the sample space would be (in seconds) <span class="math inline">\(S = \{0, 1, 2, 3, ... \}\)</span>, which is then countable.</p>
 </section>
 <section id="events" class="level2">
 <h2 class="anchored" data-anchor-id="events">Events</h2>
@@ -288,79 +289,12 @@ P(\{H\}) + P(\{T\}) = 1
 </figure>
 </div>
 <p>Understanding the probability distribution, allows us to compute the probability of a certain outcome by also accounting for the variability in the results. Thus, it enables us to generalize from the sample to the population, estimate the data-generating function and predict the behavior of a random variable more accurately.</p>
-<div class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> norm, probplot</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> boot_example():</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    N <span class="op">=</span> <span class="dv">50</span>  <span class="co"># data samples</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    R <span class="op">=</span> <span class="dv">1000</span>  <span class="co"># replicates from population</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    B <span class="op">=</span> <span class="dv">500</span>  <span class="co"># bootstrap samples</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    mixture_weight1 <span class="op">=</span> <span class="dv">1</span><span class="op">/</span><span class="dv">2</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    mixture_weight2 <span class="op">=</span> <span class="dv">1</span><span class="op">/</span><span class="dv">3</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    mixture_weight3 <span class="op">=</span> <span class="dv">1</span><span class="op">/</span><span class="dv">6</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Sample from population</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    rep_stat <span class="op">=</span> np.zeros(R)</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> r <span class="kw">in</span> <span class="bu">range</span>(R):</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>        X <span class="op">=</span> np.zeros(N)</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(N):</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>            u <span class="op">=</span> np.random.rand()</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> u <span class="op">&lt;</span> mixture_weight1:</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>                X[i] <span class="op">=</span> np.random.randn() <span class="op">+</span> <span class="dv">10</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>            <span class="cf">elif</span> u <span class="op">&lt;</span> mixture_weight1 <span class="op">+</span> mixture_weight2:</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>                X[i] <span class="op">=</span> np.random.randn() <span class="op">-</span> <span class="dv">10</span></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>            <span class="cf">else</span>:</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>                X[i] <span class="op">=</span> np.random.randn() <span class="op">+</span> <span class="dv">3</span></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>        <span class="co">##plt.figure(1)</span></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>        <span class="co">##plt.hist(X, bins=100)</span></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>        <span class="co">##plt.title('Hist from population')</span></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>        <span class="co">##plt.pause(0.001)</span></span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>        <span class="co"># rep_stat[r] = np.mean(X)  # true iid replicated</span></span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>        <span class="co">##rep_stat[r] = np.var(X)</span></span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>    plt.figure(<span class="dv">2</span>)</span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>    plt.subplot(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">1</span>)</span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>    plt.hist(rep_stat)</span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>    plt.title(<span class="st">'stat replicated from pop'</span>)</span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Note: we are recycling only the final X-vector here! 1 replicate</span></span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>    <span class="co"># -------- bootstrap -----------</span></span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>    boot_stat <span class="op">=</span> np.zeros(B)</span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> b <span class="kw">in</span> <span class="bu">range</span>(B):</span>
-<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>        X_boot <span class="op">=</span> np.random.choice(X, N, replace<span class="op">=</span><span class="va">True</span>)  <span class="co"># samples N times with replacement</span></span>
-<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>        <span class="co"># boot_stat[b] = np.mean(X_boot)  # statistic of interest, with bootstrap replication</span></span>
-<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>        boot_stat[b] <span class="op">=</span> np.var(X_boot)</span>
-<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>    plt.subplot(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>)</span>
-<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>    plt.hist(boot_stat)</span>
-<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>    plt.title(<span class="st">'bootstrap distribution'</span>)</span>
-<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>    plt.figure(<span class="dv">3</span>)</span>
-<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>    probplot(boot_stat, plot<span class="op">=</span>plt)</span>
-<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>    plt.xlabel(<span class="st">'BootStat Quantiles'</span>)</span>
-<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>    plt.ylabel(<span class="st">'Replicate Quantiles'</span>)</span>
-<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>    plt.title(<span class="st">'QQ Plot'</span>)</span>
-<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>    plt.show()</span>
-<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">"__main__"</span>:</span>
-<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a>    boot_example()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<p><img src="index_files/figure-html/cell-2-output-1.png" width="583" height="431"></p>
-</div>
-<div class="cell-output cell-output-display">
-<p><img src="index_files/figure-html/cell-2-output-2.png" width="593" height="449"></p>
-</div>
-</div>
 </section>
 </section>
 <section id="random-variables" class="level1">
 <h1>Random Variables</h1>
 <p>Loosely speaking, the random variable is a variable whose value depends on the outcome of a random event. We can also describe it as a function that maps from the sample space to a measurable space (e.g.&nbsp;a real number).</p>
-<p>Let's assume, we have a sample space containing 4 students <code>{A, B, C, D}</code>. If we now randomly pick <code>student A</code> and measure the height in centimeters, we can think of the <code>random variable (H)</code>as the function with the input of <code>student</code>and the output of <code>height</code>as a real number.</p>
+<p>Let’s assume, we have a sample space containing 4 students <code>{A, B, C, D}</code>. If we now randomly pick <code>student A</code> and measure the height in centimeters, we can think of the <code>random variable (H)</code>as the function with the input of <code>student</code>and the output of <code>height</code>as a real number.</p>
 <p><span class="math display">\[
 H(student) = height
 \]</span></p>
@@ -377,35 +311,34 @@ H(student) = height
 <p>Our random variable, however, is continuous if between any two values of our variable are an infinite number of other valid values. We can think of quantities such as pressure, height, mass, and distance as examples of continuous random variables.</p>
 <p>When we couple our random variable with a probability distribution we can answer the following question: How likely is it for our random variable to take a specific state? Which is basically the same as asking for the probability.</p>
 <p>Now, we are left with one question that remains— what is a probability distribution?</p>
-<section id="probability-distribution" class="level2">
-<h2 class="anchored" data-anchor-id="probability-distribution">Probability Distribution</h2>
+</section>
+<section id="probability-distribution" class="level1">
+<h1>Probability Distribution</h1>
 <p>The description of how likely a random variable takes one of its possible states can be given by a probability distribution. Thus, the probability distribution is a mathematical function that gives the probabilities of different outcomes for an experiment.</p>
 <p>More generally it can be described as the function</p>
 <p><span class="math display">\[
 P:A \rightarrow R
 \]</span></p>
 <p>which maps an input space A — related to the sample space — to a real number, namely the probability.</p>
-<p>For the above function to characterize a probability distribution, it must follow all of the Kolmogorov axioms:</p>
+<p>For the above function to characterize a probability distribution, it must follow all of the <strong>Kolmogorov axioms:</strong></p>
 <ol type="1">
-<li><p>Non-negativity</p></li>
+<li><p><strong>Non</strong>-negativity</p></li>
 <li><p>No probability exceeds 1</p></li>
 <li><p>Additivity of any countable disjoint (mutually exclusive) events</p></li>
 </ol>
 <p>The way we describe a probability distribution depends on whether the random variable is discrete or continuous, which will result in a probability mass or density function respectively.</p>
-</section>
-</section>
-<section id="probability-mass-function" class="level1">
-<h1><strong>Probability Mass Function</strong></h1>
+<section id="probability-mass-function" class="level2">
+<h2 class="anchored" data-anchor-id="probability-mass-function"><strong>Probability Mass Function</strong></h2>
 <p>The probability mass function (PMF) describes the probability distribution over a discrete random variable. In other terms, it is a function that returns the probability of a random variable being exactly equal to a specific value.</p>
 <p>The returned probability lies in the range [0, 1] and the sum of all probabilities for every state equals one.</p>
-<p>Let's imagine a plot where the x-axis describes the states and the y-axis shows the probability of a certain state. Thinking this way allows us to envision the probability or the PMF as a barplot sitting on top of a state.</p>
+<p>Let’s imagine a plot where the x-axis describes the states and the y-axis shows the probability of a certain state. Thinking this way allows us to envision the probability or the PMF as a barplot sitting on top of a state.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/probability-mass-function.webp" class="img-fluid figure-img"></p>
 <figcaption class="figure-caption">An example of a uniform PMF</figcaption>
 </figure>
 </div>
-<p>beIn the following, we will learn about three common discrete probability distributions: The Bernoulli, binomial and geometric distribution.</p>
+<p>In the following, we will learn about three common discrete probability distributions: The Bernoulli, binomial and geometric distribution.</p>
 <section id="bernoulli-distribution" class="level3">
 <h3 class="anchored" data-anchor-id="bernoulli-distribution">Bernoulli Distribution</h3>
 <p>Named after the Swiss mathematician Jacob Bernoulli, the Bernoulli distribution is a discrete probability distribution of a single binary random variable, which either takes the value 1 or 0.</p>
@@ -413,8 +346,8 @@ P:A \rightarrow R
 <p>More formally the function can be stated as the following equation</p>
 <p><span class="math display">\[
 f(k;p) =     \begin{dcases}
-        q = 1-p &amp; if k = 0 \\
-        q &amp; if k = 1 \\
+        q = 1-p &amp; if \ k = 0 \\
+        q &amp; if \ k = 1 \\
     \end{dcases}
 \]</span></p>
 <p><span class="math display">\[
@@ -437,8 +370,8 @@ n \in N, \ p \in [0,1]
 f(k;n,p) = {n \choose k} p^k(1-p)^{n-k}
 \]</span></p>
 <p>The success of <em>k</em> is given by the probability <em>p</em> to the power of <em>k,</em> whereas the probability of failure is defined by <em>(1-p)</em> to the power of <em>n</em> minus <em>k</em>, which is basically the number of trials minus the one trial where we get <em>k</em>.</p>
-<p>Since the event of success <em>k</em> canoccur anywhere in <em>n</em> trials, we have <a href="https://en.wikipedia.org/wiki/Binomial_coefficient"><em>"n choose k"</em></a> ways to distribute the success.</p>
-<p>Let's pick up our coin-tossing example from before and build on it.</p>
+<p>Since the event of success <em>k</em> can occur anywhere in <em>n</em> trials, we have <strong><em>“n choose k”</em></strong> ways to distribute the success.</p>
+<p>Let’s pick up our coin-tossing example from before and build on it.</p>
 <p>Now, we are going to flip the fair coin three times, while being interested in the random variable describing the number of heads obtained.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -471,10 +404,37 @@ P(2) = 0.375
 <li><p>For each trial, there are only two possible outcomes</p></li>
 <li><p>The probability of success is the same for every trial</p></li>
 </ol>
-<p>Let's visualize the geometric distribution by answering the question for the probability of the number of trials needed for the coin to come up heads for the first time.</p>
+<p>Let’s visualize the geometric distribution by answering the question for the probability of the number of trials needed for the coin to come up heads for the first time.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/geometric.jpg" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">The geometric distribution until first head</figcaption>
+</figure>
+</div>
 </section>
-<section id="probability-density-function" class="level3">
-<h3 class="anchored" data-anchor-id="probability-density-function">Probability Density Function</h3>
+<section id="gaussian-distribution" class="level3">
+<h3 class="anchored" data-anchor-id="gaussian-distribution">Gaussian Distribution</h3>
+<p>The Gaussian distribution is often considered a sensible choice to represent a real-valued random variable, whose distribution is unknown.</p>
+<p>This is mainly due to the central limit theorem, which, loosely speaking, states that the average of many independent random variables with finite mean and variance is itself a random variable — which is normally distributed as the number of observations increases.</p>
+<p>This is especially useful since it allows us to model complicated systems as Gaussian distributed, even if the individual parts follow a more complicated structure or distribution.</p>
+<p>Another reason it is a common choice for modeling a distribution over a continuous variable is the fact that it inserts the least amount of prior knowledge.</p>
+<p>More formally, the Gaussian distribution can be stated as</p>
+<p><span class="math display">\[
+N (x: \mu, \sigma^2) = \sqrt\frac{1}{2\pi\sigma^2}exp(-\frac{1}{2\sigma^2}(x-\mu)^2)
+\]</span></p>
+<p>where the parameter <em>µ</em> is the mean and <em>σ²</em> describes the variance.</p>
+<p>In simple terms, the mean will be responsible for defining the central peak of the bell-shaped distribution, whereas the variance or the standard deviation defines its width.</p>
+<p>We can visualize the normal distribution as the following:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/gaussian-distribution.webp" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">An example of a Gaussian distribution</figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="probability-density-function" class="level2">
+<h2 class="anchored" data-anchor-id="probability-density-function">Probability Density Function</h2>
 <p>In the earlier sections, we learned that a random variable can either be discrete or continuous. If it is discrete, we can describe the probability distribution with a probability mass function.</p>
 <p>Now, we are dealing with continuous variables — hence, we need to describe the probability distribution with a probability density function (PDF).</p>
 <p>The PDF, contrary to the PMF, does not give the probability of a random variable taking a specific state directly. Instead, it describes the probability of landing inside an infinitesimal region. In other terms, the PDF describes the probability of a random variable lying between a particular range of values.</p>
@@ -494,26 +454,6 @@ P(2) = 0.375
 \]</span></p>
 <p>One of the most common continuous probability distributions is the gaussian or normal distribution.</p>
 </section>
-<section id="gaussian-distribution" class="level3">
-<h3 class="anchored" data-anchor-id="gaussian-distribution">Gaussian Distribution</h3>
-<p>The Gaussian distribution is often considered a sensible choice to represent a real-valued random variable, whose distribution is unknown.</p>
-<p>This is mainly due to the <a href="https://en.wikipedia.org/wiki/Central_limit_theorem">central limit theorem</a>, which, loosely speaking, states that the average of many independent random variables with finite mean and variance is itself a random variable — which is normally distributed as the number of observations increases.</p>
-<p>This is especially useful since it allows us to model complicated systems as Gaussian distributed, even if the individual parts follow a more complicated structure or distribution.</p>
-<p>Another reason it is a common choice for modeling a distribution over a continuous variable is the fact that it inserts the least amount of prior knowledge.</p>
-<p>More formally, the Gaussian distribution can be stated as</p>
-<p><span class="math display">\[
-N (x: \mu, \sigma^2) = \sqrt\frac{1}{2\pi\sigma^2}exp(-\frac{1}{2\sigma^2}(x-\mu)^2)
-\]</span></p>
-<p>where the parameter <em>µ</em> is the mean and <em>σ²</em> describes the variance.</p>
-<p>In simple terms, the mean will be responsible for defining the central peak of the bell-shaped distribution, whereas the variance or the standard deviation defines its width.</p>
-<p>We can visualize the normal distribution as the following:</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/gaussian-distribution.webp" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">An example of a Gaussian distribution</figcaption>
-</figure>
-</div>
-</section>
 </section>
 <section id="applications-in-machine-learning" class="level1">
 <h1>Applications in Machine Learning</h1>
@@ -522,130 +462,130 @@ N (x: \mu, \sigma^2) = \sqrt\frac{1}{2\pi\sigma^2}exp(-\frac{1}{2\sigma^2}(x-\mu
 <p>Bayesian inference is a way of making statistical inferences in which the statistician assigns subjective probabilities to the distributions that could generate the data. These subjective probabilities form the so-called prior distribution.</p>
 <p>After the data is observed, <a href="https://www.statlect.com/fundamentals-of-probability/Bayes-rule">Bayes’ rule</a> is used to update the prior, that is, to revise the probabilities assigned to the possible data generating distributions. These revised probabilities form the so-called posterior distribution.</p>
 <p>This lecture provides an introduction to Bayesian inference and discusses a simple example of inference about the mean of a normal distribution.</p>
-</section>
-<section id="the-likelihood" class="level2">
-<h2 class="anchored" data-anchor-id="the-likelihood"><strong>The likelihood</strong></h2>
+<section id="the-likelihood" class="level3">
+<h3 class="anchored" data-anchor-id="the-likelihood"><strong>The likelihood</strong></h3>
 <p>The first building block of a parametric Bayesian model is the likelihood</p>
 <p>The likelihood is equal to the probability density of x when the parameter of the data generating distribution is equal to <span class="math inline">\(\theta\)</span></p>
 <p>For the time being, we assume that and are <a href="https://www.statlect.com/glossary/absolutely-continuous-random-variable">continuous</a>. Later, we will discuss how to relax this assumption.</p>
 </section>
-<section id="the-prior" class="level2">
-<h2 class="anchored" data-anchor-id="the-prior"><strong>The prior</strong></h2>
+<section id="the-prior" class="level3">
+<h3 class="anchored" data-anchor-id="the-prior"><strong>The prior</strong></h3>
 <p>The second building block of a Bayesian model is the prior</p>
 <p><span class="math display">\[
 p(\theta)
 \]</span></p>
 <p>The prior is the subjective probability density assigned to the parameter</p>
 </section>
-<section id="the-posterior" class="level2">
-<h2 class="anchored" data-anchor-id="the-posterior"><strong>The posterior</strong></h2>
+<section id="the-posterior" class="level3">
+<h3 class="anchored" data-anchor-id="the-posterior"><strong>The posterior</strong></h3>
 <p>After observing the data , we use Bayes’ rule to update the prior about the parameter :</p>
 <p>The conditional density is called posterior distribution of the parameter.</p>
 <p>By using the formula for the marginal density derived above, we obtain</p>
 <p>Thus, the posterior depends on the two distributions specified by the statistician, the prior and the likelihood .</p>
 <p>Example</p>
-<div class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> beta, binom</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Set up prior distribution</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> <span class="fl">0.5</span>  <span class="co"># alpha parameter</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> <span class="fl">0.5</span>  <span class="co"># beta parameter</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>prior <span class="op">=</span> beta(a, b)  <span class="co"># create Beta distribution object</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate some fake data</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">100</span>  <span class="co"># number of trials</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>k <span class="op">=</span> <span class="dv">40</span>   <span class="co"># number of successes</span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> binom.rvs(<span class="dv">1</span>, k<span class="op">/</span>n, size<span class="op">=</span>n)  <span class="co"># generate binary data from binomial distribution</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute posterior distribution</span></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>a_post <span class="op">=</span> a <span class="op">+</span> np.<span class="bu">sum</span>(data)  <span class="co"># update alpha parameter</span></span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>b_post <span class="op">=</span> b <span class="op">+</span> n <span class="op">-</span> np.<span class="bu">sum</span>(data)  <span class="co"># update beta parameter</span></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>posterior <span class="op">=</span> beta(a_post, b_post)  <span class="co"># create updated Beta distribution object</span></span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute credible intervals</span></span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>CI_95 <span class="op">=</span> beta.ppf([<span class="fl">0.025</span>, <span class="fl">0.975</span>], a_post, b_post)  <span class="co"># compute 95% credible interval</span></span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot prior and posterior distributions</span></span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1000</span>)</span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>prior_pdf <span class="op">=</span> prior.pdf(x)</span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>posterior_pdf <span class="op">=</span> posterior.pdf(x)</span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>plt.plot(x, prior_pdf, <span class="st">'b--'</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>plt.plot(x, posterior_pdf, <span class="st">'r-'</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>plt.ylim([<span class="dv">0</span>, <span class="bu">max</span>(posterior_pdf)<span class="op">*</span><span class="fl">1.1</span>])</span>
-<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>plt.legend([<span class="st">'Prior'</span>, <span class="st">'Posterior'</span>])</span>
-<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'p/(1-p)'</span>)</span>
-<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Density'</span>)</span>
-<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Bayesian Analysis of p/(1-p)'</span>)</span>
-<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> beta, binom</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Set up prior distribution</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> <span class="fl">0.5</span>  <span class="co"># alpha parameter</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> <span class="fl">0.5</span>  <span class="co"># beta parameter</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>prior <span class="op">=</span> beta(a, b)  <span class="co"># create Beta distribution object</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate some fake data</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">100</span>  <span class="co"># number of trials</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>k <span class="op">=</span> <span class="dv">40</span>   <span class="co"># number of successes</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> binom.rvs(<span class="dv">1</span>, k<span class="op">/</span>n, size<span class="op">=</span>n)  <span class="co"># generate binary data from binomial distribution</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute posterior distribution</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>a_post <span class="op">=</span> a <span class="op">+</span> np.<span class="bu">sum</span>(data)  <span class="co"># update alpha parameter</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>b_post <span class="op">=</span> b <span class="op">+</span> n <span class="op">-</span> np.<span class="bu">sum</span>(data)  <span class="co"># update beta parameter</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>posterior <span class="op">=</span> beta(a_post, b_post)  <span class="co"># create updated Beta distribution object</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute credible intervals</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>CI_95 <span class="op">=</span> beta.ppf([<span class="fl">0.025</span>, <span class="fl">0.975</span>], a_post, b_post)  <span class="co"># compute 95% credible interval</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot prior and posterior distributions</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1000</span>)</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>prior_pdf <span class="op">=</span> prior.pdf(x)</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>posterior_pdf <span class="op">=</span> posterior.pdf(x)</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>plt.plot(x, prior_pdf, <span class="st">'b--'</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>plt.plot(x, posterior_pdf, <span class="st">'r-'</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>plt.ylim([<span class="dv">0</span>, <span class="bu">max</span>(posterior_pdf)<span class="op">*</span><span class="fl">1.1</span>])</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>plt.legend([<span class="st">'Prior'</span>, <span class="st">'Posterior'</span>])</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'p/(1-p)'</span>)</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Density'</span>)</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Bayesian Analysis of p/(1-p)'</span>)</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="index_files/figure-html/cell-3-output-1.png" width="576" height="449"></p>
+<p><img src="index_files/figure-html/cell-2-output-1.png" width="576" height="449"></p>
 </div>
 </div>
 </section>
 </section>
-<section id="mcmc" class="level1">
-<h1>MCMC</h1>
+<section id="markov-chain-monte-carlo-mcmc" class="level2">
+<h2 class="anchored" data-anchor-id="markov-chain-monte-carlo-mcmc">Markov Chain Monte Carlo (MCMC)</h2>
 <p>There are several Bayesian models that allow us to compute the posterior distribution of the parameters analytically. However, this is often not possible.</p>
 <p>When an analytical solution is not available, Markov Chain Monte Carlo (MCMC) methods are commonly employed to derive the posterior distribution numerically.</p>
 <p>MCMC methods are <a href="https://www.statlect.com/asymptotic-theory/Monte-Carlo-method">Monte Carlo methods</a> that allow us to generate large samples of correlated draws from the posterior distribution of the parameter vector by simply using the proportionality</p>
 <p>The <a href="https://www.statlect.com/asymptotic-theory/empirical-distribution">empirical distribution</a> of the generated sample can then be used to produce <a href="https://www.statlect.com/asymptotic-theory/plug-in-principle">plug-in estimates</a> of the quantities of interest.</p>
 <p>See the lecture on <a href="https://www.statlect.com/fundamentals-of-statistics/Markov-Chain-Monte-Carlo">MCMC methods</a> for more details.</p>
-<div class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> norm</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the target distribution</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> target_dist(x):</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.exp(<span class="op">-</span>x<span class="op">**</span><span class="dv">2</span> <span class="op">/</span> <span class="dv">2</span>) <span class="op">/</span> np.sqrt(<span class="dv">2</span> <span class="op">*</span> np.pi)</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the proposal distribution (normal distribution)</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> prop_dist(x, sigma):</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.random.normal(x, sigma)</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Set the initial state and other parameters</span></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>x0 <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>num_samples <span class="op">=</span> <span class="dv">10000</span></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>burn_in <span class="op">=</span> <span class="dv">1000</span></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>sigma <span class="op">=</span> <span class="dv">1</span></span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize the Markov chain</span></span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> x0</span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate samples using the Metropolis-Hastings algorithm</span></span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>samples <span class="op">=</span> np.zeros(num_samples)</span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(num_samples <span class="op">+</span> burn_in):</span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Generate a proposal</span></span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>    x_prop <span class="op">=</span> prop_dist(x, sigma)</span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Compute the acceptance probability</span></span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>    alpha <span class="op">=</span> <span class="bu">min</span>(<span class="dv">1</span>, target_dist(x_prop) <span class="op">/</span> target_dist(x))</span>
-<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Decide whether to accept the proposal</span></span>
-<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> np.random.rand() <span class="op">&lt;</span> alpha:</span>
-<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>        x <span class="op">=</span> x_prop</span>
-<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Save the sample after the burn-in period</span></span>
-<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> i <span class="op">&gt;</span> burn_in:</span>
-<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>        samples[i <span class="op">-</span> burn_in] <span class="op">=</span> x</span>
-<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the histogram of the samples and the target distribution</span></span>
-<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>plt.hist(samples, bins<span class="op">=</span><span class="dv">30</span>, density<span class="op">=</span><span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
-<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>x_vals <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">100</span>)</span>
-<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>plt.plot(x_vals, target_dist(x_vals), <span class="st">'r-'</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'x'</span>)</span>
-<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Probability density'</span>)</span>
-<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>plt.legend([<span class="st">'Samples'</span>, <span class="st">'Target distribution'</span>])</span>
-<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> norm</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the target distribution</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> target_dist(x):</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.exp(<span class="op">-</span>x<span class="op">**</span><span class="dv">2</span> <span class="op">/</span> <span class="dv">2</span>) <span class="op">/</span> np.sqrt(<span class="dv">2</span> <span class="op">*</span> np.pi)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the proposal distribution (normal distribution)</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> prop_dist(x, sigma):</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.random.normal(x, sigma)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Set the initial state and other parameters</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>x0 <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>num_samples <span class="op">=</span> <span class="dv">10000</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>burn_in <span class="op">=</span> <span class="dv">1000</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>sigma <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize the Markov chain</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> x0</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate samples using the Metropolis-Hastings algorithm</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>samples <span class="op">=</span> np.zeros(num_samples)</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(num_samples <span class="op">+</span> burn_in):</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Generate a proposal</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>    x_prop <span class="op">=</span> prop_dist(x, sigma)</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Compute the acceptance probability</span></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>    alpha <span class="op">=</span> <span class="bu">min</span>(<span class="dv">1</span>, target_dist(x_prop) <span class="op">/</span> target_dist(x))</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Decide whether to accept the proposal</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> np.random.rand() <span class="op">&lt;</span> alpha:</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>        x <span class="op">=</span> x_prop</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Save the sample after the burn-in period</span></span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> i <span class="op">&gt;</span> burn_in:</span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>        samples[i <span class="op">-</span> burn_in] <span class="op">=</span> x</span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the histogram of the samples and the target distribution</span></span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>plt.hist(samples, bins<span class="op">=</span><span class="dv">30</span>, density<span class="op">=</span><span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>x_vals <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">100</span>)</span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>plt.plot(x_vals, target_dist(x_vals), <span class="st">'r-'</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'x'</span>)</span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Probability density'</span>)</span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>plt.legend([<span class="st">'Samples'</span>, <span class="st">'Target distribution'</span>])</span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="index_files/figure-html/cell-4-output-1.png" width="597" height="429"></p>
+<p><img src="index_files/figure-html/cell-3-output-1.png" width="597" height="429"></p>
 </div>
 </div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -883,6 +823,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">Copyright 2023, Danny_UDK - All rights reserved</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">This website is built by Daniel Udekwe with <a href="https://quarto.org/">Quarto</a></div>
+  </div>
+</footer>
 
 
 
