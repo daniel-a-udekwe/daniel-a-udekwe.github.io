@@ -2,7 +2,7 @@
 title: "Classification"
 author: "Daniel A. Udekwe"
 date: "2023-11-24"
-categories: [news]
+categories: [data, code, analysis]
 image: "classification.png"
 ---
 
@@ -36,7 +36,7 @@ The choice of algorithm often depends on factors such as the nature of the data,
 
 We will go over them one by one.
 
-# **Binary Classification** 
+# **Binary Classification**
 
 A binary classification refers to those tasks which can give either of any two class labels as the output. Generally, one is considered as the normal state and the other is considered to be the abnormal state.  The following examples will help you to understand them better.
 
@@ -190,17 +190,13 @@ Here's a brief overview of how logistic regression works:
 
     -   Logistic Regression uses the logistic function, also called the sigmoid function, to model the probability.
 
-    -   The sigmoid function has an S-shaped curve and maps any real-valued number to the range \[0, 1\]. The formula for the sigmoid function is:
-        $\sigma(z) = \frac{1}{1+ e^{-z}}$
-        where $\sigma(z)$ is the linear combination of input features and weights.
+    -   The sigmoid function has an S-shaped curve and maps any real-valued number to the range \[0, 1\]. The formula for the sigmoid function is: $\sigma(z) = \frac{1}{1+ e^{-z}}$ where $\sigma(z)$ is the linear combination of input features and weights.
 
 2.  **Linear Combination:**
 
     -   Logistic Regression establishes a linear relationship between the input features and the log-odds (logit) of the probability of belonging to the positive class.
 
-    -   The linear combination is given by:
-        $z = b_0 + b_1\times x_1 + b_2\times x_2 + ... + b_n \times x_n$
-        where $b_0, b_1, ... , b_n$ are the coefficients (weights) and $x_1, x_2, ... , x_n$ are the input features.
+    -   The linear combination is given by: $z = b_0 + b_1\times x_1 + b_2\times x_2 + ... + b_n \times x_n$ where $b_0, b_1, ... , b_n$ are the coefficients (weights) and $x_1, x_2, ... , x_n$ are the input features.
 
 3.  **Probability Prediction:**
 
@@ -454,17 +450,15 @@ Here are the key concepts of Naive Bayes:
 
 1.  **Bayes' Theorem:**
 
-    -   Bayes' theorem relates the conditional and marginal probabilities of random events. For a classification problem, it can be expressed as:
-        $$P(y|X) = \frac{P(X|y) \times P(y)}{P(X)}$$
-        where:
+    -   Bayes' theorem relates the conditional and marginal probabilities of random events. For a classification problem, it can be expressed as: $$P(y|X) = \frac{P(X|y) \times P(y)}{P(X)}$$ where:
 
-        -    $P(y|X)$ is the posterior probability of class $y$ given the features $X$,
+        -   $P(y|X)$ is the posterior probability of class $y$ given the features $X$,
 
-        -    $P(X|y)$ is the likelihood of the features given the class,
+        -   $P(X|y)$ is the likelihood of the features given the class,
 
-        -    $P(y)$ is the prior probability of class $y$,
+        -   $P(y)$ is the prior probability of class $y$,
 
-        -    $P(X)$ is the probability of the features.
+        -   $P(X)$ is the probability of the features.
 
 2.  **Naive Assumption:**
 

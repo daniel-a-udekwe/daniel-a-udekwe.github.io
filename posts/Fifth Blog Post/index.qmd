@@ -2,8 +2,8 @@
 title: "Probability Theory and Random Variables"
 author: "Daniel A. Udekwe"
 date: "2023-11-23"
-categories: [news]
-image: "randomv.jpeg"
+categories: [data, code, analysis]
+image: "probability.jpg"
 ---
 
 The subject of probability theory is the foundation upon which all of statistics is built, providing a means for modelling population, experiments or almost anything else that could be considered a random phenomenon. Through these models, statisticians are able to draw inferences about populations, inferences based on examination of only a part of the whole.

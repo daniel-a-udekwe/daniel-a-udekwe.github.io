@@ -2,7 +2,7 @@
 title: "Clustering"
 author: "Daniel A. Udekwe"
 date: "2023-11-23"
-categories: [news]
+categories: [data, code, analysis]
 image: "cluster.png"
 ---
 
