@@ -1,0 +1,42 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  repo-url: https://github.com/daniel-a-udekwe/daniel-a-udekwe.github.io
+  repo-actions: [source]
+  title: "About Me"
+  navbar:
+    right:
+      - posts.qmd
+      #- about.qmd
+      - icon: github
+        href: https://github.com/daniel-udekwe
+      - icon: twitter
+        href: https://twitter.com
+      - icon: linkedin
+        href: https://linkedin.com/in/daniel-a-udekwe-19a2bbb2
+  page-footer: 
+    background: light
+    left: Copyright 2023, Danny_UDK - All rights reserved
+    right: This website is built by Daniel Udekwe with [Quarto](https://quarto.org/)
+
+        
+#format:
+  #html:
+    #theme: cosmo
+    #css: styles.css
+
+format: 
+  html:
+    page-layout: full
+    sidebar: false
+    theme: minty
+    #theme: slate
+    #theme: green_theme.scss
+    
+    mainfont: Nunito
+    toc: true
+
+editor: visual
+
