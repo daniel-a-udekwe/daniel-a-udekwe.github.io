@@ -100,7 +100,7 @@ Now, suppose we want to draw reliable conclusions about the behavior of a random
 
 Hence, we need some kind of way to generalize from the sampled data to the population, or in other words --- we need to estimate the true data-generating process.
 
-![Estimating the data-generating process](images/data-generation.webp)
+![ Estimating the data-generating process](images/data-generation.webp)
 
 Understanding the probability distribution, allows us to compute the probability of a certain outcome by also accounting for the variability in the results. Thus, it enables us to generalize from the sample to the population, estimate the data-generating function and predict the behavior of a random variable more accurately.
 
@@ -279,7 +279,7 @@ In simple terms, the mean will be responsible for defining the central peak of t
 
 We can visualize the normal distribution as the following:
 
-![An example of a Gaussian distribution](images/gaussian-distribution.webp){alt="An example of a Gaussian distribution"}
+![An example of a Gaussian distribution](images/gaussian-distribution.webp)
 
 ## Probability Density Function
 
@@ -445,3 +445,7 @@ plt.legend(['Samples', 'Target distribution'])
 plt.show()
 
 ```
+
+Illustrations are obtained from here[^1]
+
+[^1]: <https://towardsdatascience.com/>
